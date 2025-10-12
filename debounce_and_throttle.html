@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>防抖与节流对比</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #2c3e50;
+        }
+        
+        h2 {
+            color: #3498db;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 10px;
+        }
+        
+        h3 {
+            color: #2c3e50;
+            margin: 15px 0 10px;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .comparison-table th, .comparison-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        .comparison-table th {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .demo-area {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .input-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        input, button {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #2980b9;
+        }
+        
+        .counter {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        
+        .counter-item {
+            text-align: center;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            flex: 1;
+            margin: 0 5px;
+        }
+        
+        .counter-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #3498db;
+        }
+        
+        .code-container {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+        
+        .code-container pre {
+            white-space: pre-wrap;
+        }
+        
+        .highlight {
+            background-color: #fff3cd;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        
+        .explanation {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e8f4fc;
+            border-radius: 5px;
+            border-left: 4px solid #3498db;
+        }
+    </style>
+</head>
+<body>
+    <h1>防抖与节流对比</h1>
+    
+    <div class="container">
+        <!-- 概念解释区域 -->
+        <div class="card">
+            <h2>防抖 (Debounce)</h2>
+            <p>防抖是指在事件被触发n秒后再执行回调，如果在这n秒内又被触发，则重新计时。</p>
+            
+            <h3>应用场景</h3>
+            <ul>
+                <li>搜索框输入（避免频繁请求）</li>
+                <li>窗口大小调整</li>
+                <li>表单验证</li>
+            </ul>
+            
+            <h2>节流 (Throttle)</h2>
+            <p>节流是指规定一个单位时间，在这个单位时间内，只能有一次触发事件的回调函数执行。</p>
+            
+            <h3>应用场景</h3>
+            <ul>
+                <li>滚动加载</li>
+                <li>按钮点击（防止重复提交）</li>
+                <li>鼠标移动事件</li>
+            </ul>
+            
+            <h2>对比表格</h2>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>特性</th>
+                        <th>防抖</th>
+                        <th>节流</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>核心思想</td>
+                        <td>延迟执行，重置计时</td>
+                        <td>固定频率执行</td>
+                    </tr>
+                    <tr>
+                        <td>执行时机</td>
+                        <td>事件停止触发后</td>
+                        <td>按固定时间间隔</td>
+                    </tr>
+                    <tr>
+                        <td>适用场景</td>
+                        <td>搜索建议、窗口调整</td>
+                        <td>滚动事件、按钮防重复</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- 演示区域 -->
+        <div class="card">
+            <h2>演示区域</h2>
+            
+            <div class="demo-area">
+                <div class="input-group">
+                    <label for="searchInput">搜索框（防抖演示）</label>
+                    <input type="text" id="searchInput" placeholder="输入内容体验防抖效果">
+                    <p>搜索次数: <span id="searchCount">0</span></p>
+                </div>
+                
+                <div class="input-group">
+                    <label for="clickButton">按钮（节流演示）</label>
+                    <button id="clickButton">点击我体验节流效果</button>
+                    <div class="counter">
+                        <div class="counter-item">
+                            <div class="counter-value" id="actualClicks">0</div>
+                            <div>实际点击</div>
+                        </div>
+                        <div class="counter-item">
+                            <div class="counter-value" id="processedClicks">0</div>
+                            <div>处理点击</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="explanation">
+                    <h3>演示说明</h3>
+                    <p><span class="highlight">防抖</span>: 在搜索框中快速输入，只有在停止输入一段时间后才会触发搜索。</p>
+                    <p><span class="highlight">节流</span>: 快速点击按钮，无论点击多少次，只会按固定频率处理点击事件。</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 代码实现 -->
+        <div class="card">
+            <h2>防抖实现</h2>
+            <div class="code-container">
+                <pre><code>function debounce(func, wait) {
+    let timeout;
+    return function() {
+        const context = this;
+        const args = arguments;
+        clearTimeout(timeout);
+        timeout = setTimeout(() => {
+            func.apply(context, args);
+        }, wait);
+    };
+}</code></pre>
+            </div>
+            
+            <h2>节流实现</h2>
+            <div class="code-container">
+                <pre><code>function throttle(func, wait) {
+    let timeout;
+    let previous = 0;
+    
+    return function() {
+        const context = this;
+        const args = arguments;
+        const now = Date.now();
+        
+        if (now - previous > wait) {
+            func.apply(context, args);
+            previous = now;
+        }
+    };
+}</code></pre>
+            </div>
+        </div>
+        
+        <!-- 使用示例 -->
+        <div class="card">
+            <h2>使用示例</h2>
+            
+            <div class="code-container">
+                <pre><code>// 防抖使用示例
+const searchInput = document.getElementById('searchInput');
+const searchHandler = () => {
+    // 执行搜索操作
+    console.log('执行搜索');
+};
+
+searchInput.addEventListener('input', debounce(searchHandler, 500));
+
+// 节流使用示例
+const button = document.getElementById('clickButton');
+const clickHandler = () => {
+    // 处理点击事件
+    console.log('处理点击');
+};
+
+button.addEventListener('click', throttle(clickHandler, 1000));</code></pre>
+            </div>
+            
+            <div class="explanation">
+                <h3>关键点</h3>
+                <p>1. 防抖和节流都是通过闭包保存状态</p>
+                <p>2. 防抖使用setTimeout延迟执行，每次触发重置计时器</p>
+                <p>3. 节流通过时间戳判断是否达到执行间隔</p>
+                <p>4. 两者都使用apply确保函数执行时的正确上下文</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 防抖实现
+        function debounce(func, wait) {
+            let timeout;
+            return function() {
+                const context = this;
+                const args = arguments;
+                clearTimeout(timeout);
+                timeout = setTimeout(() => {
+                    func.apply(context, args);
+                }, wait);
+            };
+        }
+
+        // 节流实现
+        function throttle(func, wait) {
+            let timeout;
+            let previous = 0;
+            
+            return function() {
+                const context = this;
+                const args = arguments;
+                const now = Date.now();
+                
+                if (now - previous > wait) {
+                    func.apply(context, args);
+                    previous = now;
+                }
+            };
+        }
+
+        // 演示代码
+        document.addEventListener('DOMContentLoaded', function() {
+            // 防抖演示
+            const searchInput = document.getElementById('searchInput');
+            const searchCount = document.getElementById('searchCount');
+            let count = 0;
+            
+            const searchHandler = () => {
+                count++;
+                searchCount.textContent = count;
+            };
+            
+            searchInput.addEventListener('input', debounce(searchHandler, 500));
+            
+            // 节流演示
+            const clickButton = document.getElementById('clickButton');
+            const actualClicks = document.getElementById('actualClicks');
+            const processedClicks = document.getElementById('processedClicks');
+            let actualCount = 0;
+            let processedCount = 0;
+            
+            const clickHandler = () => {
+                processedCount++;
+                processedClicks.textContent = processedCount;
+            };
+            
+            clickButton.addEventListener('click', throttle(clickHandler, 1000));
+            
+            // 记录实际点击次数
+            clickButton.addEventListener('click', () => {
+                actualCount++;
+                actualClicks.textContent = actualCount;
+            });
+        });
+    </script>
+</body>
+</html>
