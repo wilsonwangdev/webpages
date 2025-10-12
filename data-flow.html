@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>单向数据流 vs 双向数据流</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        @media (max-width: 900px) {
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .panel {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .unidirectional {
+            border-top: 5px solid #61dafb;
+        }
+        
+        .bidirectional {
+            border-top: 5px solid #42b883;
+        }
+        
+        .panel h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-align: center;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .unidirectional h2 {
+            color: #61dafb;
+        }
+        
+        .bidirectional h2 {
+            color: #42b883;
+        }
+        
+        .principle {
+            margin-bottom: 25px;
+        }
+        
+        .principle h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .principle h3::before {
+            content: "";
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        .unidirectional .principle h3::before {
+            background: #61dafb;
+        }
+        
+        .bidirectional .principle h3::before {
+            background: #42b883;
+        }
+        
+        .principle p {
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        
+        .flow-diagram {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 25px 0;
+            position: relative;
+        }
+        
+        .flow-step {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            width: 100%;
+        }
+        
+        .flow-node {
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-align: center;
+            min-width: 120px;
+        }
+        
+        .unidirectional .flow-node {
+            background: rgba(97, 218, 251, 0.2);
+            border: 2px solid #61dafb;
+        }
+        
+        .bidirectional .flow-node {
+            background: rgba(66, 184, 131, 0.2);
+            border: 2px solid #42b883;
+        }
+        
+        .flow-arrow {
+            margin: 0 15px;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .unidirectional .flow-arrow {
+            color: #61dafb;
+        }
+        
+        .bidirectional .flow-arrow {
+            color: #42b883;
+        }
+        
+        .bidirectional .flow-arrow.double {
+            transform: scaleX(-1);
+        }
+        
+        .code-example {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+        
+        .code-block {
+            font-family: 'Courier New', monospace;
+            line-height: 1.5;
+            color: #fff;
+        }
+        
+        .comment {
+            color: #aaa;
+        }
+        
+        .keyword {
+            color: #ff5e8a;
+        }
+        
+        .function {
+            color: #61dafb;
+        }
+        
+        .string {
+            color: #5eff8a;
+        }
+        
+        .property {
+            color: #ffbd5e;
+        }
+        
+        .comparison-table {
+            margin-top: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+        
+        .comparison-table h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 25px;
+            color: #ffcc00;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        th {
+            background: rgba(0, 0, 0, 0.3);
+            font-weight: bold;
+            color: #ffcc00;
+        }
+        
+        tr:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .pros, .cons {
+            padding: 15px;
+            border-radius: 10px;
+        }
+        
+        .pros {
+            background: rgba(94, 255, 138, 0.1);
+            border-left: 4px solid #5eff8a;
+        }
+        
+        .cons {
+            background: rgba(255, 94, 94, 0.1);
+            border-left: 4px solid #ff5e5e;
+        }
+        
+        .pros h4, .cons h4 {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .pros h4::before {
+            content: "✓";
+            margin-right: 8px;
+            color: #5eff8a;
+        }
+        
+        .cons h4::before {
+            content: "✗";
+            margin-right: 8px;
+            color: #ff5e5e;
+        }
+        
+        .demo-section {
+            margin-top: 40px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        
+        @media (max-width: 900px) {
+            .demo-section {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .demo {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+        
+        .demo h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .unidirectional-demo h3 {
+            color: #61dafb;
+        }
+        
+        .bidirectional-demo h3 {
+            color: #42b883;
+        }
+        
+        .demo-container {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .demo-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        label {
+            font-weight: bold;
+        }
+        
+        input, select {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+        }
+        
+        .state-display {
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .highlight {
+            background: rgba(255, 204, 0, 0.2);
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        
+        .pulse {
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .flow-active {
+            box-shadow: 0 0 15px currentColor;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>单向数据流 vs 双向数据流</h1>
+            <p class="subtitle">深入理解两种数据流动模式的特点、原理和应用场景</p>
+        </header>
+        
+        <div class="comparison">
+            <div class="panel unidirectional">
+                <h2>单向数据流</h2>
+                
+                <div class="principle">
+                    <h3>工作原理</h3>
+                    <p>数据沿着单一方向流动，通常从父组件传递到子组件，子组件通过事件回调通知父组件状态变化。</p>
+                    <p>状态更新由统一的中心化管理，数据变化可预测，便于调试。</p>
+                </div>
+                
+                <div class="flow-diagram">
+                    <div class="flow-step">
+                        <div class="flow-node" id="state1">应用状态</div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-node" id="view1">视图渲染</div>
+                    </div>
+                    <div class="flow-step">
+                        <div class="flow-node" id="action1">用户操作</div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-node" id="update1">状态更新</div>
+                    </div>
+                </div>
+                
+                <div class="code-example">
+                    <div class="code-block">
+                        <span class="comment">// React 示例 - 单向数据流</span><br>
+                        <span class="keyword">function</span> <span class="function">ParentComponent</span>() {<br>
+                        &nbsp;&nbsp;<span class="keyword">const</span> [value, setValue] = <span class="function">useState</span>(<span class="string">''</span>);<br><br>
+                        &nbsp;&nbsp;<span class="keyword">const</span> handleChange = (newValue) => {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="function">setValue</span>(newValue);<br>
+                        &nbsp;&nbsp;};<br><br>
+                        &nbsp;&nbsp;<span class="keyword">return</span> (<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="property">ChildComponent</span> <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value={value} <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;onChange={handleChange} /&gt;<br>
+                        &nbsp;&nbsp;);<br>
+                        }<br><br>
+                        <span class="keyword">function</span> <span class="function">ChildComponent</span>({ value, onChange }) {<br>
+                        &nbsp;&nbsp;<span class="keyword">return</span> (<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&lt;input <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value={value} <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;onChange={(e) => <span class="function">onChange</span>(e.target.value)} /&gt;<br>
+                        &nbsp;&nbsp;);<br>
+                        }
+                    </div>
+                </div>
+                
+                <div class="pros-cons">
+                    <div class="pros">
+                        <h4>优点</h4>
+                        <ul>
+                            <li>数据流动可预测，易于调试</li>
+                            <li>状态管理集中，易于维护</li>
+                            <li>组件依赖关系清晰</li>
+                            <li>适合大型复杂应用</li>
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <h4>缺点</h4>
+                        <ul>
+                            <li>代码量相对较多</li>
+                            <li>简单场景下可能显得繁琐</li>
+                            <li>需要更多样板代码</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="panel bidirectional">
+                <h2>双向数据流</h2>
+                
+                <div class="principle">
+                    <h3>工作原理</h3>
+                    <p>数据在视图和模型之间双向流动，视图变化自动更新模型，模型变化自动更新视图。</p>
+                    <p>通过数据绑定实现自动同步，减少样板代码，开发效率高。</p>
+                </div>
+                
+                <div class="flow-diagram">
+                    <div class="flow-step">
+                        <div class="flow-node" id="model2">数据模型</div>
+                        <div class="flow-arrow double">⇄</div>
+                        <div class="flow-node" id="view2">视图</div>
+                    </div>
+                </div>
+                
+                <div class="code-example">
+                    <div class="code-block">
+                        <span class="comment">// Vue 示例 - 双向数据流</span><br>
+                        &lt;template&gt;<br>
+                        &nbsp;&nbsp;&lt;div&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">&lt;!-- 使用 v-model 实现双向绑定 --&gt;</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&lt;input v-model="message" /&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;{{ message }}&lt;/p&gt;<br>
+                        &nbsp;&nbsp;&lt;/div&gt;<br>
+                        &lt;/template&gt;<br><br>
+                        &lt;script&gt;<br>
+                        <span class="keyword">export</span> <span class="keyword">default</span> {<br>
+                        &nbsp;&nbsp;data() {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;message: <span class="string">'Hello World'</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                        &nbsp;&nbsp;}<br>
+                        }<br>
+                        &lt;/script&gt;<br><br>
+                        <span class="comment">// Angular 示例</span><br>
+                        &lt;input [(ngModel)]="name" /&gt;<br>
+                        &lt;p&gt;{{ name }}&lt;/p&gt;
+                    </div>
+                </div>
+                
+                <div class="pros-cons">
+                    <div class="pros">
+                        <h4>优点</h4>
+                        <ul>
+                            <li>代码简洁，开发效率高</li>
+                            <li>减少样板代码</li>
+                            <li>简单场景下直观易用</li>
+                            <li>快速原型开发</li>
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <h4>缺点</h4>
+                        <ul>
+                            <li>数据流动不透明，调试困难</li>
+                            <li>可能产生意外副作用</li>
+                            <li>大型应用中难以维护</li>
+                            <li>性能可能受影响</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="comparison-table">
+            <h2>详细对比</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>对比项</th>
+                        <th>单向数据流</th>
+                        <th>双向数据流</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>数据流动方向</td>
+                        <td>单向：状态 → 视图 → 动作 → 状态</td>
+                        <td>双向：模型 ⇄ 视图</td>
+                    </tr>
+                    <tr>
+                        <td>典型框架</td>
+                        <td>React, Redux, Flux</td>
+                        <td>Vue, Angular, Knockout</td>
+                    </tr>
+                    <tr>
+                        <td>数据绑定</td>
+                        <td>单向绑定</td>
+                        <td>双向绑定</td>
+                    </tr>
+                    <tr>
+                        <td>状态管理</td>
+                        <td>集中式或单向状态管理</td>
+                        <td>分散式状态管理</td>
+                    </tr>
+                    <tr>
+                        <td>代码量</td>
+                        <td>相对较多，需要明确的数据流</td>
+                        <td>相对较少，自动处理数据同步</td>
+                    </tr>
+                    <tr>
+                        <td>可预测性</td>
+                        <td>高，数据流动清晰</td>
+                        <td>较低，可能存在隐式数据流</td>
+                    </tr>
+                    <tr>
+                        <td>调试难度</td>
+                        <td>较低，容易追踪数据变化</td>
+                        <td>较高，数据变化来源不明确</td>
+                    </tr>
+                    <tr>
+                        <td>适用场景</td>
+                        <td>大型复杂应用，团队协作</td>
+                        <td>中小型应用，快速开发</td>
+                    </tr>
+                    <tr>
+                        <td>学习曲线</td>
+                        <td>相对较陡，需要理解数据流概念</td>
+                        <td>相对平缓，直观易上手</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="demo-section">
+            <div class="demo unidirectional-demo">
+                <h3>单向数据流演示</h3>
+                <div class="demo-container">
+                    <div class="demo-controls">
+                        <div class="control-group">
+                            <label for="uniInput">输入文本:</label>
+                            <input type="text" id="uniInput" placeholder="输入文本...">
+                        </div>
+                        <button id="updateUniState">更新状态</button>
+                    </div>
+                    <div class="state-display">
+                        <div>当前状态: <span id="uniState"></span></div>
+                        <div>状态更新次数: <span id="uniUpdateCount">0</span></div>
+                    </div>
+                </div>
+                <div class="explanation">
+                    <p>在单向数据流中，用户输入不会直接更新状态，而是通过明确的操作（点击按钮）来触发状态更新。</p>
+                </div>
+            </div>
+            
+            <div class="demo bidirectional-demo">
+                <h3>双向数据流演示</h3>
+                <div class="demo-container">
+                    <div class="demo-controls">
+                        <div class="control-group">
+                            <label for="biInput">输入文本:</label>
+                            <input type="text" id="biInput" placeholder="输入文本...">
+                        </div>
+                    </div>
+                    <div class="state-display">
+                        <div>当前状态: <span id="biState"></span></div>
+                        <div>状态更新次数: <span id="biUpdateCount">0</span></div>
+                    </div>
+                </div>
+                <div class="explanation">
+                    <p>在双向数据流中，用户输入会自动更新状态，无需额外的操作，状态和视图始终保持同步。</p>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>单向数据流 vs 双向数据流对比 | 数据流动模式 | 前端架构设计</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 单向数据流演示
+            const uniInput = document.getElementById('uniInput');
+            const updateUniStateBtn = document.getElementById('updateUniState');
+            const uniState = document.getElementById('uniState');
+            const uniUpdateCount = document.getElementById('uniUpdateCount');
+            
+            // 双向数据流演示
+            const biInput = document.getElementById('biInput');
+            const biState = document.getElementById('biState');
+            const biUpdateCount = document.getElementById('biUpdateCount');
+            
+            let uniCount = 0;
+            let biCount = 0;
+            
+            // 初始化状态
+            uniState.textContent = '初始状态';
+            biState.textContent = '初始状态';
+            
+            // 单向数据流：需要明确的操作来更新状态
+            updateUniStateBtn.addEventListener('click', function() {
+                uniState.textContent = uniInput.value || '空值';
+                uniCount++;
+                uniUpdateCount.textContent = uniCount;
+                
+                // 可视化数据流动
+                animateUnidirectionalFlow();
+            });
+            
+            // 双向数据流：输入直接更新状态
+            biInput.addEventListener('input', function() {
+                biState.textContent = biInput.value || '空值';
+                biCount++;
+                biUpdateCount.textContent = biCount;
+                
+                // 可视化数据流动
+                animateBidirectionalFlow();
+            });
+            
+            // 动画函数
+            function animateUnidirectionalFlow() {
+                const nodes = [
+                    document.getElementById('action1'),
+                    document.getElementById('update1'),
+                    document.getElementById('state1'),
+                    document.getElementById('view1')
+                ];
+                
+                animateFlow(nodes);
+            }
+            
+            function animateBidirectionalFlow() {
+                const nodes = [
+                    document.getElementById('view2'),
+                    document.getElementById('model2')
+                ];
+                
+                animateFlow(nodes, true);
+            }
+            
+            function animateFlow(nodes, isBidirectional = false) {
+                nodes.forEach((node, index) => {
+                    setTimeout(() => {
+                        node.classList.add('flow-active');
+                        
+                        setTimeout(() => {
+                            node.classList.remove('flow-active');
+                        }, 800);
+                    }, index * 500);
+                });
+                
+                // 如果是双向数据流，添加反向动画
+                if (isBidirectional) {
+                    setTimeout(() => {
+                        nodes.reverse().forEach((node, index) => {
+                            setTimeout(() => {
+                                node.classList.add('flow-active');
+                                
+                                setTimeout(() => {
+                                    node.classList.remove('flow-active');
+                                }, 800);
+                            }, index * 500);
+                        });
+                    }, nodes.length * 500 + 200);
+                }
+            }
+            
+            // 初始动画演示
+            setTimeout(() => {
+                animateUnidirectionalFlow();
+            }, 1000);
+            
+            setTimeout(() => {
+                animateBidirectionalFlow();
+            }, 4000);
+        });
+    </script>
+</body>
+</html>
