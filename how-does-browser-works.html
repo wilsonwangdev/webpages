@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>浏览器运行机制与进程线程协调</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        @media (max-width: 1100px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .panel {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .panel h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #ffcc00;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .process-list, .thread-list {
+            list-style: none;
+        }
+        
+        .process-item, .thread-item {
+            background: rgba(0, 0, 0, 0.3);
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .process-item:hover, .thread-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.4);
+        }
+        
+        .process-title, .thread-title {
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .process-title::before, .thread-title::before {
+            content: "";
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        .browser::before { background: #ff5e5e; }
+        .render::before { background: #5e8aff; }
+        .gpu::before { background: #5eff8a; }
+        .network::before { background: #ffbd5e; }
+        .plugin::before { background: #bd5eff; }
+        
+        .main-thread::before { background: #ff5e5e; }
+        .js-engine::before { background: #ffbd5e; }
+        .compositor::before { background: #5e8aff; }
+        .worker::before { background: #5eff8a; }
+        .timer::before { background: #bd5eff; }
+        
+        .process-desc, .thread-desc {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            opacity: 0.8;
+        }
+        
+        .event-loop {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .loop-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 20px auto;
+        }
+        
+        .loop {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 3px dashed rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: rotate 20s linear infinite;
+        }
+        
+        .stack, .queue, .webapi {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .stack {
+            background: rgba(255, 94, 94, 0.8);
+            top: 10px;
+            left: 110px;
+        }
+        
+        .queue {
+            background: rgba(94, 138, 255, 0.8);
+            bottom: 10px;
+            left: 110px;
+        }
+        
+        .webapi {
+            background: rgba(94, 255, 138, 0.8);
+            top: 110px;
+            right: 10px;
+            width: 90px;
+        }
+        
+        .heap {
+            background: rgba(255, 189, 94, 0.8);
+            top: 110px;
+            left: 10px;
+            width: 90px;
+        }
+        
+        .arrow {
+            position: absolute;
+            width: 2px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.7);
+            left: 50%;
+            transform-origin: bottom center;
+        }
+        
+        .arrow::after {
+            content: "";
+            position: absolute;
+            top: -8px;
+            left: -5px;
+            width: 0;
+            height: 0;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-bottom: 10px solid rgba(255, 255, 255, 0.7);
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        button {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+        }
+        
+        .active {
+            background: rgba(255, 204, 0, 0.7);
+        }
+        
+        .demo-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+        
+        .demo-title {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #ffcc00;
+        }
+        
+        .code-container {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+        }
+        
+        .code-block {
+            font-family: 'Courier New', monospace;
+            line-height: 1.5;
+            color: #fff;
+        }
+        
+        .comment {
+            color: #aaa;
+        }
+        
+        .keyword {
+            color: #ff5e8a;
+        }
+        
+        .function {
+            color: #5ebdff;
+        }
+        
+        .string {
+            color: #5eff8a;
+        }
+        
+        .execution {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            border-left: 4px solid #ffcc00;
+        }
+        
+        .execution h4 {
+            margin-bottom: 10px;
+            color: #ffcc00;
+        }
+        
+        .highlight {
+            background: rgba(255, 204, 0, 0.2);
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        .flow-animation {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #ffcc00;
+            border-radius: 50%;
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>浏览器运行机制与进程线程协调</h1>
+            <p class="subtitle">探索现代浏览器如何通过多进程架构和线程协调来高效运行JavaScript并渲染页面</p>
+        </header>
+        
+        <div class="dashboard">
+            <div class="panel">
+                <h2>浏览器多进程架构</h2>
+                <ul class="process-list">
+                    <li class="process-item browser">
+                        <div class="process-title">浏览器进程</div>
+                        <div class="process-desc">负责界面显示、用户交互、子进程管理，提供存储等功能</div>
+                    </li>
+                    <li class="process-item render">
+                        <div class="process-title">渲染进程</div>
+                        <div class="process-desc">负责页面渲染，脚本执行，事件处理等（每个标签页一个渲染进程）</div>
+                    </li>
+                    <li class="process-item gpu">
+                        <div class="process-title">GPU进程</div>
+                        <div class="process-desc">处理GPU任务，实现CSS3D、WebGL等图形加速功能</div>
+                    </li>
+                    <li class="process-item network">
+                        <div class="process-title">网络进程</div>
+                        <div class="process-desc">负责网络资源加载，如下载HTML、CSS、JS等文件</div>
+                    </li>
+                    <li class="process-item plugin">
+                        <div class="process-title">插件进程</div>
+                        <div class="process-desc">管理浏览器插件的运行，防止插件崩溃影响浏览器</div>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="panel">
+                <h2>渲染进程内部线程</h2>
+                <ul class="thread-list">
+                    <li class="thread-item main-thread">
+                        <div class="thread-title">GUI渲染线程</div>
+                        <div class="thread-desc">负责解析HTML、CSS，构建DOM树、CSSOM树，布局和绘制等</div>
+                    </li>
+                    <li class="thread-item js-engine">
+                        <div class="thread-title">JavaScript引擎线程</div>
+                        <div class="thread-desc">负责解析和执行JavaScript代码（如V8引擎）</div>
+                    </li>
+                    <li class="thread-item compositor">
+                        <div class="thread-title">合成线程</div>
+                        <div class="thread-desc">负责将页面分层，并合成最终图像发送给GPU进程</div>
+                    </li>
+                    <li class="thread-item worker">
+                        <div class="thread-title">工作线程</div>
+                        <div class="thread-desc">Web Worker运行环境，不阻塞主线程执行复杂计算</div>
+                    </li>
+                    <li class="thread-item timer">
+                        <div class="thread-title">定时器触发线程</div>
+                        <div class="thread-desc">处理setTimeout和setInterval的计时和回调</div>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="panel">
+                <h2>JavaScript事件循环</h2>
+                <div class="event-loop">
+                    <div class="loop-container">
+                        <div class="loop"></div>
+                        <div class="stack">调用栈<br>Call Stack</div>
+                        <div class="heap">内存堆<br>Memory Heap</div>
+                        <div class="queue">回调队列<br>Callback Queue</div>
+                        <div class="webapi">Web APIs<br>(DOM, AJAX, Timer)</div>
+                        <div class="arrow"></div>
+                    </div>
+                    <div class="execution">
+                        <h4>执行流程：</h4>
+                        <p>1. 同步任务进入调用栈执行</p>
+                        <p>2. 异步任务交给Web API处理</p>
+                        <p>3. Web API完成后将回调放入任务队列</p>
+                        <p>4. 事件循环将队列中的任务推入调用栈执行</p>
+                    </div>
+                    <div class="controls">
+                        <button id="startDemo">开始演示</button>
+                        <button id="resetDemo">重置</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="demo-section">
+            <h2 class="demo-title">JavaScript执行演示</h2>
+            <div class="code-container">
+                <pre class="code-block"><code><span class="comment">// JavaScript代码执行示例</span>
+<span class="keyword">function</span> <span class="function">main</span>() {
+    <span class="keyword">console</span>.<span class="function">log</span>(<span class="string">'脚本开始执行'</span>);
+    
+    <span class="comment">// 同步任务</span>
+    <span class="keyword">let</span> result = <span class="function">calculate</span>(5, 3);
+    <span class="keyword">console</span>.<span class="function">log</span>(<span class="string">'计算结果:'</span>, result);
+    
+    <span class="comment">// 异步任务 - 定时器</span>
+    <span class="function">setTimeout</span>(<span class="keyword">function</span> <span class="function">timeoutCallback</span>() {
+        <span class="keyword">console</span>.<span class="function">log</span>(<span class="string">'定时器回调执行'</span>);
+    }, 1000);
+    
+    <span class="comment">// 异步任务 - 事件监听</span>
+    document.<span class="function">addEventListener</span>(<span class="string">'click'</span>, <span class="keyword">function</span> <span class="function">clickHandler</span>() {
+        <span class="keyword">console</span>.<span class="function">log</span>(<span class="string">'点击事件处理'</span>);
+    });
+    
+    <span class="keyword">console</span>.<span class="function">log</span>(<span class="string">'脚本执行结束'</span>);
+}
+
+<span class="keyword">function</span> <span class="function">calculate</span>(a, b) {
+    <span class="keyword">return</span> a + b;
+}
+
+<span class="comment">// 启动执行</span>
+<span class="function">main</span>();</code></pre>
+            </div>
+            
+            <div class="execution">
+                <h4>执行过程说明：</h4>
+                <p>1. <span class="highlight">main()</span> 函数被推入调用栈开始执行</p>
+                <p>2. 同步执行 <span class="highlight">console.log('脚本开始执行')</span></p>
+                <p>3. 调用 <span class="highlight">calculate(5, 3)</span> 函数并等待返回值</p>
+                <p>4. 执行 <span class="highlight">setTimeout</span>，将定时器交给Web API处理</p>
+                <p>5. 执行 <span class="highlight">addEventListener</span>，将事件监听交给Web API</p>
+                <p>6. 执行 <span class="highlight">console.log('脚本执行结束')</span></p>
+                <p>7. 主线程空闲后，事件循环检查任务队列</p>
+                <p>8. 定时器到期后，回调函数被推入任务队列</p>
+                <p>9. 事件循环将回调函数推入调用栈执行</p>
+            </div>
+        </div>
+        
+        <footer>
+            <p>现代浏览器运行机制解析 | 进程与线程协调 | JavaScript事件循环</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const startBtn = document.getElementById('startDemo');
+            const resetBtn = document.getElementById('resetDemo');
+            const stack = document.querySelector('.stack');
+            const queue = document.querySelector('.queue');
+            const webapi = document.querySelector('.webapi');
+            const loop = document.querySelector('.loop');
+            const processItems = document.querySelectorAll('.process-item');
+            const threadItems = document.querySelectorAll('.thread-item');
+            
+            let demoRunning = false;
+            
+            startBtn.addEventListener('click', function() {
+                if (demoRunning) return;
+                demoRunning = true;
+                startBtn.classList.add('active');
+                
+                // 高亮显示相关进程和线程
+                highlightElements();
+                
+                // 开始事件循环演示
+                startEventLoopDemo();
+            });
+            
+            resetBtn.addEventListener('click', function() {
+                demoRunning = false;
+                startBtn.classList.remove('active');
+                
+                // 重置所有元素状态
+                resetElements();
+            });
+            
+            function highlightElements() {
+                // 高亮显示浏览器进程和渲染进程
+                processItems[0].classList.add('pulse');
+                processItems[1].classList.add('pulse');
+                
+                // 高亮显示渲染进程中的线程
+                threadItems[0].classList.add('pulse');
+                threadItems[1].classList.add('pulse');
+                threadItems[2].classList.add('pulse');
+            }
+            
+            function resetElements() {
+                // 移除所有高亮和动画
+                processItems.forEach(item => {
+                    item.classList.remove('pulse');
+                });
+                
+                threadItems.forEach(item => {
+                    item.classList.remove('pulse');
+                });
+                
+                stack.style.background = 'rgba(255, 94, 94, 0.8)';
+                queue.style.background = 'rgba(94, 138, 255, 0.8)';
+                webapi.style.background = 'rgba(94, 255, 138, 0.8)';
+            }
+            
+            function startEventLoopDemo() {
+                if (!demoRunning) return;
+                
+                // 模拟调用栈执行
+                setTimeout(() => {
+                    stack.style.background = 'rgba(255, 204, 0, 0.8)';
+                    
+                    // 模拟Web API处理
+                    setTimeout(() => {
+                        stack.style.background = 'rgba(255, 94, 94, 0.8)';
+                        webapi.style.background = 'rgba(255, 204, 0, 0.8)';
+                        
+                        // 模拟回调进入队列
+                        setTimeout(() => {
+                            webapi.style.background = 'rgba(94, 255, 138, 0.8)';
+                            queue.style.background = 'rgba(255, 204, 0, 0.8)';
+                            
+                            // 模拟事件循环将回调推入调用栈
+                            setTimeout(() => {
+                                queue.style.background = 'rgba(94, 138, 255, 0.8)';
+                                stack.style.background = 'rgba(255, 204, 0, 0.8)';
+                                
+                                // 完成一轮循环
+                                setTimeout(() => {
+                                    stack.style.background = 'rgba(255, 94, 94, 0.8)';
+                                    
+                                    // 继续下一轮演示
+                                    if (demoRunning) {
+                                        startEventLoopDemo();
+                                    }
+                                }, 1000);
+                            }, 1000);
+                        }, 1000);
+                    }, 1000);
+                }, 1000);
+            }
+            
+            // 添加点击效果到所有进程和线程项
+            processItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                });
+            });
+            
+            threadItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
