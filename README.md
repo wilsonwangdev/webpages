@@ -11,3 +11,7 @@
 - [异常处理和性能监控](exception-handling)
 - [JS异常处理和性能监控](js-exception-handling)
 - [JS业务模块管理](js-business-module-management)
+
+# Fantastic Sites
+
+- https://blog.shashanktomar.com/posts/strange-attractors
