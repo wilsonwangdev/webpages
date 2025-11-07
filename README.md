@@ -15,4 +15,6 @@
 # Fantastic Sites
 
 - https://blog.shashanktomar.com/posts/strange-attractors
-- https://gpp.tkchu.me/
+- 《游戏编程模式》
+  - 中文版：https://gpp.tkchu.me/
+  - 英文原版：https://gameprogrammingpatterns.com/
