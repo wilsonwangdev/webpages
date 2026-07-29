@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wilson · 网页索引</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+  :root {
+    --bg: #f7f8f8;
+    --fg: #1a1a1a;
+    --fg-secondary: #6b7280;
+    --fg-tertiary: #9ca3af;
+    --accent: #5e6ad2;
+    --accent-light: rgba(94,106,210,0.08);
+    --border: #e5e7eb;
+    --card-bg: #ffffff;
+    --radius: 8px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #08090a;
+      --fg: #f7f8f8;
+      --fg-secondary: #8a8f98;
+      --fg-tertiary: #62666d;
+      --accent: #7170ff;
+      --accent-light: rgba(113,112,255,0.1);
+      --border: rgba(255,255,255,0.08);
+      --card-bg: #0f1011;
+    }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Noto Sans SC', -apple-system, 'PingFang SC', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+  .container { max-width: 680px; margin: 0 auto; padding: 60px 24px; }
+  header { margin-bottom: 48px; }
+  header h1 {
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+    margin-bottom: 4px;
+  }
+  header p {
+    font-size: 14px;
+    color: var(--fg-secondary);
+  }
+
+  .section { margin-bottom: 40px; }
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--fg-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .card-list { display: flex; flex-direction: column; gap: 8px; }
+  .card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 16px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.15s;
+  }
+  .card:hover {
+    border-color: var(--accent);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+  .card-icon {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    background: var(--accent-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .card-body { flex: 1; min-width: 0; }
+  .card-body h3 {
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 1px;
+  }
+  .card-body .url {
+    font-size: 12px;
+    color: var(--fg-tertiary);
+    font-family: 'JetBrains Mono', monospace;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .card-body .desc {
+    font-size: 13px;
+    color: var(--fg-secondary);
+    margin-top: 2px;
+  }
+  .card-arrow {
+    font-size: 16px;
+    color: var(--fg-tertiary);
+    flex-shrink: 0;
+  }
+
+  footer {
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    font-size: 12px;
+    color: var(--fg-tertiary);
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>📄 Wilson 的网页索引</h1>
+    <p>所有分享过的静态页面，统一入口</p>
+  </header>
+
+  <div class="section">
+    <div class="section-title">📖 Hermes</div>
+    <div class="card-list">
+      <a class="card" href="./hermes-desktop-story-zh.html">
+        <div class="card-icon">🇨🇳</div>
+        <div class="card-body">
+          <h3>Hermes 桌面端发展历程</h3>
+          <div class="url">/hermes-desktop-story-zh.html</div>
+          <div class="desc">中文版 · 从零到桌面客户端的完整故事</div>
+        </div>
+        <div class="card-arrow">→</div>
+      </a>
+      <a class="card" href="./hermes-desktop-history.html">
+        <div class="card-icon">🇬🇧</div>
+        <div class="card-body">
+          <h3>Hermes Desktop — The Story</h3>
+          <div class="url">/hermes-desktop-history.html</div>
+          <div class="desc">English version · full timeline with contributors</div>
+        </div>
+        <div class="card-arrow">→</div>
+      </a>
+    </div>
+  </div>
+
+  <footer>
+    <p><code>wilson-web.pages.dev</code> · 托管于 Cloudflare Pages</p>
+  </footer>
+</div>
+</body>
+</html>
