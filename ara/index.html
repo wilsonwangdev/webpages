@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ara Desktop — Your Agent, Native.</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500&display=swap');
+  :root {
+    --bg: #08090a;
+    --fg: #f7f8f8;
+    --fg-secondary: #8a8f98;
+    --fg-tertiary: #62666d;
+    --accent: #7170ff;
+    --accent-hover: #828fff;
+    --border: rgba(255,255,255,0.08);
+    --border-subtle: rgba(255,255,255,0.05);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--fg-secondary);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6;
+  }
+  .container { max-width: 680px; margin: 0 auto; padding: 80px 24px; }
+
+  .hero { margin-bottom: 80px; text-align: center; }
+  .hero h1 {
+    font-size: 48px;
+    font-weight: 600;
+    letter-spacing: -1.05px;
+    color: var(--fg);
+    margin-bottom: 8px;
+    line-height: 1.1;
+  }
+  .hero .tagline {
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--fg-tertiary);
+    margin-bottom: 32px;
+    letter-spacing: -0.16px;
+  }
+  .hero .badge {
+    display: inline-flex;
+    gap: 6px;
+    align-items: center;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 4px 14px;
+    border-radius: 9999px;
+    border: 1px solid rgba(113,112,255,0.2);
+    background: rgba(113,112,255,0.06);
+    color: var(--accent-hover);
+  }
+  .hero-sub {
+    margin-top: 24px;
+    font-size: 14px;
+    color: var(--fg-tertiary);
+    line-height: 1.7;
+  }
+  .hero-sub a { color: var(--accent); text-decoration: none; }
+  .hero-sub a:hover { text-decoration: underline; }
+
+  .section { margin-bottom: 48px; }
+  .section h2 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--fg-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .card-list { display: flex; flex-direction: column; gap: 6px; }
+  .card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 16px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.15s;
+  }
+  .card:hover { border-color: var(--accent); }
+  .card-body { flex: 1; min-width: 0; }
+  .card-body h3 { font-size: 14px; font-weight: 500; color: var(--fg); margin-bottom: 1px; }
+  .card-body p { font-size: 13px; color: var(--fg-tertiary); }
+
+  .posts { display: flex; flex-direction: column; gap: 20px; }
+  .post { }
+  .post h3 { font-size: 15px; font-weight: 500; color: var(--fg); margin-bottom: 4px; }
+  .post .meta { font-size: 12px; color: var(--fg-tertiary); font-family: 'JetBrains Mono', monospace; margin-bottom: 6px; }
+  .post p { font-size: 13px; color: var(--fg-secondary); line-height: 1.7; }
+  .post .tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border-subtle);
+    color: var(--fg-tertiary);
+    margin-top: 6px;
+  }
+
+  footer {
+    margin-top: 80px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--fg-tertiary);
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="hero">
+    <div class="badge">Tauri · React · Rust</div>
+    <h1>Ara Desktop</h1>
+    <div class="tagline">Your Agent, Native.</div>
+    <div class="hero-sub">
+      一个桌面端优先的成长型 AI Agent 客户端。<br>
+      探索 Tauri 在复杂桌面应用中的工程实践。
+    </div>
+  </div>
+
+  <!-- 文章 -->
+  <div class="section">
+    <h2>📝 文章</h2>
+    <div class="posts">
+      <div class="post">
+        <h3>从零用 Tauri 构建 AI Agent 桌面端</h3>
+        <div class="meta">2026-07-29 · 系列连载中</div>
+        <p>为什么选 Tauri、与 Electron 的真实对比、嵌入终端的 sidecar 方案、Tauri v2 的系统集成实践。记录整个开发过程的决策和教训。</p>
+        <span class="tag">Tauri</span>
+        <span class="tag">工程实践</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 下载 -->
+  <div class="section">
+    <h2>⬇️ 下载</h2>
+    <div class="card-list">
+      <a class="card" href="#">
+        <div class="card-body">
+          <h3>macOS (Apple Silicon)</h3>
+          <p>.dmg · 首批构建可用时发布</p>
+        </div>
+      </a>
+      <a class="card" href="#">
+        <div class="card-body">
+          <h3>macOS (Intel)</h3>
+          <p>.dmg · 首批构建可用时发布</p>
+        </div>
+      </a>
+      <a class="card" href="#">
+        <div class="card-body">
+          <h3>Windows</h3>
+          <p>.msi · 首批构建可用时发布</p>
+        </div>
+      </a>
+      <a class="card" href="#">
+        <div class="card-body">
+          <h3>Linux</h3>
+          <p>.AppImage · 首批构建可用时发布</p>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- 开发记录 -->
+  <div class="section">
+    <h2>📋 开发日志</h2>
+    <div class="card-list">
+      <a class="card" href="https://wilson-web.pages.dev/hermes-desktop-story-zh.html" target="_blank">
+        <div class="card-body">
+          <h3>Hermes 桌面端发展历程 →</h3>
+          <p>我们的参考原型从零到上线的完整故事</p>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <footer>
+    <p>Ara Desktop · 实验性项目 · 开源 (MIT)</p>
+  </footer>
+</div>
+</body>
+</html>
