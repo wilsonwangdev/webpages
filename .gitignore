@@ -2,4 +2,3 @@ node_modules/
 .wrangler/
 ara-site/.astro/
 ara-site/dist/
-ara/
