@@ -1,0 +1,9 @@
+{
+  "builds": [
+    {
+      "buildCommand": "pnpm install && pnpm build",
+      "buildOutputDir": "ara-site/dist",
+      "rootDir": "ara-site"
+    }
+  ]
+}

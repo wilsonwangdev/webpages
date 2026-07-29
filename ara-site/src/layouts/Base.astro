@@ -1,0 +1,57 @@
+---
+export interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title} — Ara Desktop</title>
+  {description && <meta name="description" content={description} />}
+  <link rel="icon" type="image/png" href="/ara/favicon.png" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500&display=swap');
+    :root {
+      --bg: #08090a; --fg: #f7f8f8; --fg2: #d0d6e0; --fg3: #8a8f98; --fg4: #62666d;
+      --accent: #7170ff; --bdr: rgba(255,255,255,0.08); --bdr-sub: rgba(255,255,255,0.05);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--bg); color: var(--fg2); -webkit-font-smoothing: antialiased; line-height: 1.7;
+    }
+    .wrap { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+
+    header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 24px; border-bottom: 1px solid var(--bdr);
+    }
+    header .logo { font-size: 16px; font-weight: 600; color: var(--fg); text-decoration: none; }
+    nav { display: flex; gap: 24px; }
+    nav a { font-size: 14px; font-weight: 500; color: var(--fg3); text-decoration: none; transition: color .15s; }
+    nav a:hover, nav a.current { color: var(--fg); }
+
+    footer { text-align: center; padding: 40px 24px 60px; font-size: 12px; color: var(--fg4); }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="/ara/" class="logo">Ara</a>
+    <nav>
+      <a href="/ara/">首页</a>
+      <a href="/ara/blog/">博客</a>
+      <a href="https://github.com/wilsonwangdev/ara-desktop" target="_blank">GitHub</a>
+    </nav>
+  </header>
+  <main class="wrap">
+    <slot />
+  </main>
+  <footer><p>Ara Desktop · MIT 协议</p></footer>
+</body>
+</html>

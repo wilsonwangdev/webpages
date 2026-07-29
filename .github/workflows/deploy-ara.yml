@@ -1,0 +1,34 @@
+name: Deploy Ara Site
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "ara-site/**"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "pnpm"
+          cache-dependency-path: ara-site/pnpm-lock.yaml
+
+      - name: Install & Build
+        run: |
+          cd ara-site
+          pnpm install
+          pnpm build
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: a199aa8fc1e29fdab16235fedeb1b6aa
+          command: pages deploy ara-site/dist --project-name=wilson-web --branch main
