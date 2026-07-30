@@ -1,0 +1,58 @@
+     1|---
+     2|export interface Props {
+     3|  title: string;
+     4|  description?: string;
+     5|}
+     6|
+     7|const { title, description } = Astro.props;
+     8|---
+     9|
+    10|<!DOCTYPE html>
+    11|<html lang="zh-CN">
+    12|<head>
+    13|  <meta charset="UTF-8" />
+    14|  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    15|  <title>{title} — Wilson Desktop</title>
+    16|  {description && <meta name="description" content={description} />}
+    17|  <link rel="icon" type="image/png" href="/wilson/favicon.png" />
+    18|  <style>
+    19|    @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500&display=swap');
+    20|    :root {
+    21|      --bg: #08090a; --fg: #f7f8f8; --fg2: #d0d6e0; --fg3: #8a8f98; --fg4: #62666d;
+    22|      --accent: #7170ff; --bdr: rgba(255,255,255,0.08); --bdr-sub: rgba(255,255,255,0.05);
+    23|    }
+    24|    * { margin: 0; padding: 0; box-sizing: border-box; }
+    25|    body {
+    26|      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    27|      background: var(--bg); color: var(--fg2); -webkit-font-smoothing: antialiased; line-height: 1.7;
+    28|    }
+    29|    .wrap { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+    30|
+    31|    header {
+    32|      display: flex; align-items: center; justify-content: space-between;
+    33|      padding: 16px 24px; border-bottom: 1px solid var(--bdr);
+    34|    }
+    35|    header .logo { font-size: 16px; font-weight: 600; color: var(--fg); text-decoration: none; }
+    36|    nav { display: flex; gap: 24px; }
+    37|    nav a { font-size: 14px; font-weight: 500; color: var(--fg3); text-decoration: none; transition: color .15s; }
+    38|    nav a:hover, nav a.current { color: var(--fg); }
+    39|
+    40|    footer { text-align: center; padding: 40px 24px 60px; font-size: 12px; color: var(--fg4); }
+    41|  </style>
+    42|</head>
+    43|<body>
+    44|  <header>
+    45|    <a href="/wilson/" class="logo">Wilson</a>
+    46|    <nav>
+    47|      <a href="/wilson/">首页</a>
+    48|      <a href="/wilson/blog/">博客</a>
+    49|      <a href="https://github.com/wilsonwangdev/wilson-desktop" target="_blank">GitHub</a>
+    50|    </nav>
+    51|  </header>
+    52|  <main class="wrap">
+    53|    <slot />
+    54|  </main>
+    55|  <footer><p>Wilson Desktop · MIT 协议</p></footer>
+    56|</body>
+    57|</html>
+    58|

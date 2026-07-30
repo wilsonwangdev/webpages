@@ -1,0 +1,67 @@
+     1|---
+     2|export interface Props {
+     3|  title: string;
+     4|  description?: string;
+     5|}
+     6|const { title, description } = Astro.props;
+     7|const { Content } = await Astro.slots.render("default");
+     8|---
+     9|
+    10|<!DOCTYPE html>
+    11|<html lang="zh-CN">
+    12|<head>
+    13|  <meta charset="UTF-8" />
+    14|  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    15|  <title>{title} — Wilson Desktop</title>
+    16|  {description && <meta name="description" content={description} />}
+    17|  <link rel="icon" type="image/png" href="/wilson/favicon.png" />
+    18|  <style>
+    19|    @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500&display=swap');
+    20|    :root {
+    21|      --bg: #08090a; --fg: #f7f8f8; --fg2: #d0d6e0; --fg3: #8a8f98; --fg4: #62666d;
+    22|      --accent: #7170ff; --bdr: rgba(255,255,255,0.08); --bdr-sub: rgba(255,255,255,0.05);
+    23|    }
+    24|    * { margin: 0; padding: 0; box-sizing: border-box; }
+    25|    body { font-family:'Inter',system-ui,-apple-system,sans-serif; background:var(--bg); color:var(--fg2); -webkit-font-smoothing:antialiased; line-height:1.8; }
+    26|    .wrap { max-width:720px; margin:0 auto; padding:60px 24px; }
+    27|    .bread { display:flex; align-items:center; gap:12px; margin-bottom:40px; font-size:14px; }
+    28|    .bread a { color:var(--fg3); text-decoration:none; }
+    29|    .bread a:hover { color:var(--fg); }
+    30|    .bread .sep { color:var(--fg4); }
+    31|
+    32|    article h1 { font-size:32px; font-weight:600; letter-spacing:-.5px; line-height:1.2; color:var(--fg); margin-bottom:8px; }
+    33|    article .meta { font-size:13px; color:var(--fg4); font-family:'JetBrains Mono',monospace; margin-bottom:40px; }
+    34|    article h2 { font-size:20px; font-weight:500; color:var(--fg); margin:40px 0 16px; }
+    35|    article h3 { font-size:16px; font-weight:500; color:var(--fg); margin:32px 0 12px; }
+    36|    article p { font-size:15px; color:var(--fg2); margin-bottom:16px; }
+    37|    article code { font-family:'JetBrains Mono',monospace; font-size:13px; background:rgba(255,255,255,.04); border:1px solid var(--bdr-sub); padding:1px 5px; border-radius:4px; }
+    38|    article pre { background:var(--bg); border:1px solid var(--bdr); border-radius:8px; padding:16px; overflow-x:auto; margin:20px 0; }
+    39|    article pre code { background:none; border:none; padding:0; font-size:13px; line-height:1.6; }
+    40|    article ul { margin:12px 0 20px; padding-left:20px; }
+    41|    article li { font-size:15px; color:var(--fg2); margin-bottom:6px; }
+    42|    article hr { border:none; border-top:1px solid var(--bdr); margin:40px 0; }
+    43|    article a { color:var(--accent); }
+    44|    article img { max-width:100%; border-radius:8px; margin:20px 0; border:1px solid var(--bdr); }
+    45|
+    46|    footer { text-align:center; padding:40px 24px 60px; font-size:12px; color:var(--fg4); }
+    47|  </style>
+    48|</head>
+    49|<body>
+    50|  <div class="wrap">
+    51|    <div class="bread">
+    52|      <a href="/wilson/">Wilson</a>
+    53|      <span class="sep">/</span>
+    54|      <a href="/wilson/blog/">博客</a>
+    55|      <span class="sep">/</span>
+    56|      <span style="color:var(--fg4)">{title}</span>
+    57|    </div>
+    58|    <article>
+    59|      <slot name="title" />
+    60|      <div class="meta">2026-07-29 · #Tauri #工程实践</div>
+    61|      <slot />
+    62|    </article>
+    63|  </div>
+    64|  <footer><p>Wilson Desktop · MIT 协议</p></footer>
+    65|</body>
+    66|</html>
+    67|

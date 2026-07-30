@@ -1,0 +1,217 @@
+     1|<!DOCTYPE html>
+     2|<html lang="zh-CN">
+     3|<head>
+     4|<meta charset="UTF-8">
+     5|<meta name="viewport" content="width=device-width, initial-scale=1.0">
+     6|<title>Rust WebSocket 代理：Wilson Desktop 的三层解耦架构 — Wilson Desktop</title>
+     7|<link rel="icon" type="image/png" href="/wilson/favicon.png">
+     8|<style>
+     9|@import"https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500&display=swap";
+    10|:root{--bg:#08090a;--fg:#f7f8f8;--fg2:#d0d6e0;--fg3:#8a8f98;--fg4:#62666d;--accent:#7170ff;--bdr:rgba(255,255,255,.08);--bdr-sub:rgba(255,255,255,.05)}
+    11|*{margin:0;padding:0;box-sizing:border-box}
+    12|body{font-family:Inter,system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--fg2);-webkit-font-smoothing:antialiased;line-height:1.8}
+    13|.wrap{max-width:720px;margin:0 auto;padding:60px 24px}
+    14|.bread{display:flex;align-items:center;gap:12px;margin-bottom:40px;font-size:14px}
+    15|.bread a{color:var(--fg3);text-decoration:none}
+    16|.bread a:hover{color:var(--fg)}
+    17|.bread .sep{color:var(--fg4)}
+    18|article h1{font-size:32px;font-weight:600;letter-spacing:-.5px;line-height:1.2;color:var(--fg);margin-bottom:8px}
+    19|article .meta{font-size:13px;color:var(--fg4);font-family:JetBrains Mono,monospace;margin-bottom:40px}
+    20|article h2{font-size:20px;font-weight:500;color:var(--fg);margin:40px 0 16px}
+    21|article h3{font-size:16px;font-weight:500;color:var(--fg);margin:32px 0 12px}
+    22|article p{font-size:15px;color:var(--fg2);margin-bottom:16px}
+    23|article code{font-family:JetBrains Mono,monospace;font-size:13px;background:rgba(255,255,255,.04);padding:2px 6px;border-radius:3px;color:var(--fg)}
+    24|article pre{background:#0d1117;border:1px solid var(--bdr);border-radius:8px;padding:16px;overflow-x:auto;margin:16px 0 24px;font-size:13px;line-height:1.6}
+    25|article pre code{background:none;padding:0;color:var(--fg2)}
+    26|article ul,article ol{margin:0 0 16px 20px;font-size:15px}
+    27|article li{margin-bottom:6px}
+    28|article strong{color:var(--fg)}
+    29|article a{color:var(--accent);text-decoration:none}
+    30|article a:hover{text-decoration:underline}
+    31|article blockquote{border-left:3px solid var(--accent);padding:8px 0 8px 16px;margin:16px 0 24px;background:rgba(113,112,255,.06);border-radius:0 8px 8px 0}
+    32|article blockquote p{color:var(--fg3);margin-bottom:0}
+    33|article hr{border:none;border-top:1px solid var(--bdr-sub);margin:40px 0}
+    34|article .diagram{background:#0d1117;border:1px solid var(--bdr);border-radius:8px;padding:20px;margin:16px 0 24px;font-family:JetBrains Mono,monospace;font-size:13px;line-height:1.5;color:var(--fg3);white-space:pre}
+    35|footer{text-align:center;padding:40px 24px 60px;color:var(--fg4);font-size:13px}
+    36|</style>
+    37|</head>
+    38|<body>
+    39|
+    40|<div class="wrap">
+    41|  <div class="bread">
+    42|    <a href="/wilson/">Wilson</a>
+    43|    <span class="sep">/</span>
+    44|    <a href="/wilson/blog/">博客</a>
+    45|    <span class="sep">/</span>
+    46|    <span style="color:var(--fg4)">Rust WebSocket 代理与三层解耦</span>
+    47|  </div>
+    48|
+    49|  <article>
+    50|    <h1>Rust WebSocket 代理：Wilson Desktop 的三层解耦架构</h1>
+    51|    <div class="meta">2026-07-30 · #Tauri #Rust #IPC #工程实践</div>
+    52|
+    53|    <p>v0.2 是 Wilson Desktop 的第一个架构里程碑。在需求明确（通用 Agent 桌面客户端、使用 Tauri v2）之后，第一个要解决的问题不是 UI 布局或功能细节，而是决定"后端通信的线程"。</p>
+    54|
+    55|    <p>这篇文章记录从"前端直连 WebSocket"到"Rust IPC 代理"的架构转变，以及在这个过程中发现的 Tauri 工程实践。</p>
+    56|
+    57|    <h2>初始架构的问题</h2>
+    58|
+    59|    <p>Wilson Desktop 的日常使用场景是：桌面应用（Tauri）→ WebSocket → Python Hermes Agent。v0.1 的原型采用了最直接的路径——前端 React 直接 new WebSocket() 连 Python 后端：</p>
+    60|
+    61|    <div class="diagram">┌─────────────────┐         WS (127.0.0.1:9119)         ┌────────────────────┐
+    62|│  React (Tauri)  │ ───────────────────────────────────► │ Python Hermes      │
+    63|│  useHermesWS()  │ ◄─────────────────────────────────── │                    │
+    64|└─────────────────┘                stream                 └────────────────────┘</div>
+    65|
+    66|    <p>这个模式在技术验证阶段完全合理——最小路径，快速验证通信链路。但如果一直这么用下去，Tauri 就只是一个 WebView 容器，失去了桌面端框架的核心价值。</p>
+    67|
+    68|    <p>具体痛点：</p>
+    69|
+    70|    <ul>
+    71|      <li><strong>窗口管理脱节。</strong> 前端无法通过 Tauri IPC 获取窗口状态、触发原生菜单、管理系统托盘。这些能力在 Electron 中可直接使用，在 Tauri 中需要 Rust 命令暴露。</li>
+    72|      <li><strong>无法做协议适配。</strong> 前端硬编码了 Hermes 的 JSON 消息格式（<code>stream_start</code> / <code>stream_chunk</code> / <code>stream_end</code>）。未来切换后端（比如用 stdio 启动的另一个 Agent）需要重写前端 hook。</li>
+    73|      <li><strong>消息中转能力缺失。</strong> 工具调用、错误通知等需要在 Rust 层做结构化转换的场景，在前端做要么不安全（前端代码用户可修改），要么效率低。</li>
+    74|    </ul>
+    75|
+    76|    <h2>三层解耦架构</h2>
+    77|
+    78|    <p>v0.2 重构的核心思路：所有后端通信经过 Rust IPC 层。前端只通过 <code>invoke()</code> 收发消息，不感知后端的具体协议。</p>
+    79|
+    80|    <div class="diagram">┌─────────────────┐    Tauri IPC       ┌──────────────────────┐    ws://host:port/ws    ┌────────────────────┐
+    81|│  React           │  ◄── events ───     │  Rust (BackendManager)│ ──────────────────────► │ Python Hermes      │
+    82|│  ChatView        │  ── invoke() ──►    │  tokio-tungstenite   │ ◄────────────────────── │                    │
+    83|│  StatusBar       │                    │  连接/消息/状态管理   │          stream          └────────────────────┘
+    84|└─────────────────┘                    └──────────────────────┘</div>
+    85|
+    86|    <p>关键变更：</p>
+    87|
+    88|    <ul>
+    89|      <li><strong>新增 <code>backend.rs</code></strong> — 包含 <code>BackendManager</code> 结构体和 <code>BackendEvent</code> 事件枚举。后者通过 Tauri 的 <code>AppHandle::emit()</code> 发送给前端。</li>
+    90|      <li><strong>WebSocket 客户端用 Rust 重写</strong> — 使用 <code>tokio-tungstenite</code> crate，在 tokio 异步上下文中管理 WS 连接生命周期。</li>
+    91|      <li><strong>前端新 hook <code>useHermesBackend</code></strong> — 通过 <code>@tauri-apps/api/event</code> 的 <code>listen()</code> 监听 <code>backend-event</code>，通过 <code>invoke()</code> 发消息。</li>
+    92|      <li><strong>流式消息完整透传</strong> — <code>stream_start</code> / <code>stream_chunk</code> / <code>stream_end</code> 三种事件类型全部在 Rust 层解析后重新分发，前端拿到的是标准化的事件流。</li>
+    93|    </ul>
+    94|
+    95|    <h2>BackendManager 设计</h2>
+    96|
+    97|    <p>Rust 层的核心是 <code>BackendManager</code>，它负责：</p>
+    98|
+    99|    <ul>
+   100|      <li><strong>连接管理</strong> — <code>connect(host, port)</code> 新建 WS 连接，断开自动清理</li>
+   101|      <li><strong>消息代理</strong> — 通过 mpsc channel 接收前端消息并转发给 WS，同时接收 WS 消息并 emit 成 Tauri 事件</li>
+   102|      <li><strong>状态管理</strong> — 维护 <code>BackendStatus</code>（Disconnected / Connecting / Connected / Error），通过 IPC 事件推送给前端</li>
+   103|    </ul>
+   104|
+   105|    <p>前端通过 4 个 Tauri 命令与 BackendManager 交互：</p>
+   106|
+   107|<pre><code>// Rust 侧 (commands.rs)
+   108|#[tauri::command]
+   109|async fn connect_backend(app, state, host, port) → Result
+   110|#[tauri::command]
+   111|async fn disconnect_backend(state) → Result
+   112|#[tauri::command]
+   113|async fn send_message(state, content) → Result
+   114|#[tauri::command]
+   115|async fn get_backend_status(state) → Result&lt;BackendStatus&gt;
+   116|
+   117|// 前端调用
+   118|import { invoke } from "@tauri-apps/api/core";
+   119|import { listen } from "@tauri-apps/api/event";
+   120|
+   121|await invoke("connect_backend", { host: "127.0.0.1", port: 9119 });
+   122|
+   123|const unlisten = await listen("backend-event", (event) => {
+   124|  // event.payload.type ∈ ["status_change","message","stream_start","stream_chunk","stream_end","error"]
+   125|});</code></pre>
+   126|
+   127|    <h2>流式消息透传的实现</h2>
+   128|
+   129|    <p>流式消息是 Agent 交互的核心体验。在 Rust 层做代理意味着需要把 ws_loop 中的接收循环与 Tauri 的事件系统桥接起来。</p>
+   130|
+   131|    <p>关键实现细节：</p>
+   132|
+   133|<pre><code>// ws_loop 的核心循环 (tokio::select! 多路复用)
+   134|loop {
+   135|    tokio::select! {
+   136|        // 从前端的 mpsc channel 接收消息，转发给 WS
+   137|        Some(msg) = rx.recv() => {
+   138|            ws_write.send(Message::Text(msg)).await?
+   139|        }
+   140|        // 从 WS 接收消息，解析后 emit 给前端
+   141|        Some(ws_msg) = ws_read.next() => {
+   142|            match ws_msg {
+   143|                Ok(Message::Text(text)) => {
+   144|                    handle_ws_message(&app, &text).await;
+   145|                }
+   146|                Ok(Message::Close(_)) => {
+   147|                    // 更新状态 + 通知前端
+   148|                    break;
+   149|                }
+   150|                Err(e) => {
+   151|                    // 错误处理
+   152|                    break;
+   153|                }
+   154|                _ => {}
+   155|            }
+   156|        }
+   157|    }
+   158|}</code></pre>
+   159|
+   160|    <p>每条 WS 消息在 <code>handle_ws_message</code> 中解析为 JSON，根据 <code>type</code> 字段分发为不同的 <code>BackendEvent</code> 变体，通过 <code>app.emit()</code> 发送到前端。前端在 React 组件中通过 <code>listen("backend-event", callback)</code> 接收并更新 UI 状态。</p>
+   161|
+   162|    <h2>协议抽象的前瞻</h2>
+   163|
+   164|    <p>虽然 v0.2 只实现了 Hermes WebSocket 协议，但架构为后续的协议抽象预留了空间。v0.4 的目标是实现：</p>
+   165|
+   166|<pre><code>// 未来协议抽象 trait
+   167|trait AgentBackend {
+   168|    async fn connect(&self, config: BackendConfig) -> Result&lt;()&gt;;
+   169|    async fn send_message(&self, content: &str) -> Result&lt;()&gt;;
+   170|    fn stream_events(&self) -> BoxStream&lt;AgentEvent&gt;;
+   171|    async fn disconnect(&self) -> Result&lt;()&gt;;
+   172|}</code></pre>
+   173|
+   174|    <p>届时 v0.2 的 <code>BackendManager</code> 将成为 <code>HermesWSAdapter</code> 的实现，新增后端只需要实现这个 trait。前端无需感知切换。</p>
+   175|
+   176|    <h2>前端配套改造</h2>
+   177|
+   178|    <p>架构变更不只影响 Rust 层，前端也做了对应的重构：</p>
+   179|
+   180|    <ul>
+   181|      <li><strong>主题系统</strong> — 建立 CSS 变量体系（<code>src/styles/themes.css</code>），定义颜色、间距、字体、圆角的全部 token，消除 v0.1 的内联样式债务。使用 CSS 自定义属性而非 CSS-in-JS，零运行时开销。</li>
+   182|      <li><strong>ChatView 组件化</strong> — 聊天面板从 App.tsx 中提取为独立组件，接收 <code>messages</code> 和 <code>onSend</code> props。</li>
+   183|      <li><strong>StatusBar 组件</strong> — 底部状态栏显示连接状态（Disconnected / Connecting / Connected / Error）。</li>
+   184|      <li><strong>使用 Tauri IPC</strong> — 新的 <code>useHermesBackend</code> hook 完全走 IPC 通道，<code>useHermesWS</code> 被废弃。</li>
+   185|    </ul>
+   186|
+   187|    <h2>构建验证</h2>
+   188|
+   189|    <p>重构完成后，完整构建通过：</p>
+   190|
+   191|<pre><code>pnpm tauri build --bundles dmg
+   192|
+   193|产物:
+   194|  Wilson Desktop.app        → 11 MB
+   195|  Wilson Desktop_0.1.0_aarch64.dmg → 3.6 MB
+   196|
+   197|验证:
+   198|  pnpm tsc --noEmit      → 零错误
+   199|  cargo check            → 零 warnings
+   200|  vite build             → 23 modules, 199KB JS + 1.5KB CSS</code></pre>
+   201|
+   202|    <p>Tauri 的 .app 保持了 11MB 的典型大小，新增的 tokio-tungstenite 依赖没有让包体膨胀。</p>
+   203|
+   204|    <hr>
+   205|
+   206|    <p>这次重构的核心理念是：<strong>在做功能之前先做对架构</strong>。三层解耦让 Wilson Desktop 的每个层次只关注自己的职责——前端只做 UI，Rust 层管通信和后端生命周期，Python 层管 Agent 逻辑。</p>
+   207|
+   208|    <p>下一阶段（v0.3）将在这个架构上构建双面板布局和嵌入式终端。</p>
+   209|
+   210|  </article>
+   211|</div>
+   212|
+   213|<footer><p>Wilson Desktop · MIT 协议</p></footer>
+   214|
+   215|</body>
+   216|</html>
+   217|

@@ -1,182 +1,182 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wilson · 网页索引</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
-  :root {
-    --bg: #f7f8f8;
-    --fg: #1a1a1a;
-    --fg-secondary: #6b7280;
-    --fg-tertiary: #9ca3af;
-    --accent: #5e6ad2;
-    --accent-light: rgba(94,106,210,0.08);
-    --border: #e5e7eb;
-    --card-bg: #ffffff;
-    --radius: 8px;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #08090a;
-      --fg: #f7f8f8;
-      --fg-secondary: #8a8f98;
-      --fg-tertiary: #62666d;
-      --accent: #7170ff;
-      --accent-light: rgba(113,112,255,0.1);
-      --border: rgba(255,255,255,0.08);
-      --card-bg: #0f1011;
-    }
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    font-family: 'Noto Sans SC', -apple-system, 'PingFang SC', system-ui, sans-serif;
-    background: var(--bg);
-    color: var(--fg);
-    line-height: 1.7;
-    -webkit-font-smoothing: antialiased;
-    min-height: 100vh;
-  }
-  .container { max-width: 680px; margin: 0 auto; padding: 60px 24px; }
-  header { margin-bottom: 48px; }
-  header h1 {
-    font-size: 24px;
-    font-weight: 600;
-    letter-spacing: -0.3px;
-    margin-bottom: 4px;
-  }
-  header p {
-    font-size: 14px;
-    color: var(--fg-secondary);
-  }
-
-  .section { margin-bottom: 40px; }
-  .section-title {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--fg-tertiary);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 12px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .card-list { display: flex; flex-direction: column; gap: 8px; }
-  .card {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 14px 16px;
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    text-decoration: none;
-    color: inherit;
-    transition: all 0.15s;
-  }
-  .card:hover {
-    border-color: var(--accent);
-    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-  }
-  .card-icon {
-    width: 36px; height: 36px;
-    border-radius: 8px;
-    background: var(--accent-light);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    flex-shrink: 0;
-  }
-  .card-body { flex: 1; min-width: 0; }
-  .card-body h3 {
-    font-size: 15px;
-    font-weight: 500;
-    margin-bottom: 1px;
-  }
-  .card-body .url {
-    font-size: 12px;
-    color: var(--fg-tertiary);
-    font-family: 'JetBrains Mono', monospace;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  .card-body .desc {
-    font-size: 13px;
-    color: var(--fg-secondary);
-    margin-top: 2px;
-  }
-  .card-arrow {
-    font-size: 16px;
-    color: var(--fg-tertiary);
-    flex-shrink: 0;
-  }
-
-  footer {
-    margin-top: 60px;
-    padding-top: 20px;
-    border-top: 1px solid var(--border);
-    text-align: center;
-    font-size: 12px;
-    color: var(--fg-tertiary);
-  }
-</style>
-</head>
-<body>
-<div class="container">
-  <header>
-    <h1>📄 Wilson 的网页索引</h1>
-    <p>所有分享过的静态页面，统一入口</p>
-  </header>
-
-  <div class="section">
-    <div class="section-title">🦅 Ara Desktop</div>
-    <div class="card-list">
-      <a class="card" href="./ara/">
-        <div class="card-icon">🏠</div>
-        <div class="card-body">
-          <h3>Ara Desktop 文档站</h3>
-          <div class="url">/ara/</div>
-          <div class="desc">Tauri + React 构建的桌面端 AI Agent</div>
-        </div>
-        <div class="card-arrow">→</div>
-      </a>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-title">📖 Hermes</div>
-    <div class="card-list">
-      <a class="card" href="./hermes-desktop-story-zh.html">
-        <div class="card-icon">🇨🇳</div>
-        <div class="card-body">
-          <h3>Hermes 桌面端发展历程</h3>
-          <div class="url">/hermes-desktop-story-zh.html</div>
-          <div class="desc">中文版 · 从零到桌面客户端的完整故事</div>
-        </div>
-        <div class="card-arrow">→</div>
-      </a>
-      <a class="card" href="./hermes-desktop-history.html">
-        <div class="card-icon">🇬🇧</div>
-        <div class="card-body">
-          <h3>Hermes Desktop — The Story</h3>
-          <div class="url">/hermes-desktop-history.html</div>
-          <div class="desc">English version · full timeline with contributors</div>
-        </div>
-        <div class="card-arrow">→</div>
-      </a>
-    </div>
-  </div>
-
-  <footer>
-    <p><code>wilson-web.pages.dev</code> · 托管于 Cloudflare Pages</p>
-  </footer>
-</div>
-</body>
-</html>
+     1|<!DOCTYPE html>
+     2|<html lang="zh-CN">
+     3|<head>
+     4|<meta charset="UTF-8">
+     5|<meta name="viewport" content="width=device-width, initial-scale=1.0">
+     6|<title>Wilson · 网页索引</title>
+     7|<style>
+     8|  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+     9|  :root {
+    10|    --bg: #f7f8f8;
+    11|    --fg: #1a1a1a;
+    12|    --fg-secondary: #6b7280;
+    13|    --fg-tertiary: #9ca3af;
+    14|    --accent: #5e6ad2;
+    15|    --accent-light: rgba(94,106,210,0.08);
+    16|    --border: #e5e7eb;
+    17|    --card-bg: #ffffff;
+    18|    --radius: 8px;
+    19|  }
+    20|  @media (prefers-color-scheme: dark) {
+    21|    :root {
+    22|      --bg: #08090a;
+    23|      --fg: #f7f8f8;
+    24|      --fg-secondary: #8a8f98;
+    25|      --fg-tertiary: #62666d;
+    26|      --accent: #7170ff;
+    27|      --accent-light: rgba(113,112,255,0.1);
+    28|      --border: rgba(255,255,255,0.08);
+    29|      --card-bg: #0f1011;
+    30|    }
+    31|  }
+    32|  * { margin: 0; padding: 0; box-sizing: border-box; }
+    33|  body {
+    34|    font-family: 'Noto Sans SC', -apple-system, 'PingFang SC', system-ui, sans-serif;
+    35|    background: var(--bg);
+    36|    color: var(--fg);
+    37|    line-height: 1.7;
+    38|    -webkit-font-smoothing: antialiased;
+    39|    min-height: 100vh;
+    40|  }
+    41|  .container { max-width: 680px; margin: 0 auto; padding: 60px 24px; }
+    42|  header { margin-bottom: 48px; }
+    43|  header h1 {
+    44|    font-size: 24px;
+    45|    font-weight: 600;
+    46|    letter-spacing: -0.3px;
+    47|    margin-bottom: 4px;
+    48|  }
+    49|  header p {
+    50|    font-size: 14px;
+    51|    color: var(--fg-secondary);
+    52|  }
+    53|
+    54|  .section { margin-bottom: 40px; }
+    55|  .section-title {
+    56|    display: flex;
+    57|    align-items: center;
+    58|    gap: 8px;
+    59|    font-size: 13px;
+    60|    font-weight: 600;
+    61|    color: var(--fg-tertiary);
+    62|    text-transform: uppercase;
+    63|    letter-spacing: 0.5px;
+    64|    margin-bottom: 12px;
+    65|    padding-bottom: 8px;
+    66|    border-bottom: 1px solid var(--border);
+    67|  }
+    68|
+    69|  .card-list { display: flex; flex-direction: column; gap: 8px; }
+    70|  .card {
+    71|    display: flex;
+    72|    align-items: center;
+    73|    gap: 16px;
+    74|    padding: 14px 16px;
+    75|    background: var(--card-bg);
+    76|    border: 1px solid var(--border);
+    77|    border-radius: var(--radius);
+    78|    text-decoration: none;
+    79|    color: inherit;
+    80|    transition: all 0.15s;
+    81|  }
+    82|  .card:hover {
+    83|    border-color: var(--accent);
+    84|    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    85|  }
+    86|  .card-icon {
+    87|    width: 36px; height: 36px;
+    88|    border-radius: 8px;
+    89|    background: var(--accent-light);
+    90|    display: flex;
+    91|    align-items: center;
+    92|    justify-content: center;
+    93|    font-size: 18px;
+    94|    flex-shrink: 0;
+    95|  }
+    96|  .card-body { flex: 1; min-width: 0; }
+    97|  .card-body h3 {
+    98|    font-size: 15px;
+    99|    font-weight: 500;
+   100|    margin-bottom: 1px;
+   101|  }
+   102|  .card-body .url {
+   103|    font-size: 12px;
+   104|    color: var(--fg-tertiary);
+   105|    font-family: 'JetBrains Mono', monospace;
+   106|    overflow: hidden;
+   107|    text-overflow: ellipsis;
+   108|    white-space: nowrap;
+   109|  }
+   110|  .card-body .desc {
+   111|    font-size: 13px;
+   112|    color: var(--fg-secondary);
+   113|    margin-top: 2px;
+   114|  }
+   115|  .card-arrow {
+   116|    font-size: 16px;
+   117|    color: var(--fg-tertiary);
+   118|    flex-shrink: 0;
+   119|  }
+   120|
+   121|  footer {
+   122|    margin-top: 60px;
+   123|    padding-top: 20px;
+   124|    border-top: 1px solid var(--border);
+   125|    text-align: center;
+   126|    font-size: 12px;
+   127|    color: var(--fg-tertiary);
+   128|  }
+   129|</style>
+   130|</head>
+   131|<body>
+   132|<div class="container">
+   133|  <header>
+   134|    <h1>📄 Wilson 的网页索引</h1>
+   135|    <p>所有分享过的静态页面，统一入口</p>
+   136|  </header>
+   137|
+   138|  <div class="section">
+   139|    <div class="section-title">🦅 Wilson Desktop</div>
+   140|    <div class="card-list">
+   141|      <a class="card" href="./wilson/">
+   142|        <div class="card-icon">🏠</div>
+   143|        <div class="card-body">
+   144|          <h3>Wilson Desktop 文档站</h3>
+   145|          <div class="url">/wilson/</div>
+   146|          <div class="desc">Tauri + React 构建的桌面端 AI Agent</div>
+   147|        </div>
+   148|        <div class="card-arrow">→</div>
+   149|      </a>
+   150|    </div>
+   151|  </div>
+   152|
+   153|  <div class="section">
+   154|    <div class="section-title">📖 Hermes</div>
+   155|    <div class="card-list">
+   156|      <a class="card" href="./hermes-desktop-story-zh.html">
+   157|        <div class="card-icon">🇨🇳</div>
+   158|        <div class="card-body">
+   159|          <h3>Hermes 桌面端发展历程</h3>
+   160|          <div class="url">/hermes-desktop-story-zh.html</div>
+   161|          <div class="desc">中文版 · 从零到桌面客户端的完整故事</div>
+   162|        </div>
+   163|        <div class="card-arrow">→</div>
+   164|      </a>
+   165|      <a class="card" href="./hermes-desktop-history.html">
+   166|        <div class="card-icon">🇬🇧</div>
+   167|        <div class="card-body">
+   168|          <h3>Hermes Desktop — The Story</h3>
+   169|          <div class="url">/hermes-desktop-history.html</div>
+   170|          <div class="desc">English version · full timeline with contributors</div>
+   171|        </div>
+   172|        <div class="card-arrow">→</div>
+   173|      </a>
+   174|    </div>
+   175|  </div>
+   176|
+   177|  <footer>
+   178|    <p><code>wilson-web.pages.dev</code> · 托管于 Cloudflare Pages</p>
+   179|  </footer>
+   180|</div>
+   181|</body>
+   182|</html>
