@@ -3,204 +3,138 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>训练动作速查 · 看图就会</title>
+<title>训练动作 · 视频速查</title>
 <style>
-  :root{
-    --bg:#0f1115; --card:#171a21; --line:#262b35;
-    --txt:#e8eaed; --dim:#9aa3b2; --accent:#4ade80; --warn:#f87171;
-  }
-  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent}
-  body{
-    margin:0; background:var(--bg); color:var(--txt);
-    font:16px/1.6 -apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif;
-    padding:16px 14px 48px; max-width:560px; margin:0 auto;
-  }
-  header{text-align:center; padding:8px 0 18px; border-bottom:1px solid var(--line); margin-bottom:20px}
-  h1{font-size:22px; margin:0 0 6px; letter-spacing:.5px}
-  .sub{color:var(--dim); font-size:13px; margin:0}
-  .sub b{color:var(--accent); font-weight:600}
-
-  nav{display:flex; flex-wrap:wrap; gap:8px; margin:18px 0 24px}
-  nav a{
-    font-size:12.5px; color:var(--dim); text-decoration:none;
-    border:1px solid var(--line); border-radius:999px; padding:5px 11px;
-  }
+  :root{--bg:#0f1115;--card:#171a21;--line:#262b35;--txt:#e8eaed;--dim:#9aa3b2;--accent:#4ade80;--warn:#f87171}
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{margin:0;background:var(--bg);color:var(--txt);font:16px/1.6 -apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif;padding:16px 14px 48px;max-width:560px;margin:0 auto}
+  header{text-align:center;padding:8px 0 18px;border-bottom:1px solid var(--line);margin-bottom:18px}
+  h1{font-size:22px;margin:0 0 6px;letter-spacing:.5px}
+  .sub{color:var(--dim);font-size:13px;margin:0} .sub b{color:var(--accent);font-weight:600}
+  nav{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 22px}
+  nav a{font-size:12.5px;color:var(--dim);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:5px 11px}
   nav a:active{background:var(--card)}
-
-  .card{
-    background:var(--card); border:1px solid var(--line); border-radius:16px;
-    padding:16px; margin-bottom:18px; scroll-margin-top:12px;
-  }
-  .card h2{
-    font-size:17px; margin:0 0 4px; display:flex; align-items:baseline; gap:8px;
-  }
-  .card h2 .en{font-size:12px; color:var(--dim); font-weight:400}
-  .sets{font-size:12.5px; color:var(--dim); margin:0 0 12px}
-  .sets b{color:var(--accent); font-weight:600}
-
-  .frames{display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:0 0 12px}
-  .frames figure{margin:0; position:relative}
-  .frames img{
-    width:100%; height:auto; display:block; border-radius:10px;
-    background:#fff; aspect-ratio:4/3; object-fit:contain;
-  }
-  .frames figcaption{
-    position:absolute; left:6px; bottom:6px; font-size:10.5px;
-    background:rgba(0,0,0,.62); color:#fff; padding:2px 7px; border-radius:6px;
-  }
-
-  .cue{
-    font-size:16px; font-weight:700; color:var(--accent);
-    margin:0 0 8px; padding:10px 12px; border-radius:10px;
-    background:rgba(74,222,128,.08); border-left:3px solid var(--accent);
-  }
-  .err{
-    font-size:13.5px; color:#fca5a5; margin:0 0 10px;
-    padding:9px 12px; border-radius:10px;
-    background:rgba(248,113,113,.08); border-left:3px solid var(--warn);
-  }
-  .more{font-size:12.5px; color:var(--dim); text-decoration:none; display:inline-block}
-  .more:active{color:var(--accent)}
-
-  footer{
-    margin-top:28px; padding-top:18px; border-top:1px solid var(--line);
-    font-size:12px; color:var(--dim); text-align:center; line-height:1.8;
-  }
-  @media (prefers-color-scheme: light){
-    :root{--bg:#f7f8fa; --card:#fff; --line:#e3e6ec; --txt:#14171c; --dim:#6b7280}
-    .frames img{background:#fff}
-    .cue{background:rgba(22,163,74,.07); color:#15803d}
-    .err{background:rgba(220,38,38,.06); color:#b91c1c}
-  }
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:18px;scroll-margin-top:12px}
+  .card h2{font-size:17px;margin:0 0 4px;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+  .card h2 .en{font-size:12px;color:var(--dim);font-weight:400}
+  .sets{font-size:12.5px;color:var(--dim);margin:0 0 10px} .sets b{color:var(--accent)}
+  .video{position:relative;width:100%;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#000}
+  .video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .meta{font-size:11.5px;color:var(--dim);margin:8px 0 10px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .meta a{color:var(--accent);text-decoration:none}
+  .cue{font-size:15.5px;font-weight:700;color:var(--accent);margin:0 0 8px;padding:10px 12px;border-radius:10px;background:rgba(74,222,128,.08);border-left:3px solid var(--accent)}
+  .err{font-size:13px;color:#fca5a5;margin:0;padding:9px 12px;border-radius:10px;background:rgba(248,113,113,.08);border-left:3px solid var(--warn)}
+  footer{margin-top:26px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:var(--dim);text-align:center;line-height:1.9}
+  @media (prefers-color-scheme:light){:root{--bg:#f7f8fa;--card:#fff;--line:#e3e6ec;--txt:#14171c;--dim:#6b7280}.cue{background:rgba(22,163,74,.07);color:#15803d}.err{background:rgba(220,38,38,.06);color:#b91c1c}}
 </style>
 </head>
 <body>
-
 <header>
-  <h1>🏋️ 训练动作速查</h1>
+  <h1>🏋️ 训练动作 · 视频速查</h1>
   <p class="sub">84kg · 每周 2 次 · <b>做完还剩 3 次力气</b>（RIR 3）</p>
 </header>
+<nav><a href="#leg-press">腿举</a><a href="#seated-leg-curl">腿弯举</a><a href="#leg-extension">腿屈伸</a><a href="#chest-press">胸推</a><a href="#lat-pulldown">高位下拉</a><a href="#seated-row">坐姿划船</a><a href="#shoulder-press">器械推肩</a><a href="#plank">平板支撑</a></nav>
 
-<nav>
-  <a href="#leg-press">腿举</a>
-  <a href="#leg-curl">腿弯举</a>
-  <a href="#leg-ext">腿屈伸</a>
-  <a href="#chest">胸推</a>
-  <a href="#lat">下拉</a>
-  <a href="#row">划船</a>
-  <a href="#shoulder">肩推</a>
-  <a href="#plank">平板</a>
-</nav>
-
-<!-- 1 -->
 <section class="card" id="leg-press">
   <h2>1. 腿举 <span class="en">Leg Press</span></h2>
-  <p class="sets"><b>3 组 × 12 次</b> · 85kg（三组同重）· 组间 90″</p>
-  <div class="frames">
-    <figure><img src="img/leg-press-a.webp" alt="腿举起始" loading="lazy"><figcaption>起始</figcaption></figure>
-    <figure><img src="img/leg-press-b.webp" alt="腿举结束" loading="lazy"><figcaption>下放到 90°</figcaption></figure>
+  <p class="sets">3 组 × 12 次 · 85kg（三组同重）· 组间 90″</p>
+  <div class="video">
+    <iframe src="//player.bilibili.com/player.html?bvid=BV1Ep4y1o7n9&page=1&high_quality=1&danmaku=0&autoplay=0"
+      scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" loading="lazy"></iframe>
   </div>
+  <p class="meta">视频 · ALEX健身频道 · 7:10 · 6.4万播放
+    <a href="https://www.bilibili.com/video/BV1Ep4y1o7n9/" target="_blank" rel="noopener">在B站打开 ↗</a></p>
   <p class="cue">🎯 屁股用胶水粘在垫子上</p>
-  <p class="err">⚠️ 屁股一离垫，重量就全压在腰椎上 —— 这是腿举唯一会让你躺三天的错</p>
-  <a class="more" href="https://workout.codingmarble.com/zh/exercises/leg-press/" target="_blank" rel="noopener">详细图文 →</a>
+  <p class="err">⚠️ 屁股一离垫，重量就全压在腰椎上 —— 腿举唯一会让你躺三天的错</p>
 </section>
-
-<!-- 2 -->
-<section class="card" id="leg-curl">
+<section class="card" id="seated-leg-curl">
   <h2>2. 腿弯举 <span class="en">Seated Leg Curl</span></h2>
-  <p class="sets"><b>3 组 × 12 次</b> · 找「还剩 3 次」的重量 · 组间 90″</p>
-  <div class="frames">
-    <figure><img src="img/seated-leg-curl-a.webp" alt="腿弯举起始" loading="lazy"><figcaption>起始</figcaption></figure>
-    <figure><img src="img/seated-leg-curl-b.webp" alt="腿弯举收缩" loading="lazy"><figcaption>脚跟向后弯</figcaption></figure>
+  <p class="sets">3 组 × 12 次 · 找「还剩 3 次」的重量</p>
+  <div class="video">
+    <iframe src="//player.bilibili.com/player.html?bvid=BV1Hx4y1Y7TN&page=1&high_quality=1&danmaku=0&autoplay=0"
+      scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" loading="lazy"></iframe>
   </div>
+  <p class="meta">视频 · ALEX健身频道 · 7:58 · 10.7万播放
+    <a href="https://www.bilibili.com/video/BV1Hx4y1Y7TN/" target="_blank" rel="noopener">在B站打开 ↗</a></p>
   <p class="cue">🎯 放回时数「1 — 2 — 3」</p>
-  <p class="err">⚠️ 新手最容易「甩下去」—— 慢放的那 3 秒，才是真正长肌肉的地方</p>
-  <a class="more" href="https://workout.codingmarble.com/zh/exercises/seated-leg-curl/" target="_blank" rel="noopener">详细图文 →</a>
+  <p class="err">⚠️ 甩下去 = 白练。慢放那 3 秒，才是真正长肌肉的地方</p>
 </section>
-
-<!-- 3 -->
-<section class="card" id="leg-ext">
+<section class="card" id="leg-extension">
   <h2>3. 腿屈伸 <span class="en">Leg Extension</span></h2>
-  <p class="sets"><b>2 组 × 12 次</b> · 32kg 起 · 组间 60″ <span style="color:#fbbf24">（可选）</span></p>
-  <div class="frames">
-    <figure><img src="img/leg-extension-a.webp" alt="腿屈伸起始" loading="lazy"><figcaption>起始</figcaption></figure>
-    <figure><img src="img/leg-extension-b.webp" alt="腿屈伸顶端" loading="lazy"><figcaption>顶端停 1 秒</figcaption></figure>
+  <p class="sets">2 组 × 12 次 · 32kg 起（可选）</p>
+  <div class="video">
+    <iframe src="//player.bilibili.com/player.html?bvid=BV1UE411e7VV&page=1&high_quality=1&danmaku=0&autoplay=0"
+      scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" loading="lazy"></iframe>
   </div>
-  <p class="cue">🎯 顶端停 1 秒，再慢慢放</p>
-  <p class="err">⚠️ 甩腿靠惯性 = 白练；这个动作只做 2 组，别贪多（股四头练太多会加剧前后失衡）</p>
-  <a class="more" href="https://workout.codingmarble.com/zh/exercises/leg-extension/" target="_blank" rel="noopener">详细图文 →</a>
+  <p class="meta">视频 · 健身教练刘远 · 4:10 · 6.5万播放
+    <a href="https://www.bilibili.com/video/BV1UE411e7VV/" target="_blank" rel="noopener">在B站打开 ↗</a></p>
+  <p class="cue">🎯 顶端停 1 秒再放</p>
+  <p class="err">⚠️ 甩腿靠惯性；股四头练太多会加剧前后失衡，只做 2 组</p>
 </section>
-
-<!-- 4 -->
-<section class="card" id="chest">
+<section class="card" id="chest-press">
   <h2>4. 胸推 <span class="en">Chest Press Machine</span></h2>
-  <p class="sets"><b>3 组 × 12 次</b> · <b>必须记重量</b> · 组间 90″</p>
-  <div class="frames">
-    <figure><img src="img/chest-press-machine-a.webp" alt="胸推起始" loading="lazy"><figcaption>起始</figcaption></figure>
-    <figure><img src="img/chest-press-machine-b.webp" alt="胸推推起" loading="lazy"><figcaption>推到不锁肘</figcaption></figure>
+  <p class="sets">3 组 × 12 次 · <b>必须记重量</b></p>
+  <div class="video">
+    <iframe src="//player.bilibili.com/player.html?bvid=BV1vP4y1E7nL&page=1&high_quality=1&danmaku=0&autoplay=0"
+      scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" loading="lazy"></iframe>
   </div>
+  <p class="meta">视频 · 健身教练Iris · 3:13 · 0.8万播放
+    <a href="https://www.bilibili.com/video/BV1vP4y1E7nL/" target="_blank" rel="noopener">在B站打开 ↗</a></p>
   <p class="cue">🎯 先把两块肩胛骨塞进后裤兜，再推</p>
   <p class="err">⚠️ 肩膀往前顶 = 肩关节痛，新手最高频的伤</p>
-  <a class="more" href="https://workout.codingmarble.com/zh/exercises/chest-press-machine/" target="_blank" rel="noopener">详细图文 →</a>
 </section>
-
-<!-- 5 -->
-<section class="card" id="lat">
+<section class="card" id="lat-pulldown">
   <h2>5. 高位下拉 <span class="en">Lat Pulldown</span></h2>
-  <p class="sets"><b>3 组 × 12 次</b> · 找 RIR 3 的重量 · 组间 90″</p>
-  <div class="frames">
-    <figure><img src="img/lat-pulldown-a.webp" alt="下拉起始" loading="lazy"><figcaption>起始</figcaption></figure>
-    <figure><img src="img/lat-pulldown-b.webp" alt="下拉到底" loading="lazy"><figcaption>拉到锁骨</figcaption></figure>
+  <p class="sets">3 组 × 12 次 · 找 RIR 3 的重量</p>
+  <div class="video">
+    <iframe src="//player.bilibili.com/player.html?bvid=BV1tGUTYZEY3&page=1&high_quality=1&danmaku=0&autoplay=0"
+      scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" loading="lazy"></iframe>
   </div>
+  <p class="meta">视频 · 爱健身的二哈 · 2:19 · 3.1万播放
+    <a href="https://www.bilibili.com/video/BV1tGUTYZEY3/" target="_blank" rel="noopener">在B站打开 ↗</a></p>
   <p class="cue">🎯 想象「用手肘砸地板」</p>
-  <p class="err">⚠️ 用手臂硬拉 = 练成二头；身体后仰太多 = 借力。先沉肩再拉</p>
-  <a class="more" href="https://workout.codingmarble.com/zh/exercises/lat-pulldown/" target="_blank" rel="noopener">详细图文 →</a>
+  <p class="err">⚠️ 用手臂硬拉 = 练成二头；身体后仰太多 = 借力</p>
 </section>
-
-<!-- 6 -->
-<section class="card" id="row">
+<section class="card" id="seated-row">
   <h2>6. 坐姿划船 <span class="en">Seated Cable Row</span></h2>
-  <p class="sets"><b>3 组 × 12 次</b> · 找 RIR 3 的重量 · 组间 90″</p>
-  <div class="frames">
-    <figure><img src="img/seated-cable-row-a.webp" alt="划船起始" loading="lazy"><figcaption>起始</figcaption></figure>
-    <figure><img src="img/seated-cable-row-b.webp" alt="划船拉到" loading="lazy"><figcaption>拉到腹部</figcaption></figure>
+  <p class="sets">3 组 × 12 次 · 找 RIR 3 的重量</p>
+  <div class="video">
+    <iframe src="//player.bilibili.com/player.html?bvid=BV1y14y1X7by&page=1&high_quality=1&danmaku=0&autoplay=0"
+      scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" loading="lazy"></iframe>
   </div>
+  <p class="meta">视频 · ALEX健身频道 · 10:39 · 80.0万播放
+    <a href="https://www.bilibili.com/video/BV1y14y1X7by/" target="_blank" rel="noopener">在B站打开 ↗</a></p>
   <p class="cue">🎯 把胸口挺给对面的人看</p>
-  <p class="err">⚠️ 圆背 = 腰椎受力；耸肩 = 斜方肌代偿。肩胛先收再拉</p>
-  <a class="more" href="https://workout.codingmarble.com/zh/exercises/seated-cable-row/" target="_blank" rel="noopener">详细图文 →</a>
+  <p class="err">⚠️ 圆背 = 腰椎受力；耸肩 = 斜方肌代偿</p>
 </section>
-
-<!-- 7 -->
-<section class="card" id="shoulder">
+<section class="card" id="shoulder-press">
   <h2>7. 器械推肩 <span class="en">Machine Shoulder Press</span></h2>
-  <p class="sets"><b>2 组 × 12 次</b> · 宁轻不重 · 组间 60″</p>
-  <div class="frames">
-    <figure><img src="img/machine-shoulder-press-a.webp" alt="肩推起始" loading="lazy"><figcaption>起始</figcaption></figure>
-    <figure><img src="img/machine-shoulder-press-b.webp" alt="肩推推起" loading="lazy"><figcaption>推到头顶</figcaption></figure>
+  <p class="sets">2 组 × 12 次 · 宁轻不重</p>
+  <div class="video">
+    <iframe src="//player.bilibili.com/player.html?bvid=BV1b34y1G7rq&page=1&high_quality=1&danmaku=0&autoplay=0"
+      scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" loading="lazy"></iframe>
   </div>
+  <p class="meta">视频 · ALEX健身频道 · 10:44 · 34.7万播放
+    <a href="https://www.bilibili.com/video/BV1b34y1G7rq/" target="_blank" rel="noopener">在B站打开 ↗</a></p>
   <p class="cue">🎯 肋骨往下沉，像把肋骨塞进肚子</p>
-  <p class="err">⚠️ 腰反弓 = 用腰推肩；重量宁轻不重，肩关节最不耐造</p>
-  <a class="more" href="https://workout.codingmarble.com/zh/exercises/machine-shoulder-press/" target="_blank" rel="noopener">详细图文 →</a>
+  <p class="err">⚠️ 腰反弓 = 用腰推肩；肩关节最不耐造</p>
 </section>
-
-<!-- 8 -->
 <section class="card" id="plank">
   <h2>8. 平板支撑 <span class="en">Plank</span></h2>
-  <p class="sets"><b>3 组 × 30–45 秒</b> · 组间 45″</p>
-  <div class="frames">
-    <figure><img src="img/plank-a.webp" alt="平板起始" loading="lazy"><figcaption>手肘在肩下</figcaption></figure>
-    <figure><img src="img/plank-b.webp" alt="平板保持" loading="lazy"><figcaption>一条线</figcaption></figure>
+  <p class="sets">3 组 × 30–45 秒 · 组间 45″</p>
+  <div class="video">
+    <iframe src="//player.bilibili.com/player.html?bvid=BV1Pq4y117uA&page=1&high_quality=1&danmaku=0&autoplay=0"
+      scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" loading="lazy"></iframe>
   </div>
+  <p class="meta">视频 · 飞特那斯 · 1:21 · 5.5万播放
+    <a href="https://www.bilibili.com/video/BV1Pq4y117uA/" target="_blank" rel="noopener">在B站打开 ↗</a></p>
   <p class="cue">🎯 夹紧屁股，像夹住一张纸</p>
-  <p class="err">⚠️ 塌腰 = 腰椎受压；撅臀 = 核心没发力。正常呼吸，别憋气</p>
-  <a class="more" href="https://workout.codingmarble.com/zh/exercises/plank/" target="_blank" rel="noopener">详细图文 →</a>
+  <p class="err">⚠️ 塌腰 = 腰椎受压；撅臀 = 核心没发力</p>
 </section>
-
 <footer>
   <p><b>重量怎么选</b>：做完 12 次还剩约 3 次力气 = 对了</p>
   <p><b>进阶</b>：连续 2 次做满 12 次且姿势不变 → 加最小一档</p>
-  <p style="margin-top:10px; opacity:.7">动作图片：codingmarble 动作库 · 仅供个人训练参考</p>
+  <p style="margin-top:10px;opacity:.7">视频来自 B站 · 版权归各 UP 主</p>
 </footer>
-
 </body>
 </html>
