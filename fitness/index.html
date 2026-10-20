@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>训练动作 · 视频速查</title>
 <style>
-  :root{--bg:#0f1115;--card:#171a21;--line:#262b35;--txt:#e8eaed;--dim:#9aa3b2;--accent:#4ade80;--warn:#f87171}
+  :root{--bg:#0f1115;--card:#171a21;--line:#262b35;--txt:#e8eaed;--dim:#9aa3b2;--accent:#4ade80;--warn:#f87171;--amber:#fbbf24}
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
   body{margin:0;background:var(--bg);color:var(--txt);font:16px/1.6 -apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif;padding:16px 14px 48px;max-width:560px;margin:0 auto}
   header{text-align:center;padding:8px 0 18px;border-bottom:1px solid var(--line);margin-bottom:18px}
@@ -14,9 +14,11 @@
   nav{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 22px}
   nav a{font-size:12.5px;color:var(--dim);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:5px 11px}
   nav a:active{background:var(--card)}
+  nav a.hot{color:var(--accent);border-color:rgba(74,222,128,.35)}
   .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:18px;scroll-margin-top:12px}
   .card h2{font-size:17px;margin:0 0 4px;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
   .card h2 .en{font-size:12px;color:var(--dim);font-weight:400}
+  .card h2 .tag{font-size:11px;padding:2px 7px;border-radius:6px;background:rgba(251,191,36,.14);color:var(--amber);font-weight:600}
   .sets{font-size:12.5px;color:var(--dim);margin:0 0 10px} .sets b{color:var(--accent)}
   .video{position:relative;width:100%;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#000}
   .video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
@@ -24,8 +26,19 @@
   .meta a{color:var(--accent);text-decoration:none}
   .cue{font-size:15.5px;font-weight:700;color:var(--accent);margin:0 0 8px;padding:10px 12px;border-radius:10px;background:rgba(74,222,128,.08);border-left:3px solid var(--accent)}
   .err{font-size:13px;color:#fca5a5;margin:0;padding:9px 12px;border-radius:10px;background:rgba(248,113,113,.08);border-left:3px solid var(--warn)}
+  .alt{font-size:12.5px;color:var(--dim);margin:10px 0 0;padding-top:10px;border-top:1px dashed var(--line)}
+  .alt a{color:var(--accent);text-decoration:none}
+  .steps{margin:0;padding-left:20px;font-size:14px}
+  .steps li{margin-bottom:7px}
+  .steps b{color:var(--accent)}
+  table{width:100%;border-collapse:collapse;font-size:12.5px;margin:8px 0}
+  th,td{padding:7px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  th{color:var(--dim);font-weight:600;font-size:11.5px}
+  td.y{color:var(--accent)} td.n{color:#fca5a5}
+  .note{font-size:12.5px;color:var(--dim);margin:8px 0 0;line-height:1.7}
+  .note b{color:var(--txt)}
   footer{margin-top:26px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:var(--dim);text-align:center;line-height:1.9}
-  @media (prefers-color-scheme:light){:root{--bg:#f7f8fa;--card:#fff;--line:#e3e6ec;--txt:#14171c;--dim:#6b7280}.cue{background:rgba(22,163,74,.07);color:#15803d}.err{background:rgba(220,38,38,.06);color:#b91c1c}}
+  @media (prefers-color-scheme:light){:root{--bg:#f7f8fa;--card:#fff;--line:#e3e6ec;--txt:#14171c;--dim:#6b7280}.cue{background:rgba(22,163,74,.07);color:#15803d}.err{background:rgba(220,38,38,.06);color:#b91c1c}.card h2 .tag{background:rgba(180,83,9,.10);color:#b45309}}
 </style>
 </head>
 <body>
@@ -33,11 +46,27 @@
   <h1>🏋️ 训练动作 · 视频速查</h1>
   <p class="sub">84kg · 每周 2 次 · <b>做完还剩 3 次力气</b>（RIR 3）</p>
 </header>
-<nav><a href="#leg-press">腿举</a><a href="#seated-leg-curl">腿弯举</a><a href="#leg-extension">腿屈伸</a><a href="#chest-press">胸推</a><a href="#lat-pulldown">高位下拉</a><a href="#seated-row">坐姿划船</a><a href="#shoulder-press">器械推肩</a><a href="#plank">平板支撑</a></nav>
+<nav>
+  <a href="#squat" class="hot">深蹲</a><a href="#leg-press">腿举</a><a href="#seated-leg-curl">腿弯举</a><a href="#leg-extension">腿屈伸</a><a href="#chest-press">胸推</a><a href="#lat-pulldown">下拉</a><a href="#seated-row">划船</a><a href="#shoulder-press">推肩</a><a href="#deadbug" class="hot">死虫</a><a href="#plank">平板</a><a href="#precheck" class="hot">✓ 训练前</a><a href="#doms">疼？</a>
+</nav>
+
+<section class="card" id="squat">
+  <h2>1. 史密斯深蹲 <span class="en">Smith Machine Squat</span></h2>
+  <p class="sets">2 组 × 10 次 · <b>35kg 起</b> · 组间 90″ · 下放数 3 秒</p>
+  <div class="video">
+    <iframe src="//player.bilibili.com/player.html?bvid=BV17N4y1e7Ge&page=1&high_quality=1&danmaku=0&autoplay=0"
+      scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" loading="lazy"></iframe>
+  </div>
+  <p class="meta">视频 · ALEX健身频道 · 8:52 · 12.6万播放
+    <a href="https://www.bilibili.com/video/BV17N4y1e7Ge/" target="_blank" rel="noopener">在B站打开 ↗</a></p>
+  <p class="cue">🎯 全脚掌压地，膝盖跟脚尖同方向</p>
+  <p class="err">⚠️ 膝盖内扣 = 新手第一号错误；脚跟离地 = 踝活动度不够，先垫杠铃片</p>
+  <p class="alt">📺 备用短版：<a href="https://www.bilibili.com/video/BV1gu411a7Aq/" target="_blank" rel="noopener">史密斯深蹲的常见错误 · 1:00 · 6.2万</a></p>
+</section>
 
 <section class="card" id="leg-press">
-  <h2>1. 腿举 <span class="en">Leg Press</span></h2>
-  <p class="sets">3 组 × 12 次 · 85kg（三组同重）· 组间 90″</p>
+  <h2>2. 腿举 <span class="en">Leg Press</span></h2>
+  <p class="sets">2 组 × 12 次 · 85kg（两组同重）· 组间 90″</p>
   <div class="video">
     <iframe src="//player.bilibili.com/player.html?bvid=BV1Ep4y1o7n9&page=1&high_quality=1&danmaku=0&autoplay=0"
       scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" loading="lazy"></iframe>
@@ -47,9 +76,10 @@
   <p class="cue">🎯 屁股用胶水粘在垫子上</p>
   <p class="err">⚠️ 屁股一离垫，重量就全压在腰椎上 —— 腿举唯一会让你躺三天的错</p>
 </section>
+
 <section class="card" id="seated-leg-curl">
-  <h2>2. 腿弯举 <span class="en">Seated Leg Curl</span></h2>
-  <p class="sets">3 组 × 12 次 · 找「还剩 3 次」的重量</p>
+  <h2>3. 腿弯举 <span class="en">Seated Leg Curl</span></h2>
+  <p class="sets">2 组 × 12 次 · 找「还剩 3 次」的重量 · <b>别跳过</b></p>
   <div class="video">
     <iframe src="//player.bilibili.com/player.html?bvid=BV1Hx4y1Y7TN&page=1&high_quality=1&danmaku=0&autoplay=0"
       scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" loading="lazy"></iframe>
@@ -59,8 +89,9 @@
   <p class="cue">🎯 放回时数「1 — 2 — 3」</p>
   <p class="err">⚠️ 甩下去 = 白练。慢放那 3 秒，才是真正长肌肉的地方</p>
 </section>
+
 <section class="card" id="leg-extension">
-  <h2>3. 腿屈伸 <span class="en">Leg Extension</span></h2>
+  <h2>4. 腿屈伸 <span class="en">Leg Extension</span></h2>
   <p class="sets">2 组 × 12 次 · 32kg 起（可选）</p>
   <div class="video">
     <iframe src="//player.bilibili.com/player.html?bvid=BV1UE411e7VV&page=1&high_quality=1&danmaku=0&autoplay=0"
@@ -71,9 +102,10 @@
   <p class="cue">🎯 顶端停 1 秒再放</p>
   <p class="err">⚠️ 甩腿靠惯性；股四头练太多会加剧前后失衡，只做 2 组</p>
 </section>
+
 <section class="card" id="chest-press">
-  <h2>4. 胸推 <span class="en">Chest Press Machine</span></h2>
-  <p class="sets">3 组 × 12 次 · <b>必须记重量</b></p>
+  <h2>5. 胸推 <span class="en">Chest Press Machine</span> <span class="tag">肩恢复中</span></h2>
+  <p class="sets">最轻档 × 15 × <b>1 组</b>（测试）· 无痛才加到 2 组 · 必须记重量</p>
   <div class="video">
     <iframe src="//player.bilibili.com/player.html?bvid=BV1vP4y1E7nL&page=1&high_quality=1&danmaku=0&autoplay=0"
       scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" loading="lazy"></iframe>
@@ -81,11 +113,12 @@
   <p class="meta">视频 · 健身教练Iris · 3:13 · 0.8万播放
     <a href="https://www.bilibili.com/video/BV1vP4y1E7nL/" target="_blank" rel="noopener">在B站打开 ↗</a></p>
   <p class="cue">🎯 先把两块肩胛骨塞进后裤兜，再推</p>
-  <p class="err">⚠️ 肩膀往前顶 = 肩关节痛，新手最高频的伤</p>
+  <p class="err">⚠️ 推完感觉「胸胀」= 对了；「肩前酸 / 顶住」= 立刻停。握把在乳头高度，肘 45–75°</p>
 </section>
+
 <section class="card" id="lat-pulldown">
-  <h2>5. 高位下拉 <span class="en">Lat Pulldown</span></h2>
-  <p class="sets">3 组 × 12 次 · 找 RIR 3 的重量</p>
+  <h2>6. 高位下拉 <span class="en">Lat Pulldown</span></h2>
+  <p class="sets">2 组 × 12 次 · 找 RIR 3 的重量</p>
   <div class="video">
     <iframe src="//player.bilibili.com/player.html?bvid=BV1tGUTYZEY3&page=1&high_quality=1&danmaku=0&autoplay=0"
       scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" loading="lazy"></iframe>
@@ -95,33 +128,50 @@
   <p class="cue">🎯 想象「用手肘砸地板」</p>
   <p class="err">⚠️ 用手臂硬拉 = 练成二头；身体后仰太多 = 借力</p>
 </section>
+
 <section class="card" id="seated-row">
-  <h2>6. 坐姿划船 <span class="en">Seated Cable Row</span></h2>
-  <p class="sets">3 组 × 12 次 · 找 RIR 3 的重量</p>
+  <h2>7. 坐姿划船 <span class="en">Seated Cable Row</span></h2>
+  <p class="sets">2 组 × 12 次 · <b>25–28kg</b>（32kg 只能做 6 次，太重）· 下放数 3 秒</p>
   <div class="video">
     <iframe src="//player.bilibili.com/player.html?bvid=BV1y14y1X7by&page=1&high_quality=1&danmaku=0&autoplay=0"
       scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" loading="lazy"></iframe>
   </div>
-  <p class="meta">视频 · ALEX健身频道 · 10:39 · 80.0万播放
+  <p class="meta">视频 · ALEX健身频道 · 10:39 · 80.4万播放
     <a href="https://www.bilibili.com/video/BV1y14y1X7by/" target="_blank" rel="noopener">在B站打开 ↗</a></p>
   <p class="cue">🎯 把胸口挺给对面的人看</p>
-  <p class="err">⚠️ 圆背 = 腰椎受力；耸肩 = 斜方肌代偿</p>
+  <p class="err">⚠️ 圆背 = 腰椎受力；耸肩 = 斜方肌代偿；肘超过身体中线 = 拉到肩后侧</p>
 </section>
+
 <section class="card" id="shoulder-press">
-  <h2>7. 器械推肩 <span class="en">Machine Shoulder Press</span></h2>
-  <p class="sets">2 组 × 12 次 · 宁轻不重</p>
+  <h2>8. 器械推肩 <span class="en">Machine Shoulder Press</span></h2>
+  <p class="sets">2 组 × 12 次 · 宁轻不重 · 肩不舒服就跳过</p>
   <div class="video">
     <iframe src="//player.bilibili.com/player.html?bvid=BV1b34y1G7rq&page=1&high_quality=1&danmaku=0&autoplay=0"
       scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" loading="lazy"></iframe>
   </div>
-  <p class="meta">视频 · ALEX健身频道 · 10:44 · 34.7万播放
+  <p class="meta">视频 · ALEX健身频道 · 10:44 · 34.8万播放
     <a href="https://www.bilibili.com/video/BV1b34y1G7rq/" target="_blank" rel="noopener">在B站打开 ↗</a></p>
   <p class="cue">🎯 肋骨往下沉，像把肋骨塞进肚子</p>
   <p class="err">⚠️ 腰反弓 = 用腰推肩；肩关节最不耐造</p>
 </section>
+
+<section class="card" id="deadbug">
+  <h2>9. 死虫 <span class="en">Dead Bug</span> <span class="tag">核心·不累</span></h2>
+  <p class="sets">2 组 × 每侧 6–8 次 · 伸出 3 秒 / 回来 3 秒</p>
+  <div class="video">
+    <iframe src="//player.bilibili.com/player.html?bvid=BV19t41187NG&page=1&high_quality=1&danmaku=0&autoplay=0"
+      scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" loading="lazy"></iframe>
+  </div>
+  <p class="meta">视频 · GUNSPL力量举 · 6:00 · 5.1万播放
+    <a href="https://www.bilibili.com/video/BV19t41187NG/" target="_blank" rel="noopener">在B站打开 ↗</a></p>
+  <p class="cue">🎯 腰贴地 —— 手插不进腰下的缝</p>
+  <p class="err">⚠️ 腰一离地就缩回来。伸多远不重要，「腰贴地」才是唯一标准</p>
+  <p class="alt">📺 呼吸专门讲解：<a href="https://www.bilibili.com/video/BV1ay4y14769/" target="_blank" rel="noopener">做对 5 次核心就发酸 · 1:33 · 4.4万</a></p>
+</section>
+
 <section class="card" id="plank">
-  <h2>8. 平板支撑 <span class="en">Plank</span></h2>
-  <p class="sets">3 组 × 30–45 秒 · 组间 45″</p>
+  <h2>10. 平板支撑 <span class="en">Plank</span></h2>
+  <p class="sets">2 组 × 30 秒 · 组间 45″</p>
   <div class="video">
     <iframe src="//player.bilibili.com/player.html?bvid=BV1Pq4y117uA&page=1&high_quality=1&danmaku=0&autoplay=0"
       scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" loading="lazy"></iframe>
@@ -131,9 +181,38 @@
   <p class="cue">🎯 夹紧屁股，像夹住一张纸</p>
   <p class="err">⚠️ 塌腰 = 腰椎受压；撅臀 = 核心没发力</p>
 </section>
+
+<section class="card" id="precheck">
+  <h2>✓ 训练前 60 秒检查</h2>
+  <ol class="steps">
+    <li><b>查伤情</b>：肩 / 腿 / 背有任何未恢复的部位 → 跳掉对应动作，不赌</li>
+    <li><b>热身分开做</b>：上肢必做 5 分钟（画圈 → 弹力带外旋 2×15 → 肩胛俯卧撑 2×10 → <b>最轻档推胸 1×15</b>）</li>
+    <li><b>呼吸</b>：⭐ 发力时呼气、下放时吸气，<b>全程出声，绝不憋气</b></li>
+    <li><b>节奏</b>：下放数 3 秒，不赶。快了 = 靠惯性 + 缺氧</li>
+    <li><b>次数</b>：⭐ 用「预设次数」，不用「感觉」—— 写死 10 次，到 10 就放下</li>
+  </ol>
+  <p class="note"><b>为什么用预设次数：</b>你在训练当下会高估自己（32kg 说「快力竭」，实际是 RIR 0）。把判断挪到训练之前，问题就消失了。</p>
+</section>
+
+<section class="card" id="doms">
+  <h2>疼？先分清 DOMS 还是损伤</h2>
+  <table>
+    <tr><th>特征</th><th>DOMS（正常酸痛）</th><th>肌腱 / 关节损伤</th></tr>
+    <tr><td>达峰</td><td class="y">24–48 小时</td><td class="n">持续，无峰谷</td></tr>
+    <tr><td>消退</td><td class="y">3–5 天自愈</td><td class="n">数周不干预不好</td></tr>
+    <tr><td>感觉</td><td class="y">酸胀、钝痛</td><td class="n">刺痛、点状、尖锐</td></tr>
+    <tr><td>静止时</td><td class="y">不疼</td><td class="n">夜间 / 静息也疼</td></tr>
+    <tr><td>运动时</td><td class="y">热身后减轻</td><td class="n">越动越疼</td></tr>
+  </table>
+  <p class="note"><b>DOMS = Delayed(延迟) Onset(发作) Muscle(肌肉) Soreness(酸痛)</b><br>
+  记忆锚：<b>「练完第二天最疼，不是当时最疼」</b> → 那就是 DOMS。<br>
+  ⚠️ 夜间疼醒 / 抬手不过头顶 / 明显无力 / &gt;2 周无改善 → 就医。</p>
+</section>
+
 <footer>
-  <p><b>重量怎么选</b>：做完 12 次还剩约 3 次力气 = 对了</p>
-  <p><b>进阶</b>：连续 2 次做满 12 次且姿势不变 → 加最小一档</p>
+  <p><b>重量怎么选</b>：做完目标次数还剩约 3 次力气 = 对了</p>
+  <p><b>进阶</b>：连续 2 次做满目标次数且姿势不变 → 加最小一档</p>
+  <p><b>蛋白</b>：目标 134g/天（1.6 g/kg）· 缺口靠鸡蛋 + 蛋白粉补</p>
   <p style="margin-top:10px;opacity:.7">视频来自 B站 · 版权归各 UP 主</p>
 </footer>
 </body>
