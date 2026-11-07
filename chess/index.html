@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>国际象棋 Cheatsheet</title>
+<style>
+  :root{
+    --ink:#111;
+    --ink-2:#555;
+    --ink-3:#8a8a8a;
+    --line:#e5e5e2;
+    --paper:#fff;
+    --paper-2:#fafaf8;
+    --accent:#b3402a;
+    --sq-l:#f3f3ef;
+    --sq-d:#d3d3ca;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue","PingFang SC","Hiragino Sans GB",sans-serif;
+    font-size:17px;
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:640px;margin:0 auto;padding:0 22px 100px}
+
+  /* ---------- header ---------- */
+  header{padding:56px 0 34px;border-bottom:1px solid var(--line)}
+  .kicker{
+    font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink-3);margin:0 0 14px;font-weight:600;
+  }
+  h1{
+    font-size:31px;line-height:1.28;margin:0 0 16px;font-weight:700;
+    letter-spacing:-.02em;text-wrap:balance;
+  }
+  .lede{font-size:16px;color:var(--ink-2);margin:0;text-wrap:pretty}
+  .lede b{color:var(--ink);font-weight:600}
+
+  /* ---------- section ---------- */
+  section{padding:44px 0;border-bottom:1px solid var(--line)}
+  section:last-of-type{border-bottom:none}
+  h2{
+    font-size:13px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--ink-3);margin:0 0 6px;font-weight:600;
+  }
+  .h2sub{font-size:23px;font-weight:700;margin:0 0 22px;letter-spacing:-.01em;text-wrap:balance}
+
+  /* ---------- board ---------- */
+  .boardbox{margin:0 0 18px}
+  .board{
+    position:relative;width:100%;aspect-ratio:1;
+    display:grid;grid-template:repeat(8,1fr)/repeat(8,1fr);
+    border:1px solid #c9cac2;border-radius:3px;overflow:hidden;
+    background:var(--sq-l);
+  }
+  .sq{border:none}
+  .sq.d{background:var(--sq-d)}
+  .sq.hit{background:#efc9be}
+  .sq.hit2{
+    background:rgba(179,64,42,.07);
+    box-shadow:inset 0 0 0 1px rgba(179,64,42,.28);
+  }
+  .pc{
+    position:absolute;width:12.5%;height:12.5%;
+    display:grid;place-items:center;
+    font-size:min(10vw,42px);line-height:1;
+    font-family:"Apple Symbols","Segoe UI Symbol","Noto Sans Symbols 2",serif;
+    transition:left .68s cubic-bezier(.34,.01,.2,1), top .68s cubic-bezier(.34,.01,.2,1);
+    user-select:none;z-index:2;
+  }
+  .pc.w{
+    color:#fff;
+    background:radial-gradient(circle,#fff 46%,rgba(255,255,255,0) 47%);
+    text-shadow:
+      -1.3px 0 0 #171717, 1.3px 0 0 #171717, 0 -1.3px 0 #171717, 0 1.3px 0 #171717,
+      -1.3px -1.3px 0 #171717, 1.3px -1.3px 0 #171717, -1.3px 1.3px 0 #171717, 1.3px 1.3px 0 #171717;
+  }
+  .pc.b{color:#171717;text-shadow:0 1px 0 rgba(255,255,255,.35)}
+  .pc.tgt::after{
+    content:"";position:absolute;inset:14%;
+    border:2px dashed var(--accent);border-radius:50%;
+    opacity:0;transition:opacity .3s;
+  }
+  .pc.tgt.on::after{opacity:1}
+  .cap{
+    font-size:12.5px;color:var(--ink-3);margin:8px 0 0;
+    letter-spacing:.01em;
+  }
+
+  .btnrow{display:flex;gap:8px;margin:14px 0 0;flex-wrap:wrap}
+  button{
+    font:inherit;font-size:14px;font-weight:600;
+    padding:9px 17px;border-radius:999px;
+    border:1px solid var(--ink);background:var(--ink);color:#fff;
+    cursor:pointer;transition:opacity .18s,transform .12s;
+  }
+  button:active{transform:scale(.97)}
+  button.ghost{background:transparent;color:var(--ink)}
+  button.ghost:active{background:var(--paper-2)}
+
+  /* ---------- cards ---------- */
+  .cards{display:grid;gap:0}
+  .card{
+    border-top:1px solid var(--line);
+    padding:20px 0;
+    cursor:pointer;
+  }
+  .card:first-child{border-top:none}
+  .card .row{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .en{
+    font-size:19px;font-weight:700;letter-spacing:-.01em;
+  }
+  .zh{font-size:15px;color:var(--ink-3);font-weight:500}
+  .fig{
+    margin-left:auto;font-size:12px;color:var(--ink-3);
+    letter-spacing:.02em;white-space:nowrap;
+  }
+  .explain{margin:11px 0 0;font-size:15.5px;color:var(--ink-2);text-wrap:pretty}
+  .explain strong{color:var(--ink);font-weight:600}
+  .explain em{font-style:normal;background:#f4f0ea;padding:0 3px;border-radius:2px}
+
+  .quiz .explain{display:none}
+  .quiz .card.open .explain{display:block}
+  .quiz .card::after{
+    content:"轻点查看";
+    display:block;font-size:12px;color:#c0bdb6;margin-top:7px;
+  }
+  .quiz .card.open::after{content:"";display:none}
+
+  /* ---------- proverbs ---------- */
+  .pv{padding:17px 0;border-top:1px solid var(--line)}
+  .pv:first-child{border-top:none}
+  .pv p{
+    margin:0 0 7px;font-size:16.5px;font-weight:600;
+    letter-spacing:-.005em;text-wrap:pretty;
+  }
+  .pv p::before{content:"“";color:var(--ink-3)}
+  .pv p::after{content:"”";color:var(--ink-3)}
+  .pv .src{font-size:12.5px;color:var(--ink-3);margin:0 0 6px}
+  .pv .mean{font-size:15px;color:var(--ink-2);margin:0;text-wrap:pretty}
+
+  /* ---------- phases ---------- */
+  .phase{display:flex;gap:14px;padding:18px 0;border-top:1px solid var(--line)}
+  .phase:first-child{border-top:none}
+  .num{
+    flex:0 0 26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;
+    display:grid;place-items:center;font-size:13px;font-weight:700;
+    margin-top:2px;
+  }
+  .phase h3{margin:0 0 5px;font-size:17px;font-weight:700}
+  .phase p{margin:0;font-size:15px;color:var(--ink-2);text-wrap:pretty}
+  .phase p b{color:var(--ink)}
+
+  .flip{
+    background:var(--paper-2);border-radius:8px;padding:18px 20px;
+    margin:22px 0 0;
+  }
+  .flip .lab{
+    font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--ink-3);font-weight:700;margin:0 0 8px;
+  }
+  .flip p{margin:0;font-size:15.5px;color:var(--ink-2);text-wrap:pretty}
+  .flip p b{color:var(--ink)}
+
+  .warn{
+    border-left:2px solid var(--accent);padding:2px 0 2px 15px;
+    margin:22px 0 0;
+  }
+  .warn p{margin:0;font-size:15px;color:var(--ink-2);text-wrap:pretty}
+  .warn p b{color:var(--accent)}
+
+  /* ---------- dock ---------- */
+  .dock{
+    position:fixed;left:0;right:0;bottom:0;
+    background:rgba(255,255,255,.97);
+    border-top:1px solid var(--line);
+    padding:10px 22px calc(10px + env(safe-area-inset-bottom));
+    display:flex;gap:10px;justify-content:center;z-index:50;
+  }
+  .dock button{font-size:13.5px;padding:8px 15px}
+
+  @media(prefers-reduced-motion:reduce){
+    .pc{transition:none}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <p class="kicker">Cheatsheet · 国际象棋</p>
+  <h1>一个棋子同时打两个目标，还只是入门</h1>
+  <p class="lede">这不是规则手册。它讲的是<b>象棋为什么这样赢、这样输</b>——以及英语棋圈真正在用的那些词。<b>点右下角可以切成自测模式</b>，遮住解释做回忆。</p>
+</header>
+
+<!-- ============ 1 战术 ============ -->
+<section>
+  <h2>01 · 三大战术</h2>
+  <p class="h2sub">它们都是「一个子管两个目标」的变体</p>
+
+  <!-- FORK -->
+  <div class="boardbox">
+    <div class="board" id="b1"></div>
+    <p class="cap"><strong>fork</strong> · 白 <strong>Nd5</strong> 跳到 e7，同时咬住黑王 g8 和黑车 c8。对方只能救一个。</p>
+  </div>
+  <div class="btnrow">
+    <button onclick="demo('fork')">演示 fork</button>
+    <button class="ghost" onclick="rst('b1')">重置</button>
+  </div>
+
+  <!-- PIN -->
+  <div class="boardbox" style="margin-top:30px">
+    <div class="board" id="b2"></div>
+    <p class="cap"><strong>pin</strong> · 白 <strong>Bb5</strong> 指向黑王 e8，中间的黑马 c6 <strong>一步都不能动</strong>（绝对牵制）。</p>
+  </div>
+  <div class="btnrow">
+    <button onclick="demo('pin')">演示 pin</button>
+    <button class="ghost" onclick="rst('b2')">重置</button>
+  </div>
+
+  <!-- SKEWER -->
+  <div class="boardbox" style="margin-top:30px">
+    <div class="board" id="b3"></div>
+    <p class="cap"><strong>skewer</strong> · 白 <strong>Rb1</strong> 打前面的黑车 b7。车一逃，后面的王 b8 就暴露了。</p>
+  </div>
+  <div class="btnrow">
+    <button onclick="demo('skewer')">演示 skewer</button>
+    <button class="ghost" onclick="rst('b3')">重置</button>
+  </div>
+
+  <div class="cards" style="margin-top:24px">
+    <div class="card">
+      <div class="row"><span class="en">fork</span><span class="zh">捉双 · 分叉</span><span class="fig">餐叉，两根齿</span></div>
+      <p class="explain">一个子同时攻击两个以上目标，对方只能救一个。<strong>它有效的原因是强制性</strong>——带将的 fork 里，对方必须先把王移开，另一个子必然丢。</p>
+    </div>
+    <div class="card">
+      <div class="row"><span class="en">pin</span><span class="zh">牵制</span><span class="fig">别针，钉住</span></div>
+      <p class="explain">攻击<strong>后面</strong>的目标，中间的子被钉住不敢动。<em>absolute pin</em>（绝对牵制）后面是王，一步都不能动；<em>relative pin</em>（相对牵制）能动，但代价很大。</p>
+    </div>
+    <div class="card">
+      <div class="row"><span class="en">skewer</span><span class="zh">闪击 · 穿透</span><span class="fig">烤肉签，串起来</span></div>
+      <p class="explain">和 pin <strong>相反</strong>：攻击<em>前面</em>的大子，逼它逃开，然后吃掉后面那个。<strong>中文译「闪击」丢了意象</strong>——skewer 的画面是「串成一串」。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 2 棋子 ============ -->
+<section>
+  <h2>02 · 先纠正三个误译</h2>
+  <p class="h2sub">马是 knight，不是 horse</p>
+
+  <div class="cards">
+    <div class="card">
+      <div class="row"><span class="en">knight</span><span class="zh">马</span><span class="fig">不是 horse</span></div>
+      <p class="explain">「骑士」。<strong>说 horse 会立刻暴露你是从中文直译过来的。</strong>同理还有下面几个。</p>
+    </div>
+    <div class="card">
+      <div class="row"><span class="en">bishop</span><span class="zh">象</span><span class="fig">不是 elephant</span></div>
+      <p class="explain">「主教」。中国象棋的「象」在这里叫 bishop，因为欧洲把印度原版的象换成了教会形象。</p>
+    </div>
+    <div class="card">
+      <div class="row"><span class="en">rook</span><span class="zh">车</span><span class="fig">不是 chariot</span></div>
+      <p class="explain">来自波斯语 <em>rukh</em>（战车）。传到意大利变成 <em>rocca</em>（堡垒），所以 rook 既是「车」也是「城堡」。</p>
+    </div>
+    <div class="card">
+      <div class="row"><span class="en">en passant</span><span class="zh">吃过路兵</span><span class="fig">法语借词</span></div>
+      <p class="explain">棋手直接用这个法语词，不翻译成英语。<strong>念法</strong>：on pa-SAHNT。</p>
+    </div>
+    <div class="card">
+      <div class="row"><span class="en">promotion</span><span class="zh">升变</span><span class="fig">不是 upgrade</span></div>
+      <p class="explain">兵走到底线变成别的子。英文只说 promotion。</p>
+    </div>
+  </div>
+
+  <div class="flip">
+    <p class="lab">文化 · 名字里藏着一部翻译史</p>
+    <p>国际象棋从印度传到波斯、阿拉伯、再到欧洲，<b>每一站都重新命名过棋子</b>。英语保留的是欧洲那一版：「象」变成主教（教会的地位），「大臣」变成王后（还给了她全盘最强走法）。而 <b>checkmate 来自波斯语 shah mat，直译是「国王死了」</b>。</p>
+  </div>
+</section>
+
+<!-- ============ 3 德语词 ============ -->
+<section>
+  <h2>03 · 两个不翻译的德语词</h2>
+  <p class="h2sub">能自然说出它们，是英语棋圈的入门信号</p>
+
+  <div class="cards">
+    <div class="card">
+      <div class="row"><span class="en">Zugzwang</span><span class="zh">被迫走棋</span><span class="fig">tsOOk-tsvahng</span></div>
+      <p class="explain">轮到你走，但<strong>每一步都让你更糟</strong>，可你非走不可。残局里最致命的处境——<strong>不是你走错了，是「必须走」这件事本身在害你。</strong></p>
+    </div>
+    <div class="card">
+      <div class="row"><span class="en">Zwischenzug</span><span class="zh">中间着</span><span class="fig">TSVISH-en-tsook</span></div>
+      <p class="explain">在预期的连续走法中间，<strong>插一步别的</strong>，打乱对方节奏。常见于「你以为我要吃，我先将你一军」。</p>
+    </div>
+  </div>
+
+  <div class="warn">
+    <p><b>为什么用德语：</b>这两个概念在英语里没有好对译，所以整个棋圈直接用德语词。这不是装，是<strong>真的没有更短的英语说法</strong>。</p>
+  </div>
+</section>
+
+<!-- ============ 4 谚语 ============ -->
+<section>
+  <h2>04 · 谚语才是文化精华</h2>
+  <p class="h2sub">很多原则就是靠一句话传下来的</p>
+
+  <div class="pv">
+    <p>A knight on the rim is dim.</p>
+    <p class="src">押韵口诀</p>
+    <p class="mean">马到边上就变弱。<strong>马在中心控 8 格，在角落只控 2 格</strong>——这一句可能比一整章位置理论还有用。</p>
+  </div>
+
+  <div class="pv">
+    <p>Rooks belong on open files.</p>
+    <p class="src">基础原则</p>
+    <p class="mean">车应该在开放线上。车被堵住时价值大打折扣，所以开局后常要「把车送到通路上」。</p>
+  </div>
+
+  <div class="pv">
+    <p>The threat is stronger than the execution.</p>
+    <p class="src">Nimzowitsch</p>
+    <p class="mean">威胁比执行更有力。让对方一直担心你要做什么，往往比真做出来更有效。<strong>反直觉，但中局里非常真实。</strong></p>
+  </div>
+
+  <div class="pv">
+    <p>When you see a good move, look for a better one.</p>
+    <p class="src">Emanuel Lasker · 世界冠军 27 年</p>
+    <p class="mean">看到好棋，再找找有没有更好的。专门用来对抗「满足于第一个想法」。</p>
+  </div>
+
+  <div class="pv">
+    <p>Tactics is knowing what to do when there is something to do; strategy is knowing what to do when there is nothing to do.</p>
+    <p class="src">Tartakower · 棋坛最出名的段子手</p>
+    <p class="mean">战术是「有事可做时知道做什么」，战略是「无事可做时知道做什么」。<strong>把两者区别说得比任何教科书都清楚。</strong></p>
+  </div>
+</section>
+
+<!-- ============ 5 口语 ============ -->
+<section>
+  <h2>05 · 棋手真正在说的口语</h2>
+  <p class="h2sub">教科书不教，但出现频率比术语高得多</p>
+
+  <div class="cards">
+    <div class="card">
+      <div class="row"><span class="en">He hung his queen.</span><span class="zh">他把后白送了</span></div>
+      <p class="explain"><strong>hang</strong> 是棋手最常用的动词之一：把一个子放到能被吃的地方而没保护。<strong>比 lost his queen 地道得多</strong>——它强调的是失误动作，不是结果。</p>
+    </div>
+    <div class="card">
+      <div class="row"><span class="en">I dropped a piece.</span><span class="zh">我丢了个子</span></div>
+      <p class="explain">drop 专指「不该丢却丢了」。<strong>随口一说，不解释原因。</strong></p>
+    </div>
+    <div class="card">
+      <div class="row"><span class="en">That's just losing.</span><span class="zh">那直接就是输</span></div>
+      <p class="explain">不用算什么，就是输。判断局面时的口头断言。</p>
+    </div>
+    <div class="card">
+      <div class="row"><span class="en">The position is dead equal.</span><span class="zh">局面完全均势</span></div>
+      <p class="explain">dead equal 的 dead 是加强语气，意思是「谁也没戏，别再算了」。</p>
+    </div>
+    <div class="card">
+      <div class="row"><span class="en">I was out of book by move eight.</span><span class="zh">第八步就出了棋谱</span></div>
+      <p class="explain">out of book = 背过的东西用完了，开始自己思考。<strong>棋手的标准自嘲</strong>，暗示「接下来可能就要出事了」。</p>
+    </div>
+    <div class="card">
+      <div class="row"><span class="en">We agreed a draw.</span><span class="zh">我们和棋了</span></div>
+      <p class="explain"><strong>注意不加 to</strong>：agree a draw，不是 agree to a draw。<strong>这个细节能听出是不是常和人对弈。</strong></p>
+    </div>
+    <div class="card">
+      <div class="row"><span class="en">Let's play it out.</span><span class="zh">别和了，下完吧</span></div>
+      <p class="explain">拒绝和棋提议时的说法。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 6 开局 ============ -->
+<section>
+  <h2>06 · 开局只叫名字</h2>
+  <p class="h2sub">说全称反而显得生疏</p>
+
+  <div class="cards">
+    <div class="card">
+      <div class="row"><span class="en">the Sicilian</span><span class="zh">西西里防御</span><span class="fig">1.e4 c5</span></div>
+      <p class="explain">最主流、最复杂的开局。<strong>说 "I play the Sicilian" 就够了。</strong></p>
+    </div>
+    <div class="card">
+      <div class="row"><span class="en">the Spanish</span><span class="zh">西班牙开局</span><span class="fig">正式名 Ruy Lopez</span></div>
+      <p class="explain"><strong>the Spanish 和 Ruy Lopez 是同一个东西</strong>：正式场合用 Ruy Lopez，口语说 the Spanish。<strong>这个区别本身就是地道性标志。</strong></p>
+    </div>
+    <div class="card">
+      <div class="row"><span class="en">the Najdorf</span><span class="zh">纳伊多夫变例</span><span class="fig">只用姓氏</span></div>
+      <p class="explain">还有 the Dragon（龙式）、the Berlin（柏林防御）。<strong>棋手只说人名或代号，不加「变例」「防御」。</strong></p>
+    </div>
+    <div class="card">
+      <div class="row"><span class="en">the French / the Italian</span><span class="zh">法兰西 / 意大利</span></div>
+      <p class="explain">开局大量用国家、城市命名——因为这套棋在欧洲各国分别发展了上百年。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 7 阶段 ============ -->
+<section>
+  <h2>07 · 三个阶段，规则完全不同</h2>
+  <p class="h2sub">象棋不是一盘同质的棋，是三场不同的比赛</p>
+
+  <div class="phase">
+    <div class="num">1</div>
+    <div>
+      <h3>开局 · 抢时间</h3>
+      <p>目标是<b>用最少步数把子力送出去</b>并控制中心。<b>步数就是资源</b>。检查方法：这一步有没有让一个新子出来，或让已有子的位置变好？都没有，大概率是浪费。</p>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="num">2</div>
+    <div>
+      <h3>中局 · 找战术</h3>
+      <p>子力都出来了，开始互相威胁。胜负取决于<b>有没有看漏对方的强制手段</b>——叉、牵制、闪击、底线杀。</p>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="num">3</div>
+    <div>
+      <h3>残局 · 算精确</h3>
+      <p>子少了，每一步都能算清。这时候是纯计算，讲的是<b>王的位置</b>和<b>兵的升变</b>。</p>
+    </div>
+  </div>
+
+  <div class="flip">
+    <p class="lab">最漂亮的一点 · 王的价值会反转</p>
+    <p>同一个棋子，三个阶段价值完全相反。<b>开局和中局，王是弱点</b>，必须藏到角落、赶紧易位。<b>残局，王变成强子</b>——战斗力约等于一个马，必须主动走到中心去抢关键格。<b>很多人输残局，就是因为王还在开局的位置待着不敢动。</b></p>
+  </div>
+</section>
+
+<!-- ============ 8 边界 ============ -->
+<section>
+  <h2>08 · 什么时候这套不适用</h2>
+  <p class="h2sub">老实说，下面三点会推翻上面不少内容</p>
+
+  <div class="cards">
+    <div class="card">
+      <div class="row"><span class="en">超快棋里，谚语来不及用</span></div>
+      <p class="explain">bullet（1 分钟）和 blitz（3–5 分钟）里，胜负更多取决于<strong>模式识别速度和手速</strong>，「马在边上就变弱」这种长期原则用不上。那时人们说的是 <em>I flagged him</em>（把他拖到超时了），而不是任何战略讨论。</p>
+    </div>
+    <div class="card">
+      <div class="row"><span class="en">引擎改变了评价语言</span></div>
+      <p class="explain">现在讨论一步棋，标准说法是 <em>the engine gives +0.3</em> 或 <em>that's a blunder, it drops to -2.1</em>。<strong>传统的「这步棋很美」正在被数字替代。</strong></p>
+    </div>
+    <div class="card">
+      <div class="row"><span class="en">中英社群的用词习惯不同</span></div>
+      <p class="explain">中文说「捉双」，英语说 fork；「弃子攻王」在英语里常说 <em>sacrificing for the attack</em>，口语缩成 <em>a sac</em>。<strong>sac 这个缩写只在英语棋圈通用</strong>，中文圈说「弃子」时不会这样省。</p>
+    </div>
+  </div>
+
+  <div class="warn">
+    <p><b>如果只记六个词：</b>hang、drop、blunder、out of book、dead equal、<strong>I play the X</strong>。它们出现的频率比所有战术术语加起来都高。</p>
+  </div>
+</section>
+
+</div>
+
+<div class="dock">
+  <button id="quizBtn" class="ghost" onclick="toggleQuiz()">切到自测模式</button>
+  <button onclick="window.scrollTo({top:0,behavior:'smooth'})">回到顶部</button>
+</div>
+
+<script>
+/* ============ 棋子符号 ============ */
+const PC = {
+  wk:"♔", wq:"♕", wr:"♖", wb:"♗", wn:"♘", wp:"♙",
+  bk:"♚", bq:"♛", br:"♜", bb:"♝", bn:"♞", bp:"♟"
+};
+
+/* ============ 通用棋盘 ============ */
+const B = {};
+
+function initBoard(id, pieces){
+  const el = document.getElementById(id);
+  el.innerHTML = "";
+  for(let r=0;r<8;r++){
+    for(let c=0;c<8;c++){
+      const sq=document.createElement("div");
+      sq.className="sq"+((r+c)%2?" d":"");
+      sq.dataset.r=r; sq.dataset.c=c;
+      el.appendChild(sq);
+    }
+  }
+  const map={};
+  pieces.forEach(p=>{
+    const d=document.createElement("div");
+    d.className="pc "+(p.w?"w":"b");
+    d.textContent=PC[p.k];
+    d.style.left=(p.c-1)*12.5+"%";
+    d.style.top=(p.r-1)*12.5+"%";
+    el.appendChild(d);
+    map[p.id]=d;
+  });
+  B[id]={el, map, init:pieces};
+}
+
+function mv(id,pid,c,r){
+  const p=B[id].map[pid];
+  p.style.left=(c-1)*12.5+"%";
+  p.style.top=(r-1)*12.5+"%";
+}
+function mark(id,r,c,cls){
+  const s=B[id].el.querySelector(`.sq[data-r="${r-1}"][data-c="${c-1}"]`);
+  if(s) s.classList.add(cls);
+}
+function tgt(id,pid,on){
+  const p=B[id].map[pid];
+  p.classList.toggle("tgt",true);
+  if(on) p.classList.add("on");
+}
+function rst(id){
+  const b=B[id];
+  b.el.querySelectorAll(".sq").forEach(s=>s.classList.remove("hit","hit2"));
+  Object.values(b.map).forEach(p=>p.classList.remove("tgt","on"));
+  b.init.forEach(p=>mv(id,p.id,p.c,p.r));
+}
+
+/* ---------- 三块盘 ---------- */
+initBoard("b1",[
+  {id:"wn",k:"wn",c:4,r:4,w:1},   // Nd5
+  {id:"bk",k:"bk",c:7,r:1,w:0},   // Kg8
+  {id:"br",k:"br",c:3,r:1,w:0},   // Rc8
+]);
+initBoard("b2",[
+  {id:"wb",k:"wb",c:2,r:4,w:1},   // Bb5
+  {id:"bn",k:"bn",c:3,r:3,w:0},   // Nc6
+  {id:"bk2",k:"bk",c:5,r:1,w:0},  // Ke8
+]);
+initBoard("b3",[
+  {id:"wr",k:"wr",c:2,r:8,w:1},   // Rb1
+  {id:"br2",k:"br",c:2,r:2,w:0},  // Rb7
+  {id:"bk3",k:"bk",c:2,r:1,w:0},  // Kb8
+]);
+
+/* ---------- 演示 ---------- */
+let busy=false;
+function demo(kind){
+  if(busy) return; busy=true;
+  if(kind==="fork"){
+    rst("b1");
+    setTimeout(()=>{
+      mv("b1","wn",5,2);                       // Nd5→e7
+      setTimeout(()=>{
+        mark("b1",4,4,"hit2");                 // 起点 d5
+        mark("b1",1,3,"hit"); mark("b1",1,7,"hit");
+        tgt("b1","br",true); tgt("b1","bk",true);
+        busy=false;
+      },720);
+    },60);
+  }
+  if(kind==="pin"){
+    rst("b2");
+    setTimeout(()=>{
+      // 高亮牵制线 b5-c6-d7-e8
+      [[4,2],[3,3],[2,4],[1,5]].forEach(([r,c])=>mark("b2",r,c,"hit2"));
+      setTimeout(()=>{
+        mark("b2",3,3,"hit");                  // c6 马所在格
+        tgt("b2","bn",true);                   // 马被钉住
+        tgt("b2","bk2",true);                  // 王是真正的目标
+        busy=false;
+      },500);
+    },60);
+  }
+  if(kind==="skewer"){
+    rst("b3");
+    setTimeout(()=>{
+      mark("b3",2,2,"hit");                    // b7 车
+      tgt("b3","br2",true);
+      setTimeout(()=>{
+        mv("b3","br2",2,4);                    // 车逃到 b5
+        setTimeout(()=>{
+          [8,7,6,5,4,3,2,1].forEach(r=>mark("b3",r,2,"hit2"));
+          mark("b3",1,2,"hit");
+          tgt("b3","bk3",true);                // 王暴露
+          busy=false;
+        },720);
+      },900);
+    },60);
+  }
+}
+
+/* ============ 自测模式 ============ */
+let quiz=false;
+function toggleQuiz(){
+  quiz=!quiz;
+  document.body.classList.toggle("quiz",quiz);
+  document.getElementById("quizBtn").textContent = quiz ? "切回速查模式" : "切到自测模式";
+  document.querySelectorAll(".card").forEach(c=>c.classList.remove("open"));
+}
+document.querySelectorAll(".card").forEach(c=>{
+  c.addEventListener("click",()=>{ if(quiz) c.classList.toggle("open"); });
+});
+
+/* 减少动效偏好 */
+if(window.matchMedia("(prefers-reduced-motion: reduce)").matches){
+  document.querySelectorAll(".pc").forEach(p=>p.style.transition="none");
+}
+</script>
+</body>
+</html>
