@@ -93,6 +93,25 @@
     letter-spacing:.01em;
   }
 
+  /* 坐标棋盘 */
+  .coordwrap{margin:0 0 6px}
+  .coord{display:flex;gap:7px;align-items:stretch}
+  .ranks{
+    display:flex;flex-direction:column;justify-content:space-around;
+    font-size:11px;color:var(--ink-3);width:11px;text-align:right;
+    font-variant-numeric:tabular-nums;
+  }
+  .boardinner{flex:1;min-width:0}
+  .files{
+    display:flex;justify-content:space-around;font-size:11px;
+    color:var(--ink-3);padding-top:5px;
+  }
+  .sqname{
+    font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+    font-size:20px;font-weight:700;letter-spacing:.02em;
+  }
+  .sq.pick{background:#f0d3ca;box-shadow:inset 0 0 0 2px var(--accent)}
+
   .btnrow{display:flex;gap:8px;margin:14px 0 0;flex-wrap:wrap}
   button{
     font:inherit;font-size:14px;font-weight:600;
@@ -379,9 +398,64 @@
   </div>
 </section>
 
-<!-- ============ 6 开局 ============ -->
+<!-- ============ 6 棋谱 ============ -->
 <section>
-  <h2>06 · 开局只叫名字</h2>
+  <h2>06 · 棋谱怎么读</h2>
+  <p class="h2sub">看不懂 1.e4 c5，就读不懂任何一个开局命名</p>
+
+  <div class="coordwrap">
+    <div class="coord">
+      <div class="ranks"><span>8</span><span>7</span><span>6</span><span>5</span><span>4</span><span>3</span><span>2</span><span>1</span></div>
+      <div class="boardinner">
+        <div class="board" id="bc"></div>
+        <div class="files"><span>a</span><span>b</span><span>c</span><span>d</span><span>e</span><span>f</span><span>g</span><span>h</span></div>
+      </div>
+    </div>
+  </div>
+  <p class="cap">点棋盘任意一格 → 当前格：<span class="sqname" id="sqname">e4</span></p>
+
+  <div class="cards" style="margin-top:26px">
+    <div class="card">
+      <div class="row"><span class="en">file + rank</span><span class="zh">纵线字母 + 横线数字</span></div>
+      <p class="explain"><strong>纵线（file）用 a–h，横线（rank）用 1–8。</strong>所以 <em>e4</em> = 第 e 列第 4 行。<strong>a1 是白方左下角</strong>——所有坐标都从白方视角看，白方永远朝数字变大的方向前进。</p>
+    </div>
+    <div class="card">
+      <div class="row"><span class="en">N = knight</span><span class="zh">为什么马不是 K</span></div>
+      <p class="explain"><strong>K 已经被 King 占用了</strong>，所以马取 Knight 的第二个字母 <em>N</em>。<strong>六种子的字母</strong>：K 王、Q 后、R 车、B 象、N 马，而<strong>兵不写字母</strong>，只写目标格（e4 就是兵走 e4）。</p>
+    </div>
+    <div class="card">
+      <div class="row"><span class="en">x · + · #</span><span class="zh">三个最常出现的符号</span></div>
+      <p class="explain"><em>x</em> 吃子（Bxc6 = 象吃掉 c6）；<em>+</em> 将军（Qh5+）；<em>#</em> 将死（Qh7#）。<strong>没有符号 = 普通走子。</strong></p>
+    </div>
+    <div class="card">
+      <div class="row"><span class="en">O-O / O-O-O</span><span class="zh">易位</span></div>
+      <p class="explain">两个 O 是短易位（王翼），三个 O 是长易位（后翼）。<strong>用字母 O，不是数字 0。</strong></p>
+    </div>
+    <div class="card">
+      <div class="row"><span class="en">=Q</span><span class="zh">升变</span></div>
+      <p class="explain">兵走到底线写 <em>e8=Q</em>（升变成后）。<strong>等号后面写变成什么子。</strong></p>
+    </div>
+    <div class="card">
+      <div class="row"><span class="en">! ? !! ??</span><span class="zh">评注符号</span></div>
+      <p class="explain"><em>!</em> 好棋、<em>!!</em> 妙着、<em>?</em> 坏棋、<em>??</em> 大漏着、<em>!?</em> 有趣、<em>?!</em> 可疑。<strong>这些不是棋谱的一部分，是评论者事后加的。</strong></p>
+    </div>
+  </div>
+
+  <div class="flip">
+    <p class="lab">完整拆解 · 西西里防御的开头</p>
+    <p><b>1.e4</b> — 白方第 1 步，兵走 e4 &nbsp;·&nbsp; <b>c5</b> — 黑方，兵走 c5<br>
+    <b>2.Nf3</b> — 白方第 2 步，马到 f3 &nbsp;·&nbsp; <b>d6</b> — 黑方，兵到 d6<br>
+    <b>3.d4</b> — 白兵到 d4 &nbsp;·&nbsp; <b>cxd4</b> — 黑兵 c5 <b>吃掉</b> d4</p>
+  </div>
+
+  <div class="warn">
+    <p><b>读法规则：</b>数字是<b>回合数</b>，白黑各走一步算一回合。<b>x 前面的字母是出发列</b>——cxd4 里的 c 表示「从 c 列来的兵吃掉 d4」，因为两个兵都可能吃这个格子，必须说清是哪一个。</p>
+  </div>
+</section>
+
+<!-- ============ 7 开局 ============ -->
+<section>
+  <h2>07 · 开局只叫名字</h2>
   <p class="h2sub">说全称反而显得生疏</p>
 
   <div class="cards">
@@ -399,14 +473,27 @@
     </div>
     <div class="card">
       <div class="row"><span class="en">the French / the Italian</span><span class="zh">法兰西 / 意大利</span></div>
-      <p class="explain">开局大量用国家、城市命名——因为这套棋在欧洲各国分别发展了上百年。</p>
+      <p class="explain">开局大量用国家、城市命名——因为这套棋在欧洲各国分别发展了上百年。<strong>还有用人名的</strong>：Ruy López 是 16 世纪的西班牙教士，Najdorf 是波兰裔阿根廷棋手，Alekhine 是俄裔法国世界冠军。</p>
     </div>
+    <div class="card">
+      <div class="row"><span class="en">B90</span><span class="zh">ECO 编码</span><span class="fig">A00–E99</span></div>
+      <p class="explain">职业圈用《国际象棋开局百科》的编码索引：<strong>A00–E99 共 500 类</strong>。比如西西里·纳伊多夫变例就是 <em>B90</em>。<strong>说 B90 比说一长串名字省事</strong>，这是数据库和引擎里通用的语言。</p>
+    </div>
+    <div class="card">
+      <div class="row"><span class="en">Open Game / Closed Game</span><span class="zh">开放局 / 封闭局</span></div>
+      <p class="explain"><em>1.e4 e5</em> 叫开放局（Open Game），<em>1.d4 d5</em> 叫封闭局（Closed Game）。<strong>这个分类本身也是约定</strong>——按双方兵是否直接顶上来分的。</p>
+    </div>
+  </div>
+
+  <div class="flip">
+    <p class="lab">文化 · 名字是地理和人名的化石层</p>
+    <p>开局名大多来自 <b>地名</b>（西西里、维也纳、布达佩斯、柏林）或 <b>人名</b>（Ruy López、Najdorf、Alekhine、Caro-Kann）。原因很实际：<b>19 世纪到 20 世纪初，各国棋手各自发展体系，谁先系统研究就被冠上谁的名字或地方</b>。所以开局命名表其实是一张欧洲棋史地图。</p>
   </div>
 </section>
 
 <!-- ============ 7 阶段 ============ -->
 <section>
-  <h2>07 · 三个阶段，规则完全不同</h2>
+  <h2>08 · 三个阶段，规则完全不同</h2>
   <p class="h2sub">象棋不是一盘同质的棋，是三场不同的比赛</p>
 
   <div class="phase">
@@ -441,7 +528,7 @@
 
 <!-- ============ 8 边界 ============ -->
 <section>
-  <h2>08 · 什么时候这套不适用</h2>
+  <h2>09 · 什么时候这套不适用</h2>
   <p class="h2sub">老实说，下面三点会推翻上面不少内容</p>
 
   <div class="cards">
@@ -537,11 +624,31 @@ initBoard("b2",[
   {id:"bn",k:"bn",c:3,r:3,w:0},   // Nc6
   {id:"bk2",k:"bk",c:5,r:1,w:0},  // Ke8
 ]);
+initBoard("bc",[]);
+
 initBoard("b3",[
   {id:"wr",k:"wr",c:2,r:8,w:1},   // Rb1
   {id:"br2",k:"br",c:2,r:2,w:0},  // Rb7
   {id:"bk3",k:"bk",c:2,r:1,w:0},  // Kb8
 ]);
+
+/* ---------- 坐标棋盘：点击显示格名 ---------- */
+(function(){
+  const el = document.getElementById("bc");
+  const out = document.getElementById("sqname");
+  const FILES = "abcdefgh";
+  el.addEventListener("click", e=>{
+    const sq = e.target.closest(".sq");
+    if(!sq) return;
+    el.querySelectorAll(".sq.pick").forEach(x=>x.classList.remove("pick"));
+    sq.classList.add("pick");
+    const r = +sq.dataset.r, c = +sq.dataset.c;
+    out.textContent = FILES[c] + (8 - r);
+  });
+  // 默认高亮 e4（列 5、行 5）
+  const e4 = el.querySelector('.sq[data-c="4"][data-r="4"]');
+  if(e4) e4.classList.add("pick");
+})();
 
 /* ---------- 演示 ---------- */
 let busy=false;
