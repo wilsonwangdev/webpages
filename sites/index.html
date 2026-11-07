@@ -119,7 +119,7 @@
 
 <header>
   <h1>站点索引</h1>
-  <p class="sub">一个入口找全部页面。公开的可以直接点，私有的要先点一下才显示链接。</p>
+  <p class="sub">一个入口找全部页面。通用的直接点，含个人信息的先点一下才显示链接。</p>
 </header>
 
 <div class="searchwrap">
@@ -139,8 +139,11 @@
 <div id="list"></div>
 
 <div class="notice" style="margin-top:34px">
-  <p class="h">关于「私有」这个标记</p>
-  <p><b>私有 = 还没准备好公开，不是加密保护。</b>这些站点的链接默认遮住，是为了避免随手点开或截图带出去。真正的敏感内容不要放在这里，也不要指望这层遮罩能挡住谁。</p>
+  <p class="h">三个标记怎么分</p>
+  <p><b>公开</b> —— 内容是通用的，给别人看没问题。<br>
+  <b>私有</b> —— 含个人信息（体重、训练数据、伤情这类），或者成品的完成度还不够。<br>
+  <b>本地</b> —— 没有部署，只在本机。</p>
+  <p style="margin-top:10px"><b>私有不等于加密。</b>私有条目的链接默认遮住，只为了避免随手点开或截图带出去；链接仍写在页面源码里，挡不住真想看的人。</p>
 </div>
 
 <footer>
@@ -183,7 +186,7 @@ const SITES = [
     desc:"技术笔记集合的入口", visibility:"public", status:"live", tags:["notes","首页"] },
 
   { group:"技术笔记 · wilson-web.pages.dev", name:"象棋 Cheatsheet", url:"https://wilson-web.pages.dev/chess/",
-    desc:"三大战术棋盘动画 + 英语术语与文化 + 自测模式", visibility:"private", status:"live", tags:["chess","象棋","cheatsheet","英语"] },
+    desc:"三大战术棋盘动画 + 英语术语与文化 + 自测模式", visibility:"public", status:"live", tags:["chess","象棋","cheatsheet","英语"] },
 
   { group:"技术笔记 · wilson-web.pages.dev", name:"训练计划", url:"https://wilson-web.pages.dev/fitness/",
     desc:"力量训练计划、动作库、负荷换算（含个人训练数据）", visibility:"private", status:"live", tags:["fitness","训练","健身"] },
