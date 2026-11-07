@@ -13,8 +13,8 @@
     --paper:#fff;
     --paper-2:#fafaf8;
     --accent:#b3402a;
-    --sq-l:#f3f3ef;
-    --sq-d:#d3d3ca;
+    --sq-l:#eceae2;
+    --sq-d:#cfcfc4;
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
   html{-webkit-text-size-adjust:100%}
@@ -69,19 +69,24 @@
   .pc{
     position:absolute;width:12.5%;height:12.5%;
     display:grid;place-items:center;
-    font-size:min(10vw,42px);line-height:1;
+    font-size:min(12.5vw,52px);line-height:1;
     font-family:"Apple Symbols","Segoe UI Symbol","Noto Sans Symbols 2",serif;
     transition:left .68s cubic-bezier(.34,.01,.2,1), top .68s cubic-bezier(.34,.01,.2,1);
     user-select:none;z-index:2;
   }
   .pc.w{
     color:#fff;
-    background:radial-gradient(circle,#fff 46%,rgba(255,255,255,0) 47%);
+    -webkit-text-stroke:2px #1a1a1a;
+    paint-order:stroke fill;
     text-shadow:
-      -1.3px 0 0 #171717, 1.3px 0 0 #171717, 0 -1.3px 0 #171717, 0 1.3px 0 #171717,
-      -1.3px -1.3px 0 #171717, 1.3px -1.3px 0 #171717, -1.3px 1.3px 0 #171717, 1.3px 1.3px 0 #171717;
+      -1.9px 0 0 #1a1a1a, 1.9px 0 0 #1a1a1a, 0 -1.9px 0 #1a1a1a, 0 1.9px 0 #1a1a1a,
+      -1.9px -1.9px 0 #1a1a1a, 1.9px -1.9px 0 #1a1a1a, -1.9px 1.9px 0 #1a1a1a, 1.9px 1.9px 0 #1a1a1a;
   }
-  .pc.b{color:#171717;text-shadow:0 1px 0 rgba(255,255,255,.35)}
+  .pc.b{
+    color:#141414;
+    -webkit-text-stroke:0.5px #141414;
+    paint-order:stroke fill;
+  }
   .pc.tgt::after{
     content:"";position:absolute;inset:14%;
     border:2px dashed var(--accent);border-radius:50%;
@@ -560,9 +565,13 @@
 
 <script>
 /* ============ 棋子符号 ============ */
+/* 统一使用「实心」字形（U+265A–265F），黑白靠颜色与描边区分。
+   原来白子用 U+2654–2659 的线稿字形，笔画只有 1–2px，小尺寸下几乎看不清。 */
+/* 统一用「实心」字形（U+265A–265F），黑白靠颜色+描边区分。
+   原先白子用 U+2654–2659 的线稿字形，笔画仅 1–2px，小尺寸下看不清。 */
 const PC = {
-  wk:"♔", wq:"♕", wr:"♖", wb:"♗", wn:"♘", wp:"♙",
-  bk:"♚", bq:"♛", br:"♜", bb:"♝", bn:"♞", bp:"♟"
+  wk:"\u265A", wq:"\u265B", wr:"\u265C", wb:"\u265D", wn:"\u265E", wp:"\u265F",
+  bk:"\u265A", bq:"\u265B", br:"\u265C", bb:"\u265D", bn:"\u265E", bp:"\u265F"
 };
 
 /* ============ 通用棋盘 ============ */
