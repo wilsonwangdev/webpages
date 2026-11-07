@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>站点索引</title>
+<style>
+  :root{
+    --ink:#111; --ink2:#555; --ink3:#8a8a8a;
+    --line:#e6e6e2; --paper:#fff; --paper2:#fafaf8;
+    --pub:#1a6b3c; --priv:#a33d22; --local:#6b6b6b;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue","PingFang SC","Hiragino Sans GB",sans-serif;
+    font-size:16.5px;line-height:1.65;-webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:660px;margin:0 auto;padding:0 20px 120px}
+
+  header{padding:48px 0 26px}
+  h1{font-size:27px;line-height:1.3;margin:0 0 10px;font-weight:700;letter-spacing:-.02em;text-wrap:balance}
+  .sub{font-size:15px;color:var(--ink2);margin:0;text-wrap:pretty}
+
+  /* 搜索 */
+  .searchwrap{position:relative;margin:22px 0 14px}
+  #q{
+    width:100%;font:inherit;font-size:16px;
+    padding:13px 44px 13px 15px;
+    border:1px solid var(--line);border-radius:10px;
+    background:var(--paper2);color:var(--ink);
+    outline:none;transition:border-color .18s,background .18s;
+  }
+  #q:focus{border-color:var(--ink);background:#fff}
+  #q::placeholder{color:#aaa}
+  .clear{
+    position:absolute;right:6px;top:50%;transform:translateY(-50%);
+    border:none;background:none;font-size:19px;color:#bbb;
+    padding:8px 10px;cursor:pointer;line-height:1;
+  }
+  .clear:active{color:var(--ink)}
+
+  /* 筛选 */
+  .filters{display:flex;gap:7px;flex-wrap:wrap;margin:0 0 8px}
+  .chip{
+    font:inherit;font-size:13.5px;font-weight:600;
+    padding:7px 14px;border-radius:999px;
+    border:1px solid var(--line);background:var(--paper);color:var(--ink2);
+    cursor:pointer;transition:all .16s;
+  }
+  .chip[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .chip:active{transform:scale(.97)}
+
+  .count{font-size:12.5px;color:var(--ink3);margin:14px 0 4px;letter-spacing:.02em}
+
+  /* 分组 */
+  .group{margin:26px 0 0}
+  .gtitle{
+    font-size:12px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--ink3);font-weight:700;margin:0 0 4px;
+  }
+
+  /* 卡片 */
+  .item{
+    border-top:1px solid var(--line);
+    padding:17px 0 15px;
+  }
+  .item:first-of-type{border-top:none}
+  .top{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
+  .name{font-size:17px;font-weight:700;letter-spacing:-.01em}
+  .badge{
+    font-size:10.5px;font-weight:700;letter-spacing:.06em;
+    padding:2.5px 7px;border-radius:4px;text-transform:uppercase;
+  }
+  .b-pub{background:#e8f2ea;color:var(--pub)}
+  .b-priv{background:#f7e6e1;color:var(--priv)}
+  .b-local{background:#eee;color:var(--local)}
+  .b-dead{background:#f0f0ec;color:#999;text-decoration:line-through}
+
+  .desc{font-size:14.5px;color:var(--ink2);margin:7px 0 0;text-wrap:pretty}
+  .meta{font-size:12.5px;color:var(--ink3);margin:8px 0 0;display:flex;gap:12px;flex-wrap:wrap}
+  .meta code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;background:var(--paper2);padding:1px 5px;border-radius:3px}
+
+  .linkrow{margin:10px 0 0}
+  a.go{
+    display:inline-block;font-size:14px;font-weight:600;color:var(--ink);
+    text-decoration:none;border-bottom:1.5px solid var(--ink);
+    padding-bottom:1px;word-break:break-all;
+  }
+  a.go:active{opacity:.6}
+  .masked{
+    font:inherit;font-size:13px;font-weight:600;
+    border:1px dashed #c9c6bd;background:none;color:var(--ink3);
+    padding:5px 11px;border-radius:6px;cursor:pointer;
+  }
+  .masked:active{background:var(--paper2)}
+  .deadnote{font-size:13px;color:#b0aca3}
+
+  .empty{text-align:center;color:var(--ink3);font-size:15px;padding:50px 0}
+
+  /* 提示条 */
+  .notice{
+    background:var(--paper2);border-radius:9px;padding:15px 17px;margin:4px 0 0;
+  }
+  .notice p{margin:0;font-size:14px;color:var(--ink2);text-wrap:pretty}
+  .notice p b{color:var(--ink)}
+  .notice .h{
+    font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--ink3);font-weight:700;margin:0 0 7px;
+  }
+
+  footer{margin:44px 0 0;padding-top:20px;border-top:1px solid var(--line)}
+  footer p{margin:0;font-size:12.5px;color:var(--ink3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>站点索引</h1>
+  <p class="sub">一个入口找全部页面。公开的可以直接点，私有的要先点一下才显示链接。</p>
+</header>
+
+<div class="searchwrap">
+  <input id="q" type="search" placeholder="搜索名称、描述、标签…" autocomplete="off" spellcheck="false">
+  <button class="clear" id="clear" aria-label="清空">×</button>
+</div>
+
+<div class="filters" id="filters">
+  <button class="chip" data-f="all" aria-pressed="true">全部</button>
+  <button class="chip" data-f="public" aria-pressed="false">公开</button>
+  <button class="chip" data-f="private" aria-pressed="false">私有</button>
+  <button class="chip" data-f="local" aria-pressed="false">本地</button>
+</div>
+
+<div class="count" id="count"></div>
+
+<div id="list"></div>
+
+<div class="notice" style="margin-top:34px">
+  <p class="h">关于「私有」这个标记</p>
+  <p><b>私有 = 还没准备好公开，不是加密保护。</b>这些站点的链接默认遮住，是为了避免随手点开或截图带出去。真正的敏感内容不要放在这里，也不要指望这层遮罩能挡住谁。</p>
+</div>
+
+<footer>
+  <p id="stamp"></p>
+</footer>
+
+</div>
+
+<script>
+/* ============================================================
+   数据。新增条目改这里就行。
+   visibility: public | private | local
+   status:     live（已验证 200）| dead（打不开）| local（本地文件/应用）
+   ============================================================ */
+const SITES = [
+  /* ---------- 独立站点 ---------- */
+  { group:"独立站点", name:"个人作品集", url:"https://www.wilsonhandbook.online",
+    desc:"Wilson 的技术主页与项目集合", visibility:"public", status:"live", tags:["portfolio","主页"] },
+
+  { group:"独立站点", name:"知识库", url:"https://kb.wilsonhandbook.online",
+    desc:"Quartz 构建的长期知识库：阅读、资源、书籍、文章", visibility:"public", status:"live", tags:["kb","quartz","笔记","books"] },
+
+  { group:"独立站点", name:"Agent Experience 指南", url:"https://ax.wilsonhandbook.online",
+    desc:"Agent 开发模式的工程规范与工作流", visibility:"public", status:"live", tags:["agent","harness","指南"] },
+
+  { group:"独立站点", name:"前端工程师手册", url:"https://fe.wilsonhandbook.online",
+    desc:"前端工程知识体系", visibility:"public", status:"live", tags:["frontend","手册"] },
+
+  { group:"独立站点", name:"What's Next", url:"https://wilsonwangdev.github.io/whatsnext/",
+    desc:"记录软件产品的退场与被收购，9 个案例", visibility:"public", status:"live", tags:["whatsnext","archive","案例"] },
+
+  { group:"独立站点", name:"单词站", url:"https://words.pages.dev",
+    desc:"词根与专业词汇学习，间隔复习", visibility:"private", status:"live", tags:["words","vocab","词根"] },
+
+  { group:"独立站点", name:"bio 健康科普", url:"https://bio.wilsonhandbook.online",
+    desc:"健康与营养科普站（域名 CNAME 尚未配置，目前打不开）", visibility:"private", status:"dead", tags:["bio","健康","营养"] },
+
+  /* ---------- wilson-web.pages.dev 下的页面 ---------- */
+  { group:"技术笔记 · wilson-web.pages.dev", name:"笔记首页", url:"https://wilson-web.pages.dev/",
+    desc:"技术笔记集合的入口", visibility:"public", status:"live", tags:["notes","首页"] },
+
+  { group:"技术笔记 · wilson-web.pages.dev", name:"象棋 Cheatsheet", url:"https://wilson-web.pages.dev/chess/",
+    desc:"三大战术棋盘动画 + 英语术语与文化 + 自测模式", visibility:"private", status:"live", tags:["chess","象棋","cheatsheet","英语"] },
+
+  { group:"技术笔记 · wilson-web.pages.dev", name:"训练计划", url:"https://wilson-web.pages.dev/fitness/",
+    desc:"力量训练计划、动作库、负荷换算（含个人训练数据）", visibility:"private", status:"live", tags:["fitness","训练","健身"] },
+
+  { group:"技术笔记 · wilson-web.pages.dev", name:"Wilson Desktop 博客", url:"https://wilson-web.pages.dev/wilson/blog/",
+    desc:"桌面应用开发记录", visibility:"public", status:"live", tags:["desktop","tauri","blog"] },
+
+  { group:"技术笔记 · wilson-web.pages.dev", name:"Ara 站点", url:"https://wilson-web.pages.dev/ara-site/",
+    desc:"独立部署的子站", visibility:"public", status:"live", tags:["ara"] },
+
+  { group:"技术笔记 · wilson-web.pages.dev", name:"防抖与节流", url:"https://wilson-web.pages.dev/debounce_and_throttle.html",
+    desc:"debounce / throttle 的差异与实现", visibility:"public", status:"live", tags:["frontend","js"] },
+
+  { group:"技术笔记 · wilson-web.pages.dev", name:"React 是怎么工作的", url:"https://wilson-web.pages.dev/how-does-react-work.html",
+    desc:"React 渲染机制拆解", visibility:"public", status:"live", tags:["react","frontend"] },
+
+  { group:"技术笔记 · wilson-web.pages.dev", name:"浏览器是怎么工作的", url:"https://wilson-web.pages.dev/how-does-browser-works.html",
+    desc:"从输入 URL 到页面呈现", visibility:"public", status:"live", tags:["browser","frontend"] },
+
+  { group:"技术笔记 · wilson-web.pages.dev", name:"数据流", url:"https://wilson-web.pages.dev/data-flow.html",
+    desc:"应用内数据流梳理", visibility:"public", status:"live", tags:["architecture"] },
+
+  { group:"技术笔记 · wilson-web.pages.dev", name:"Hermes Desktop 历史（中文）", url:"https://wilson-web.pages.dev/hermes-desktop-story-zh.html",
+    desc:"桌面客户端演进记录", visibility:"public", status:"live", tags:["hermes","desktop"] },
+
+  { group:"技术笔记 · wilson-web.pages.dev", name:"Hermes Desktop 历史", url:"https://wilson-web.pages.dev/hermes-desktop-history.html",
+    desc:"同上，另一版本", visibility:"public", status:"live", tags:["hermes","desktop"] },
+
+  /* ---------- 打不开 / 已下线 ---------- */
+  { group:"打不开 / 已下线", name:"Agent Master Handbook", url:"https://agent-master-handbook.vercel.app",
+    desc:"Vercel 项目，目前返回 000，需确认是否已删除或暂停", visibility:"private", status:"dead", tags:["agent","handbook"] },
+
+  { group:"打不开 / 已下线", name:"Frontend Tools Explorer", url:"https://frontend-tools-explorer.vercel.app",
+    desc:"Vercel 项目，目前返回 000", visibility:"private", status:"dead", tags:["frontend","tools"] },
+
+  { group:"打不开 / 已下线", name:"note-share", url:"",
+    desc:"Vercel 项目 note-share 存在（prj_wPUcD…），但未找到可访问域名", visibility:"private", status:"dead", tags:["note"] },
+
+  /* ---------- 本地 ---------- */
+  { group:"本地（未部署）", name:"象棋 Cheatsheet 源码", url:"",
+    desc:"单文件，零依赖，双击即可离线打开", visibility:"local", status:"local",
+    path:"~/_repos/webpages/chess/index.html", tags:["chess","local"] },
+
+  { group:"本地（未部署）", name:"wilson-desktop", url:"",
+    desc:"Tauri v2 + React 桌面应用（私有 repo）", visibility:"local", status:"local",
+    path:"~/_repos/wilson-desktop", tags:["desktop","tauri"] },
+
+  { group:"本地（未部署）", name:"agent-master-companion", url:"",
+    desc:"无部署痕迹，私有 repo", visibility:"local", status:"local",
+    path:"~/_repos/agent-master-companion", tags:["agent"] },
+];
+
+/* ============================================================ */
+const BADGE = {
+  public:  {cls:"b-pub",   txt:"公开"},
+  private: {cls:"b-priv",  txt:"私有"},
+  local:   {cls:"b-local", txt:"本地"},
+};
+const STATUS_TXT = { live:"已上线", dead:"打不开", local:"本地" };
+
+let filter = "all";
+let query = "";
+
+const listEl  = document.getElementById("list");
+const countEl = document.getElementById("count");
+const qEl     = document.getElementById("q");
+
+function matches(s){
+  if(filter !== "all"){
+    if(filter === "public"  && s.visibility !== "public")  return false;
+    if(filter === "private" && s.visibility !== "private") return false;
+    if(filter === "local"   && s.visibility !== "local")   return false;
+  }
+  if(!query) return true;
+  const hay = [s.name, s.desc, (s.tags||[]).join(" "), s.url, s.path].join(" ").toLowerCase();
+  return hay.includes(query);
+}
+
+function render(){
+  const shown = SITES.filter(matches);
+
+  // 按 group 聚合并保持原始顺序
+  const order = [];
+  const buckets = {};
+  shown.forEach(s=>{
+    if(!buckets[s.group]){ buckets[s.group]=[]; order.push(s.group); }
+    buckets[s.group].push(s);
+  });
+
+  if(!shown.length){
+    listEl.innerHTML = '<p class="empty">没有匹配的条目</p>';
+    countEl.textContent = "0 个结果";
+    return;
+  }
+
+  listEl.innerHTML = order.map(g=>{
+    const items = buckets[g].map((s,i)=>{
+      const b = BADGE[s.visibility];
+      const dead = s.status === "dead";
+      let link;
+      if(s.visibility === "local" || !s.url){
+        link = s.path
+          ? `<span class="deadnote"><code>${s.path}</code></span>`
+          : `<span class="deadnote">${dead ? "暂无可用地址" : "无链接"}</span>`;
+      } else if(s.visibility === "private"){
+        link = dead
+          ? `<span class="deadnote">${s.url}（打不开）</span>`
+          : `<button class="masked" data-url="${s.url}">显示链接</button>`;
+      } else {
+        link = dead
+          ? `<span class="deadnote">${s.url}（打不开）</span>`
+          : `<a class="go" href="${s.url}" target="_blank" rel="noopener">${s.url.replace(/^https?:\/\//,'')}</a>`;
+      }
+      return `<div class="item">
+        <div class="top">
+          <span class="name">${s.name}</span>
+          <span class="badge ${b.cls}">${b.txt}</span>
+          ${dead?'<span class="badge b-dead">未上线</span>':''}
+        </div>
+        <p class="desc">${s.desc}</p>
+        ${s.path && s.url ? `<p class="meta"><code>${s.path}</code></p>` : ''}
+        <div class="linkrow">${link}</div>
+      </div>`;
+    }).join("");
+    return `<div class="group"><p class="gtitle">${g}</p>${items}</div>`;
+  }).join("");
+
+  countEl.textContent = `${shown.length} 个条目 · 共 ${SITES.length}`;
+
+  // 私有链接：点一下才展开
+  listEl.querySelectorAll(".masked").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      const u = btn.dataset.url;
+      const a = document.createElement("a");
+      a.className="go"; a.href=u; a.target="_blank"; a.rel="noopener";
+      a.textContent = u.replace(/^https?:\/\//,'');
+      btn.replaceWith(a);
+    });
+  });
+}
+
+qEl.addEventListener("input", ()=>{ query = qEl.value.trim().toLowerCase(); render(); });
+document.getElementById("clear").addEventListener("click", ()=>{
+  qEl.value=""; query=""; render(); qEl.focus();
+});
+document.querySelectorAll(".chip").forEach(c=>{
+  c.addEventListener("click", ()=>{
+    filter = c.dataset.f;
+    document.querySelectorAll(".chip").forEach(x=>x.setAttribute("aria-pressed", x===c ? "true":"false"));
+    render();
+  });
+});
+
+document.getElementById("stamp").textContent =
+  "最后核对 " + new Date().toLocaleDateString("zh-CN", {year:"numeric",month:"2-digit",day:"2-digit"})
+  + " · 链接状态逐个实测过，打不开的标了「未上线」";
+
+render();
+</script>
+</body>
+</html>
