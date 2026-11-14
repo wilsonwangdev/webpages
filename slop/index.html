@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>AI Slop 及其同类 — 九个正在被使用的词</title>
+<meta name="description" content="slop、vibe coding、enshittification、shoggoth、botshit、dead internet theory、model collapse、e/acc — 每个词附可点开的真实出处，原文与转述分开标注。">
+<meta property="og:title" content="AI Slop 及其同类">
+<meta property="og:description" content="九个正在被使用的 AI 热词，原文照录，转述另标。">
+<meta property="og:type" content="article">
+<meta name="theme-color" content="#ffffff">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#fff;--ink:#0a0a0a;--mid:#6b6b6b;--faint:#d8d8d8;--hair:#ebebeb;
+--sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+--mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,monospace}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;
+-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+#prog{position:fixed;top:0;left:0;height:2px;background:var(--ink);width:0;z-index:99}
+.wrap{max-width:760px;margin:0 auto;padding:0 22px}
+@media(min-width:900px){.wrap{padding:0 44px}}
+
+header{padding:84px 0 54px;border-bottom:1px solid var(--hair)}
+.kicker{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mid);margin-bottom:26px}
+h1{font-size:clamp(3.1rem,12.5vw,6.4rem);font-weight:700;letter-spacing:-.05em;line-height:.92;text-wrap:balance}
+h1 em{font-style:normal;color:var(--faint)}
+.lede{margin-top:28px;font-size:1.0625rem;line-height:1.78;color:#2e2e2e;max-width:34em;text-wrap:pretty}
+.meta{margin-top:32px;font-family:var(--mono);font-size:11.5px;color:var(--mid);line-height:1.9}
+.meta b{font-weight:500;color:var(--ink)}
+
+.entry{position:relative;padding:66px 0 62px;border-bottom:1px solid var(--hair);overflow:hidden}
+.entry:last-of-type{border-bottom:none}
+.ghost{position:absolute;top:30px;right:-6px;font-size:clamp(6rem,26vw,13rem);font-weight:700;
+color:#f2f2f2;letter-spacing:-.06em;line-height:1;pointer-events:none;user-select:none;z-index:0}
+.head{position:relative;z-index:1;display:flex;gap:14px;align-items:baseline;margin-bottom:15px}
+.idx{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em}
+.yr{font-family:var(--mono);font-size:11.5px;color:var(--mid)}
+h2{position:relative;z-index:1;font-size:clamp(2.3rem,9.4vw,4.5rem);font-weight:700;
+letter-spacing:-.045em;line-height:1.02;margin-bottom:13px;transition:letter-spacing .4s ease}
+h2 .sub{font-size:.52em;color:var(--mid);letter-spacing:-.03em}
+@media(min-width:900px){.entry:hover h2{letter-spacing:-.018em}}
+.zh{position:relative;z-index:1;font-size:1.0625rem;color:#3a3a3a;margin-bottom:19px}
+.def{position:relative;z-index:1;font-size:1rem;line-height:1.88;color:#1e1e1e;max-width:33em;text-wrap:pretty}
+
+.quotes{position:relative;z-index:1;margin-top:32px;display:flex;flex-direction:column;gap:22px}
+blockquote{border-left:2px solid var(--ink);padding-left:17px}
+blockquote.n{border-left:2px solid var(--faint)}
+blockquote p{font-size:.9375rem;line-height:1.78;color:#0f0f0f;text-wrap:pretty}
+blockquote.q p:before{content:"\201C"}
+blockquote.q p:after{content:"\201D"}
+blockquote.n p{color:#3f3f3f}
+blockquote.n p:before{content:"→ ";color:var(--faint);font-family:var(--mono);font-size:.85em}
+cite{display:block;margin-top:10px;font-family:var(--mono);font-size:11px;color:var(--mid);font-style:normal;line-height:1.75}
+cite a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--faint)}
+cite a:hover{border-bottom-color:var(--ink)}
+.sep{margin:0 .45em;color:var(--faint)}
+
+footer{padding:58px 0 92px;border-top:1px solid var(--hair)}
+footer p{font-family:var(--mono);font-size:11.5px;line-height:2.05;color:var(--mid)}
+footer b{font-weight:500;color:var(--ink)}
+
+@media(prefers-reduced-motion:no-preference){
+  h1,.lede,.meta{animation:rise .8s cubic-bezier(.2,.7,.2,1) both}
+  .lede{animation-delay:.09s}.meta{animation-delay:.16s}
+  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<div class="wrap">
+  <header>
+    <div class="kicker">Lexicon / 2022—2026</div>
+    <h1>AI Slop<br><em>及其同类</em></h1>
+    <p class="lede">九个正在被真正使用的词。不是营销术语，是人们在抱怨、取笑、开会和写论文时会说的那种词。每条署名都能点开，直达出处。</p>
+    <p class="meta"><b>09</b> 词 · <b>13</b> 条原文照录 · <b>7</b> 条转述另标 · 按首次出现排序</p>
+  </header>
+      <article class="entry">
+        <div class="ghost" aria-hidden="true">01</div>
+        <div class="head"><span class="idx">01</span><span class="yr">2024</span></div>
+        <h2>slop</h2>
+        <p class="zh">AI 生成的低质内容</p>
+        <p class="def">名词。批量生成、无人校对、被塞给不需要它的人的文本与图像。这个词之所以成立，是因为它把「AI 做的」和「不该给人看的」两件事绑在了一起。</p>
+        <div class="quotes">
+        <blockquote class="q">
+          <p>Watching in real time as “slop” becomes a term of art. the way that “spam” became the term for unwanted emails, “slop” is going in the dictionary as the term for unwanted AI generated content</p>
+          <cite><a href="https://simonwillison.net/2024/May/8/slop/" target="_blank" rel="noopener">@deepfates</a><span class="sep">·</span>X<span class="sep">·</span>2024-05</cite>
+        </blockquote>
+        <blockquote class="q">
+          <p>Sharing unreviewed content that has been artificially generated with other people is rude.</p>
+          <cite><a href="https://simonwillison.net/2024/May/8/slop/" target="_blank" rel="noopener">Simon Willison</a><span class="sep">·</span>simonwillison.net<span class="sep">·</span>2024-05-08</cite>
+        </blockquote>
+        <blockquote class="q">
+          <p>Not all promotional content is spam, and not all AI-generated content is slop. But if it&#x27;s mindlessly generated and thrust upon someone who didn&#x27;t ask for it, slop is the perfect term for it.</p>
+          <cite><a href="https://simonwillison.net/2024/May/8/slop/" target="_blank" rel="noopener">Simon Willison</a><span class="sep">·</span>同上<span class="sep">·</span>2024-05-08</cite>
+        </blockquote>
+        </div>
+      </article>
+      <article class="entry">
+        <div class="ghost" aria-hidden="true">02</div>
+        <div class="head"><span class="idx">02</span><span class="yr">2026</span></div>
+        <h2>All Code Is Slop<br><span class=sub>(Except Mine)</span></h2>
+        <p class="zh">所有代码都是垃圾，除了我写的</p>
+        <p class="def">Lauren Tan 在 AI Engineer CODE 2026 的主舞台标题。表面是自嘲，实际讲的是信任：怎么在生成量翻十倍的同时，不让需要人抓的缺陷一起翻倍。</p>
+        <div class="quotes">
+        <blockquote class="q">
+          <p>When an agent makes the same mistake again, it is tempting to add another warning to AGENTS.md. Lauren Tan wants the correction to land somewhere harder to ignore: the codebase, an API, or an executable check.</p>
+          <cite><a href="https://ai.engineer/code/2026/talks/lauren-tan" target="_blank" rel="noopener">Lauren Tan (@poteto)</a><span class="sep">·</span>AI Engineer CODE 2026 · 主舞台<span class="sep">·</span>2026-11-11</cite>
+        </blockquote>
+        <blockquote class="n">
+          <p>演讲的核心是一张信任金字塔：代码库设计、静态分析、类型与测试排在前，散文式的规则说明排在最后。能被写成检查的东西，不要留给人的注意力。</p>
+          <cite><a href="https://ai.engineer/code/2026/talks/lauren-tan" target="_blank" rel="noopener">同场演讲 · 信任金字塔</a><span class="sep">·</span>AI Engineer CODE 2026<span class="sep">·</span>2026-11-11</cite>
+        </blockquote>
+        </div>
+      </article>
+      <article class="entry">
+        <div class="ghost" aria-hidden="true">03</div>
+        <div class="head"><span class="idx">03</span><span class="yr">2025</span></div>
+        <h2>vibe coding</h2>
+        <p class="zh">凭感觉写代码</p>
+        <p class="def">Karpathy 造的词：完全交出控制权，顺着感觉走，忘掉代码本身的存在。半年后他自己改口，说实际很少真的全凭 vibe。</p>
+        <div class="quotes">
+        <blockquote class="q">
+          <p>There&#x27;s a new kind of coding I call “vibe coding”, where you fully give in to the vibes, embrace exponentials, and forget that the code even exists.</p>
+          <cite><a href="https://x.com/karpathy/status/1886192184808149383" target="_blank" rel="noopener">Andrej Karpathy</a><span class="sep">·</span>X<span class="sep">·</span>2025-02</cite>
+        </blockquote>
+        <blockquote class="q">
+          <p>I rarely go full out vibe coding, and more often I still look at the code, I add compl…</p>
+          <cite><a href="https://twitter.com/karpathy/status/1903870973126045712" target="_blank" rel="noopener">Andrej Karpathy</a><span class="sep">·</span>X · 三个月后<span class="sep">·</span>2025-03</cite>
+        </blockquote>
+        <blockquote class="n">
+          <p>作者的论点：软件工程不只是写出能跑的程序，而是构建一个能满足需求、扛得住规模、在整个生命周期里能继续演进的系统。vibe coding 覆盖的是第一层。</p>
+          <cite><a href="https://serce.me/posts/2025-03-31-there-is-no-vibe-engineering" target="_blank" rel="noopener">SerCe</a><span class="sep">·</span>There is no Vibe Engineering<span class="sep">·</span>2025-03-31</cite>
+        </blockquote>
+        </div>
+      </article>
+      <article class="entry">
+        <div class="ghost" aria-hidden="true">04</div>
+        <div class="head"><span class="idx">04</span><span class="yr">2022</span></div>
+        <h2>enshittification</h2>
+        <p class="zh">平台腐化</p>
+        <p class="def">两阶段衰败：先对用户好以吸引供给方，再对供给方好以吸引商家，最后把两边的价值都抽干，留给股东。2023 年被选为年度词汇。</p>
+        <div class="quotes">
+        <blockquote class="q">
+          <p>Today, Amazon is an enshittified endless scroll of paid results, where winning depends on ad budgets, not quality.</p>
+          <cite><a href="https://pluralistic.net/2022/11/28/enshittificaiton/" target="_blank" rel="noopener">Cory Doctorow</a><span class="sep">·</span>pluralistic.net · 这个词第一次作为动词出现<span class="sep">·</span>2022-11-28</cite>
+        </blockquote>
+        <blockquote class="q">
+          <p>Enshittification is an informal word used to criticize the degradation in the quality and experience of online platforms over time, due to an increase in advertisements, costs, or features.</p>
+          <cite><a href="https://www.merriam-webster.com/slang/enshittification" target="_blank" rel="noopener">Merriam-Webster</a><span class="sep">·</span>slang 词条<span class="sep">·</span>2024</cite>
+        </blockquote>
+        </div>
+      </article>
+      <article class="entry">
+        <div class="ghost" aria-hidden="true">05</div>
+        <div class="head"><span class="idx">05</span><span class="yr">2022</span></div>
+        <h2>shoggoth</h2>
+        <p class="zh">戴笑脸的怪物</p>
+        <p class="def">预训练模型是洛夫克拉夫特笔下的无定形怪物，RLHF 是贴在它脸上的一张纸笑脸。梗的重点是：对齐只改了表面。</p>
+        <div class="quotes">
+        <blockquote class="n">
+          <p>这个梗的图像来自 @TetraspaceWest 2022 年 12 月的一条回复：左边是原始的 GPT-3（一团无定形的怪物），右边是加上 RLHF 之后的同一个怪物，手里举着一张小小的笑脸面具。</p>
+          <cite><a href="https://www.nytimes.com/2023/05/30/technology/shoggoth-meme-ai.html" target="_blank" rel="noopener">起源 · @TetraspaceWest</a><span class="sep">·</span>X · 经 NYT 与 RLHF 教材转述<span class="sep">·</span>2022-12</cite>
+        </blockquote>
+        <blockquote class="q">
+          <p>The pretrained model is an untamed monster because it was trained on indiscriminate data scraped from the Internet: think clickbait, …</p>
+          <cite><a href="https://huyenchip.com/2023/05/02/rlhf.html" target="_blank" rel="noopener">Huyen Chip</a><span class="sep">·</span>RLHF 长文<span class="sep">·</span>2023-05-02</cite>
+        </blockquote>
+        </div>
+      </article>
+      <article class="entry">
+        <div class="ghost" aria-hidden="true">06</div>
+        <div class="head"><span class="idx">06</span><span class="yr">2024</span></div>
+        <h2>botshit</h2>
+        <p class="zh">机器胡说，人当真用</p>
+        <p class="def">比 hallucination 更狠的地方在于后半句：它不只是模型编造，而是人未经核实就把它用进了真实工作。危险来自使用方式，不是模型本身。</p>
+        <div class="quotes">
+        <blockquote class="q">
+          <p>Botshit — made-up, inaccurate, and untruthful chatbot content that humans uncritically use for tasks — can pose major risks to your business in the form of reputational damage, …</p>
+          <cite><a href="https://hbr.org/2024/07/the-risks-of-botshit" target="_blank" rel="noopener">Harvard Business Review</a><span class="sep">·</span>The Risks of Botshit<span class="sep">·</span>2024-07</cite>
+        </blockquote>
+        <blockquote class="n">
+          <p>André Spicer 的论点：生成式 AI 把「生产空洞且误导性信息」的成本压到了接近零，这才是它对公共讨论的真实威胁——不是它说谎，而是它让说谎变得免费。</p>
+          <cite><a href="https://www.theguardian.com/commentisfree/2024/jan/03/botshit-generative-ai-imminent-threat-democracy" target="_blank" rel="noopener">André Spicer</a><span class="sep">·</span>The Guardian · 评论<span class="sep">·</span>2024-01-03</cite>
+        </blockquote>
+        </div>
+      </article>
+      <article class="entry">
+        <div class="ghost" aria-hidden="true">07</div>
+        <div class="head"><span class="idx">07</span><span class="yr">2021</span></div>
+        <h2>dead internet<br><span class=sub>theory</span></h2>
+        <p class="zh">死互联网理论</p>
+        <p class="def">一个 2021 年前后从论坛长出来的说法：真实的、由人产生的内容已经被机器和算法挤到可以忽略。它长期被当作阴谋论，但其中的统计部分越来越难反驳。</p>
+        <div class="quotes">
+        <blockquote class="n">
+          <p>这个理论没有可考的单一起源。维基百科的条目直接指出：学术文献本身就很难记录网络亚文化与阴谋论的诞生过程，所以它的出处无法被精确定位。</p>
+          <cite><a href="https://en.wikipedia.org/wiki/Dead_Internet_theory" target="_blank" rel="noopener">Wikipedia</a><span class="sep">·</span>Dead Internet theory · 起源一节<span class="sep">·</span>2026</cite>
+        </blockquote>
+        <blockquote class="n">
+          <p>它主张：互联网已经几乎完全被自动化与 AI 填满，真正由人产生的内容被压缩或协调到接近不存在的程度。这里记的是这个主张本身，不是对它的认可。</p>
+          <cite><a href="https://en.wikipedia.org/wiki/Dead_Internet_theory" target="_blank" rel="noopener">该理论的核心命题</a><span class="sep">·</span>作为被记录的说法<span class="sep">·</span>2021—</cite>
+        </blockquote>
+        </div>
+      </article>
+      <article class="entry">
+        <div class="ghost" aria-hidden="true">08</div>
+        <div class="head"><span class="idx">08</span><span class="yr">2024</span></div>
+        <h2>model collapse</h2>
+        <p class="zh">模型坍塌</p>
+        <p class="def">用模型自己生成的数据去训练下一个模型，几代之后分布的两端会消失——先是罕见的东西没了，然后连常见的东西也失真。Nature 上的论文，不是比喻。</p>
+        <div class="quotes">
+        <blockquote class="q">
+          <p>Indiscriminate use of model-generated content in training causes irreversible defects in the resulting models, in which tails of the original content distribution disappear.</p>
+          <cite><a href="https://www.nature.com/articles/s41586-024-07566-y" target="_blank" rel="noopener">Shumailov et al.</a><span class="sep">·</span>Nature 631, 755<span class="sep">·</span>2024-07-25</cite>
+        </blockquote>
+        <blockquote class="n">
+          <p>牛津计算机系的通告指出：这类错误会随时间累积，最终成为未来机器学习模型的一道主要障碍。论文用的是递归训练的实验，不是思想实验。</p>
+          <cite><a href="https://www.cs.ox.ac.uk/news/2356-full.html" target="_blank" rel="noopener">University of Oxford · 计算机系</a><span class="sep">·</span>研究通告<span class="sep">·</span>2024-07</cite>
+        </blockquote>
+        </div>
+      </article>
+      <article class="entry">
+        <div class="ghost" aria-hidden="true">09</div>
+        <div class="head"><span class="idx">09</span><span class="yr">2022</span></div>
+        <h2>e/acc</h2>
+        <p class="zh">有效加速主义</p>
+        <p class="def">把「技术资本是不可阻挡的物理过程」当成政治主张。它借了有效利他（EA）的句法，结论却反过来：不要减速，不要对齐，加速本身就是答案。</p>
+        <div class="quotes">
+        <blockquote class="q">
+          <p>Effective Accelerationism (often shortened to “e/acc,” pronounced “e-ack”) is a loosely organized movement devoted to the no-holds-barred pursuit of technological progress.</p>
+          <cite><a href="https://www.nytimes.com/2023/12/10/technology/ai-acceleration.html" target="_blank" rel="noopener">The New York Times</a><span class="sep">·</span>This A.I. Subculture&#x27;s Motto: Go, Go, Go<span class="sep">·</span>2023-12-10</cite>
+        </blockquote>
+        <blockquote class="q">
+          <p>Technocapital is an inexorable physical process. … e/acc is not an ideology. It is not a movement. It is simply an acknowledgement of truth.</p>
+          <cite><a href="https://effectiveacceleration.tech/" target="_blank" rel="noopener">e/acc 支持者站点</a><span class="sep">·</span>effectiveacceleration.tech<span class="sep">·</span>2023</cite>
+        </blockquote>
+        </div>
+      </article>
+  <footer>
+    <p><b>引文分两类，页面上分开标注。</b><br>
+    带引号的为原文照录，未改写；带 → 的为转述或概括，已注明依据。<br>
+    两种都能点开署名核对。整理于 2026-11。</p>
+  </footer>
+</div>
+<script>
+(function(){
+  var p=document.getElementById('prog');
+  function up(){
+    var h=document.documentElement;
+    var max=(h.scrollHeight-h.clientHeight)||1;
+    p.style.width=Math.min(100,(h.scrollTop||document.body.scrollTop)/max*100)+'%';
+  }
+  addEventListener('scroll',up,{passive:true}); up();
+})();
+</script>
+</body>
+</html>
