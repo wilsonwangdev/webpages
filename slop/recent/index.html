@@ -3,229 +3,276 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>先被说出口，后被收进词典</title>
-<meta name="description" content="2025—2026，八个从 X、播客和会议室里长出来、最后进了词典的 AI 词。中英对照。">
-<meta property="og:title" content="先被说出口，后被收进词典">
-<meta property="og:description" content="八个词，从 X 和会议室走进 Merriam-Webster。中英对照。">
+<title>八个 AI 热词 · 中英对照</title>
+<meta name="description" content="slop、vibe coding、agentic、AGI、hallucination、AI agent、context window、prompt injection — 原文照录，逐句中译。">
+<meta property="og:title" content="八个 AI 热词">
+<meta property="og:description" content="英文原文在上，中文在下。">
 <meta property="og:type" content="article">
 <meta name="theme-color" content="#ffffff">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#fff;--ink:#0a0a0a;--mid:#6b6b6b;--faint:#d8d8d8;--hair:#ebebeb;
+:root{--bg:#fff;--ink:#0a0a0a;--mid:#6b6b6b;--faint:#d8d8d8;--hair:#ececec;
 --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
 --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,monospace}
-html{-webkit-text-size-adjust:100%}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;
--webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
-#prog{position:fixed;top:0;left:0;height:2px;background:var(--ink);width:0;z-index:99}
+-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;overflow-x:hidden}
+#prog{position:fixed;top:0;left:0;height:2px;background:var(--ink);width:0;z-index:99;will-change:width}
+
+.topmark{position:fixed;top:18px;left:22px;z-index:50;font-family:var(--mono);font-size:10.5px;
+letter-spacing:.16em;color:var(--mid);mix-blend-mode:multiply;pointer-events:none}
+@media(min-width:900px){.topmark{left:44px;top:22px}}
+
+nav.dots{position:fixed;right:12px;top:50%;transform:translateY(-50%);z-index:50;
+display:flex;flex-direction:column;gap:11px}
+nav.dots a{display:block;width:7px;height:7px;border-radius:50%;border:1px solid var(--faint);
+transition:background .3s ease,border-color .3s ease,transform .3s ease}
+nav.dots a.on{background:var(--ink);border-color:var(--ink);transform:scale(1.25)}
+@media(min-width:900px){nav.dots{right:26px;gap:13px}}
+
 .wrap{max-width:740px;margin:0 auto;padding:0 22px}
 @media(min-width:900px){.wrap{padding:0 44px}}
 
-header{padding:96px 0 64px;border-bottom:1px solid var(--hair)}
-.kicker{font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--mid);margin-bottom:34px}
-h1{font-size:clamp(2.6rem,10.4vw,5rem);font-weight:700;letter-spacing:-.05em;line-height:1.06;text-wrap:balance}
-.lede{margin-top:34px;font-size:1.0625rem;line-height:1.85;color:#2e2e2e;max-width:30em;text-wrap:pretty}
-
-.entry{position:relative;padding:62px 0 58px;border-bottom:1px solid var(--hair);overflow:hidden}
-.entry:last-of-type{border-bottom:none}
-.ghost{position:absolute;top:26px;right:-6px;font-size:clamp(5.5rem,24vw,12rem);font-weight:700;
-color:#f2f2f2;letter-spacing:-.06em;line-height:1;pointer-events:none;user-select:none;z-index:0}
-.head{position:relative;z-index:1;display:flex;gap:12px;align-items:baseline;margin-bottom:14px;flex-wrap:wrap}
+.entry{position:relative;padding:110px 0 76px;overflow:hidden}
+.entry+.entry{border-top:1px solid var(--hair)}
+.ghost{position:absolute;top:52px;right:-10px;font-size:clamp(6rem,26vw,14rem);font-weight:700;
+color:#f1f1f1;letter-spacing:-.06em;line-height:1;pointer-events:none;user-select:none;z-index:0;
+will-change:transform}
+.head{position:relative;z-index:1;display:flex;gap:14px;align-items:baseline;margin-bottom:16px}
 .idx{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em}
 .dt{font-family:var(--mono);font-size:11.5px;color:var(--mid)}
-.tag{font-family:var(--mono);font-size:10.5px;color:var(--mid);border:1px solid var(--faint);border-radius:2px;padding:2px 6px}
-h2{position:relative;z-index:1;font-size:clamp(2.15rem,8.8vw,4.2rem);font-weight:700;
-letter-spacing:-.045em;line-height:1.04;margin-bottom:8px;transition:letter-spacing .4s ease}
-@media(min-width:900px){.entry:hover h2{letter-spacing:-.018em}}
-.cn{position:relative;z-index:1;font-size:1rem;color:#4a4a4a;margin-bottom:18px}
-.def{position:relative;z-index:1;font-size:.9688rem;line-height:1.9;color:#1e1e1e;max-width:32em;text-wrap:pretty}
+h2{position:relative;z-index:1;font-size:clamp(2.5rem,10.6vw,5rem);font-weight:700;
+letter-spacing:-.05em;line-height:1.02;margin-bottom:10px;
+transition:letter-spacing .5s cubic-bezier(.2,.7,.2,1)}
+@media(min-width:900px){.entry:hover h2{letter-spacing:-.02em}}
+.cn{position:relative;z-index:1;font-size:1.0625rem;color:#4a4a4a;margin-bottom:20px}
+.def{position:relative;z-index:1;font-size:.9688rem;line-height:1.92;color:#1e1e1e;max-width:32em;text-wrap:pretty}
 
-.quotes{position:relative;z-index:1;margin-top:30px;display:flex;flex-direction:column;gap:26px}
+.quotes{position:relative;z-index:1;margin-top:32px;display:flex;flex-direction:column;gap:28px}
 blockquote{border-left:2px solid var(--ink);padding-left:17px}
 blockquote p.en{font-size:.9375rem;line-height:1.78;color:#0f0f0f;text-wrap:pretty}
 blockquote p.en:before{content:"\201C"}
 blockquote p.en:after{content:"\201D"}
 blockquote p.en.noq:before,blockquote p.en.noq:after{content:none}
-blockquote p.zh{margin-top:9px;font-size:.875rem;line-height:1.95;color:#666;text-wrap:pretty;
-padding-top:9px;border-top:1px dotted #e0e0e0}
+blockquote p.zh{margin-top:9px;font-size:.875rem;line-height:1.98;color:#6a6a6a;text-wrap:pretty;
+padding-top:9px;border-top:1px dotted #e2e2e2}
 cite{display:block;margin-top:11px;font-family:var(--mono);font-size:10.5px;color:var(--mid);font-style:normal;line-height:1.8}
 cite a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--faint)}
 cite a:hover{border-bottom-color:var(--ink)}
 .sep{margin:0 .4em;color:var(--faint)}
 
-footer{padding:54px 0 90px;border-top:1px solid var(--hair)}
-footer p{font-family:var(--mono);font-size:11.5px;line-height:2.1;color:var(--mid)}
-footer b{font-weight:500;color:var(--ink)}
-
+/* 入场：从下裁切揭示 */
 @media(prefers-reduced-motion:no-preference){
-  h1,.lede{animation:rise .9s cubic-bezier(.2,.7,.2,1) both}
-  .lede{animation-delay:.1s}
-  @keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+  .rv{opacity:0;transform:translateY(22px);
+      transition:opacity .85s cubic-bezier(.16,.84,.3,1),transform .85s cubic-bezier(.16,.84,.3,1)}
+  .rv.in{opacity:1;transform:none}
+  blockquote.rv{transition-delay:calc(var(--i,0) * 90ms)}
+  .entry h2.rv{transition-delay:.05s}
+  .entry .cn.rv{transition-delay:.11s}
+  .entry .def.rv{transition-delay:.16s}
 }
 </style>
 </head>
 <body>
 <div id="prog"></div>
+<div class="topmark">2025 — 2026 · 08</div>
+<nav class="dots" aria-label="词条导航"><a href="#w01" aria-label="slop"></a><a href="#w02" aria-label="vibe coding"></a><a href="#w03" aria-label="agentic"></a><a href="#w04" aria-label="AGI"></a><a href="#w05" aria-label="hallucination"></a><a href="#w06" aria-label="AI agent"></a><a href="#w07" aria-label="context window"></a><a href="#w08" aria-label="prompt injection"></a></nav>
 <div class="wrap">
-  <header>
-    <div class="kicker">2025 — 2026</div>
-    <h1>先被说出口<br>后被收进词典</h1>
-    <p class="lede">有的来自一条推文，有的来自一期播客，有的来自你自己在群里打出的那行字。八个词。英文原文在上，中文在下。</p>
-  </header>
-      <article class="entry">
+      <article class="entry" id="w01" data-no="01">
         <div class="ghost" aria-hidden="true">01</div>
-        <div class="head"><span class="idx">01</span><span class="dt">2025</span><span class="tag">年度词汇</span></div>
-        <h2>slop</h2>
-        <p class="cn">泔水·AI 垃圾内容</p>
-        <p class="def">Merriam-Webster 的 2025 年度词汇。定义只有一句：由人工智能批量生产的低质量数字内容。它包含整个 AI 时代的不耐烦，而且是笑着说的那种。</p>
+        <div class="head rv"><span class="idx">01</span><span class="dt">2025 年度词汇</span></div>
+        <h2 class="rv">slop</h2>
+        <p class="cn rv">泔水 · AI 垃圾内容</p>
+        <p class="def rv">Merriam-Webster 的年度词。定义只有一句：由人工智能批量生产的低质量数字内容。它装着整个 AI 时代的不耐烦，而且是笑着说出来的。</p>
         <div class="quotes">
-        <blockquote>
-          <p class="en noq">Merriam-Webster&#x27;s human editors have chosen slop as the 2025 Word of the Year. We define slop as “digital content of low quality that is produced usually in quantity by means of artificial intelligence.” All that stuff dumped on our screens, captured in just four letters: the English language came through again.</p>
-          <p class="zh">Merriam-Webster 的真人编辑把 slop 选为 2025 年度词汇。我们把它定义为「由人工智能批量生产的低质量数字内容」。所有被倒在我们屏幕上的东西，四个字母就说完了：英语又一次赢了。</p>
+        <blockquote class="rv">
+          <p class="en noq">Merriam-Webster&#x27;s human editors have chosen slop as the 2025 Word of the Year. We define slop as “digital content of low quality that is produced usually in quantity by means of artificial intelligence.”</p>
+          <p class="zh">Merriam-Webster 的真人编辑把 slop 选为 2025 年度词汇。我们把它定义为「由人工智能批量生产的低质量数字内容」。</p>
           <cite><a href="https://www.merriam-webster.com/wordplay/word-of-the-year" target="_blank" rel="noopener">Merriam-Webster</a><span class="sep">·</span>2025 Word of the Year<span class="sep">·</span>2025-12</cite>
         </blockquote>
-        <blockquote>
+        <blockquote class="rv">
           <p class="en">In 2025, amid all the talk about AI threats, slop set a tone that&#x27;s less fearful, more mocking. The word sends a little message to AI: when it comes to replacing human creativity, sometimes you don&#x27;t seem too superintelligent.</p>
-          <p class="zh">在 2025 年、在满世界都在谈 AI 威胁的时候，slop 定下的是另一种调子——不恐惧，更多是取笑。这个词给 AI 递了一句话：要说取代人类的创造力，你有时候看着也没那么超级智能。</p>
+          <p class="zh">2025 年，满世界都在谈 AI 威胁，slop 定下的调子却不同——不恐惧，更多是取笑。它给 AI 递了句话：要说取代人类创造力，你有时候看着也没那么超级智能。</p>
           <cite><a href="https://www.merriam-webster.com/wordplay/word-of-the-year" target="_blank" rel="noopener">Merriam-Webster</a><span class="sep">·</span>同上<span class="sep">·</span>2025-12</cite>
         </blockquote>
         </div>
       </article>
-      <article class="entry">
+      <article class="entry" id="w02" data-no="02">
         <div class="ghost" aria-hidden="true">02</div>
-        <div class="head"><span class="idx">02</span><span class="dt">2025.02 → 2026 入典</span><span class="tag">入词典</span></div>
-        <h2>vibe coding</h2>
-        <p class="cn">凭感觉编程</p>
-        <p class="def">Karpathy 2025 年 2 月造的词。2026 年 9 月，它和 AGI、looksmaxxing 一起被收进 Merriam-Webster。从一条推文到一本词典，用了一年半。</p>
+        <div class="head rv"><span class="idx">02</span><span class="dt">2026 入典</span></div>
+        <h2 class="rv">vibe coding</h2>
+        <p class="cn rv">凭感觉编程</p>
+        <p class="def rv">Karpathy 2025 年 2 月造的词。2026 年 9 月被收进 Merriam-Webster，同批还有 AGI 和 looksmaxxing。从一条推文到一本词典，用了一年半。</p>
         <div class="quotes">
-        <blockquote>
+        <blockquote class="rv">
           <p class="en noq">There&#x27;s a new kind of coding I call “vibe coding”, where you fully give in to the vibes, embrace exponentials, and forget that the code even exists.</p>
-          <p class="zh">有一种新的编程方式，我叫它「凭感觉编程」：完全交给感觉，拥抱指数增长，忘掉代码这回事本身还存在。</p>
+          <p class="zh">有一种新的编程方式，我叫它「凭感觉编程」：完全交给感觉，拥抱指数增长，忘掉代码这回事本身就还存在。</p>
           <cite><a href="https://x.com/karpathy/status/1886192184808149383" target="_blank" rel="noopener">Andrej Karpathy</a><span class="sep">·</span>X<span class="sep">·</span>2025-02</cite>
         </blockquote>
-        <blockquote>
+        <blockquote class="rv">
           <p class="en">Merriam-Webster adds meme coin, vibe coding, and uncanny valley to its online dictionary. Those are just three of 1,400 new words added.</p>
           <p class="zh">Merriam-Webster 把 meme coin、vibe coding 和 uncanny valley 收进了在线词典。这只是新增 1,400 个词里的三个。</p>
           <cite><a href="https://www.theverge.com/tech/997370/merriam-webster-online-dictionary-vibe-conding-rickroll" target="_blank" rel="noopener">The Verge</a><span class="sep">·</span>2026-09-15 词典更新<span class="sep">·</span>2026-09</cite>
         </blockquote>
         </div>
       </article>
-      <article class="entry">
+      <article class="entry" id="w03" data-no="03">
         <div class="ghost" aria-hidden="true">03</div>
-        <div class="head"><span class="idx">03</span><span class="dt">2026 入典</span><span class="tag">入词典</span></div>
-        <h2>agentic</h2>
-        <p class="cn">有能动性的</p>
-        <p class="def">形容词，2026 年 9 月 15 日进入 Merriam-Webster。指 AI 能自己拿主意、自己往下做，而不是等你每步都给指令。也被当作营销标签用——每个厂商的发布会第二页都有它。</p>
+        <div class="head rv"><span class="idx">03</span><span class="dt">2026 入典</span></div>
+        <h2 class="rv">agentic</h2>
+        <p class="cn rv">能自己干的</p>
+        <p class="def rv">形容词，2026 年 9 月 15 日进入词典。指 AI 自己拿主意、自己往下做，而不是等你每一步都给指令。也是这一年最泛滥的营销标签。</p>
         <div class="quotes">
-        <blockquote>
+        <blockquote class="rv">
           <p class="en">Agentic: A type of artificial intelligence that can make proactive, autonomous decisions with limited human input and is capable of operating autonomously around the clock.</p>
-          <p class="zh">agentic：一种能主动、自主地做决策的人工智能，只需很少的人类输入，且能全天候自主运行。</p>
+          <p class="zh">agentic：一种能主动、自主做决策的人工智能，只需很少的人类输入，且能全天候自主运行。</p>
           <cite><a href="https://businessinsider.com/ai-terms-definitions-vocabulary-2026" target="_blank" rel="noopener">Business Insider</a><span class="sep">·</span>AI terms: Definitions of the words behind the boom<span class="sep">·</span>2026</cite>
         </blockquote>
-        <blockquote>
+        <blockquote class="rv">
           <p class="en">‘Vibe coding’ makes the dictionary: AI terms recognized by Merriam-Webster — ‘Agentic’, ‘prompt engineering’ and other technical terms are among the 1,400 entries added.</p>
           <p class="zh">「凭感觉编程」进词典了：Merriam-Webster 认可的 AI 术语——agentic、prompt engineering 等技术名词都在新增的 1,400 个条目里。</p>
           <cite><a href="https://www.nature.com/articles/d41586-026-03044-9" target="_blank" rel="noopener">Nature</a><span class="sep">·</span>News<span class="sep">·</span>2026-10-01</cite>
         </blockquote>
         </div>
       </article>
-      <article class="entry">
+      <article class="entry" id="w04" data-no="04">
         <div class="ghost" aria-hidden="true">04</div>
-        <div class="head"><span class="idx">04</span><span class="dt">2026 入典</span><span class="tag">入词典</span></div>
-        <h2>AGI</h2>
-        <p class="cn">通用人工智能</p>
-        <p class="def">老词，但这个身份是新的：它在 2026 年 9 月才正式进入词典。此前十年它一直是个没人能给出统一定义的东西，各家实验室的版本互相打架。</p>
+        <div class="head rv"><span class="idx">04</span><span class="dt">2026 入典</span></div>
+        <h2 class="rv">AGI</h2>
+        <p class="cn rv">通用人工智能</p>
+        <p class="def rv">十年了，没人能给出统一定义。2026 年 9 月，它终于被正式收进词典——不是因为它清楚了，而是因为已经无法回避。</p>
         <div class="quotes">
-        <blockquote>
-          <p class="en">AGI generally refers to AI that&#x27;s more capable than the average human at many, if not most, tasks. OpenAI CEO Sam Altman once described AGI as the equivalent of a median human that you could hire as a co-worker.</p>
-          <p class="zh">AGI 一般指在多数（即使不是绝大多数）任务上比普通人更强的 AI。OpenAI 的 CEO Sam Altman 曾说，AGI 相当于一个你能雇来当同事的中位水平的人。</p>
+        <blockquote class="rv">
+          <p class="en">Artificial general intelligence, or AGI, is a nebulous term. But it generally refers to AI that&#x27;s more capable than the average human at many, if not most, tasks.</p>
+          <p class="zh">通用人工智能，也就是 AGI，是一个模糊的词。但它一般是指：在多数——即使不是绝大多数——任务上，比普通人更强的 AI。</p>
           <cite><a href="https://techcrunch.com/2026/09/07/artificial-intelligence-definition-glossary-hallucinations-guide-to-common-ai-terms" target="_blank" rel="noopener">TechCrunch</a><span class="sep">·</span>AI Glossary<span class="sep">·</span>2026-09-07</cite>
         </blockquote>
+        <blockquote class="rv">
+          <p class="en noq">OpenAI CEO Sam Altman once described AGI as the “equivalent of a median human that you could hire as a co-worker.”</p>
+          <p class="zh">OpenAI 的 CEO Sam Altman 曾说，AGI 相当于「一个你能雇来当同事的中位水平的人」。</p>
+          <cite><a href="https://techcrunch.com/2026/09/07/artificial-intelligence-definition-glossary-hallucinations-guide-to-common-ai-terms" target="_blank" rel="noopener">TechCrunch</a><span class="sep">·</span>同上 · 引 Altman<span class="sep">·</span>2026-09-07</cite>
+        </blockquote>
         </div>
       </article>
-      <article class="entry">
+      <article class="entry" id="w05" data-no="05">
         <div class="ghost" aria-hidden="true">05</div>
-        <div class="head"><span class="idx">05</span><span class="dt">2026 入典</span><span class="tag">入词典</span></div>
-        <h2>-maxxing</h2>
-        <p class="cn">刷到极致</p>
-        <p class="def">一个构词法而不是一个词：把某件事做到极端的量。looksmaxxing 在 2026 年 9 月进了词典，同一个月，AI 圈把它套到 token 上——tokenmaxxing，然后是它的反面 modelmaxxing。</p>
+        <div class="head rv"><span class="idx">05</span><span class="dt">天天在用</span></div>
+        <h2 class="rv">hallucination</h2>
+        <p class="cn rv">幻觉</p>
+        <p class="def rv">AI 行业对「模型瞎编」的首选说法。它之所以流行，是因为把机器的错误说成了一种精神现象——听起来比「它错了」更准确，也更像托辞。</p>
         <div class="quotes">
-        <blockquote>
-          <p class="en">Other additions include Mandela Effect, AGI, letterboxing, looksmaxxing, and what seems like a really late acknowledgement for Rickroll.</p>
-          <p class="zh">其他新增条目包括曼德拉效应、AGI、letterboxing、looksmaxxing，以及对 Rickroll 一个迟得离谱的正式承认。</p>
-          <cite><a href="https://www.theverge.com/tech/997370/merriam-webster-online-dictionary-vibe-conding-rickroll" target="_blank" rel="noopener">The Verge</a><span class="sep">·</span>2026-09-15 词典更新<span class="sep">·</span>2026-09</cite>
+        <blockquote class="rv">
+          <p class="en">Hallucination is the AI industry&#x27;s preferred term for AI models making stuff up — literally generating information that is incorrect. Obviously, it&#x27;s a huge problem for AI quality.</p>
+          <p class="zh">幻觉是 AI 行业对「模型瞎编」的首选说法——字面意思就是生成了不正确的内容。显然，这对 AI 的质量是个大问题。</p>
+          <cite><a href="https://techcrunch.com/2026/09/07/artificial-intelligence-definition-glossary-hallucinations-guide-to-common-ai-terms" target="_blank" rel="noopener">TechCrunch</a><span class="sep">·</span>AI Glossary<span class="sep">·</span>2026-09-07</cite>
         </blockquote>
-        <blockquote>
-          <p class="en">The first half of 2026 was characterized by one word in the AI community: tokenmaxxing — referring to companies urging their employees to use AI as much as possible. But after reviewing the AI bills…</p>
-          <p class="zh">2026 年上半年，AI 圈可以用一个词概括：刷 token——指公司催促员工尽可能多地使用 AI。但在核对过 AI 账单之后……</p>
-          <cite><a href="https://businessinsider.com/ai-model-routing-modelmaxxing-efficient-token-use-2026-7" target="_blank" rel="noopener">Business Insider</a><span class="sep">·</span>Tokenmaxxing is over. It&#x27;s all about modelmaxxing now.<span class="sep">·</span>2026-07</cite>
+        <blockquote class="rv">
+          <p class="en">Hallucinations produce GenAI outputs that can be misleading and could even lead to real-life risks — with potentially dangerous consequences.</p>
+          <p class="zh">幻觉会让生成式 AI 的输出具有误导性，甚至可能导致现实风险——后果可能很危险。</p>
+          <cite><a href="https://techcrunch.com/2026/09/07/artificial-intelligence-definition-glossary-hallucinations-guide-to-common-ai-terms" target="_blank" rel="noopener">TechCrunch</a><span class="sep">·</span>同上<span class="sep">·</span>2026-09-07</cite>
         </blockquote>
         </div>
       </article>
-      <article class="entry">
+      <article class="entry" id="w06" data-no="06">
         <div class="ghost" aria-hidden="true">06</div>
-        <div class="head"><span class="idx">06</span><span class="dt">2025.09</span><span class="tag">职场</span></div>
-        <h2>workslop</h2>
-        <p class="cn">无用功</p>
-        <p class="def">AI 生成、看起来像模像样、但缺少推进任务所需的实质——拿到手里的人还得解读、修补甚至重做。HBR 造词，被列为 2026 年职场第一趋势，也被写进了年度词汇那篇文章。</p>
+        <div class="head rv"><span class="idx">06</span><span class="dt">两年最热</span></div>
+        <h2 class="rv">AI agent</h2>
+        <p class="cn rv">智能体</p>
+        <p class="def rv">2025 到 2026 最铺开的一个概念，也是被滥用最狠的一个。厂商说它的时候，可能指一个能自己订机票的程序，也可能指一个换了名字的聊天框。</p>
         <div class="quotes">
-        <blockquote>
-          <p class="en noq">The flood of slop in 2025 included absurd videos, off-kilter advertising images, cheesy propaganda, fake news that looks pretty real, junky AI-written books, “workslop” reports that waste coworkers&#x27; time… and lots of talking cats.</p>
-          <p class="zh">2025 年的泔水洪流里有荒诞视频、歪掉的广告图、廉价宣传、看着挺真的假新闻、AI 写的垃圾书、浪费同事时间的 workslop 报告……还有一大堆会说话的猫。</p>
-          <cite><a href="https://www.merriam-webster.com/wordplay/word-of-the-year" target="_blank" rel="noopener">Merriam-Webster</a><span class="sep">·</span>2025 年度词汇说明<span class="sep">·</span>2025-12</cite>
+        <blockquote class="rv">
+          <p class="en">An AI agent refers to a tool that uses AI technologies to perform a series of tasks on your behalf — beyond what a more basic AI chatbot could do — such as filing expenses, booking tickets or a table at a restaurant, or even writing and maintaining code.</p>
+          <p class="zh">AI 智能体指一种工具：它用 AI 技术代替你完成一系列任务——超出基础聊天机器人能做的范围——比如报销、订票、订餐厅，甚至写代码和维护代码。</p>
+          <cite><a href="https://techcrunch.com/2026/09/07/artificial-intelligence-definition-glossary-hallucinations-guide-to-common-ai-terms" target="_blank" rel="noopener">TechCrunch</a><span class="sep">·</span>AI Glossary<span class="sep">·</span>2026-09-07</cite>
         </blockquote>
-        <blockquote>
-          <p class="en">AI-generated work that masquerades as good work, but lacks the substance to advance a given task.</p>
-          <p class="zh">AI 生成、伪装成好成果的工作，但缺少推进某一具体任务所需的实质。</p>
-          <cite><a href="https://tech.co/news/what-is-workslop-ai-how-spot" target="_blank" rel="noopener">tech.co</a><span class="sep">·</span>What Is AI Workslop, and How Can You Spot It?<span class="sep">·</span>2025-10-03</cite>
+        <blockquote class="rv">
+          <p class="en noq">“AI agent” might mean different things to different people. Infrastructure is also still being built out to deliver on its envisaged capabilities.</p>
+          <p class="zh">「AI 智能体」对不同的人可能指不同的东西。支撑它那些设想能力的基础设施，也还在建设中。</p>
+          <cite><a href="https://techcrunch.com/2026/09/07/artificial-intelligence-definition-glossary-hallucinations-guide-to-common-ai-terms" target="_blank" rel="noopener">TechCrunch</a><span class="sep">·</span>同上<span class="sep">·</span>2026-09-07</cite>
         </blockquote>
         </div>
       </article>
-      <article class="entry">
+      <article class="entry" id="w07" data-no="07">
         <div class="ghost" aria-hidden="true">07</div>
-        <div class="head"><span class="idx">07</span><span class="dt">2026.08</span><span class="tag">X / 办公室</span></div>
-        <h2>meat proxy</h2>
-        <p class="cn">人肉代理</p>
-        <p class="def">把 AI 生成的东西原样转发出去、自己不读也不核实的人。词在 X 上流行，官媒跟进报道，被叫作「最先被替换掉的那批人」。</p>
+        <div class="head rv"><span class="idx">07</span><span class="dt">天天在用</span></div>
+        <h2 class="rv">context window</h2>
+        <p class="cn rv">上下文窗口</p>
+        <p class="def rv">模型一次能「看见」多少字。这个词两年里从技术参数变成了日常抱怨——「塞不下了」「前面忘光了」，说的都是它。</p>
         <div class="quotes">
-        <blockquote>
-          <p class="en noq">There is a new name for the coworker who responds to a simple question with seven paragraphs that very clearly came straight from ChatGPT: a “meat proxy.”</p>
-          <p class="zh">现在，那种你问一句、他甩回七段、而七段明显直接来自 ChatGPT 的同事，有了新名字：「人肉代理」。</p>
-          <cite><a href="https://me.mashable.com/digital-culture/75391/are-you-a-meat-proxy-the-latest-ai-slang-explained" target="_blank" rel="noopener">Mashable</a><span class="sep">·</span>Are you a &#x27;meat proxy&#x27;? The latest AI slang, explained.<span class="sep">·</span>2026</cite>
+        <blockquote class="rv">
+          <p class="en">The amount of text (measured in tokens) a model can consider at once, covering your messages, its replies, files, and tool output. Effectively the model&#x27;s working memory.</p>
+          <p class="zh">模型一次能考虑的文本量（以 token 计），涵盖你的消息、它的回复、文件和工具输出。实际上就是模型的工作记忆。</p>
+          <cite><a href="https://thelexicon.ai/terms/context-window" target="_blank" rel="noopener">The New AI Lexicon</a><span class="sep">·</span>context window<span class="sep">·</span>2026-10</cite>
         </blockquote>
-        <blockquote>
-          <p class="en noq">Techies on X are calling them “very annoying” and “the first ones to be replaced.” For some, being a meat proxy might even be the “biggest career risk of 2026.”</p>
-          <p class="zh">X 上的技术人叫他们「非常烦人」，还说他们是「最先被替换掉的人」。对某些人来说，当一个人肉代理甚至可能是「2026 年最大的职业风险」。</p>
-          <cite><a href="https://www.businessinsider.com/meat-proxy-tech-new-term-ai-2026-8" target="_blank" rel="noopener">Business Insider</a><span class="sep">·</span>What Is a &#x27;Meat Proxy&#x27;?<span class="sep">·</span>2026-08</cite>
+        <blockquote class="rv">
+          <p class="en">The whole codebase won&#x27;t fit in the context window, so the agent searches for what it needs.</p>
+          <p class="zh">整个代码库塞不进上下文窗口，所以 agent 会去搜索它需要的部分。</p>
+          <cite><a href="https://thelexicon.ai/terms/context-window" target="_blank" rel="noopener">The New AI Lexicon</a><span class="sep">·</span>同上 · 词条示例<span class="sep">·</span>2026-10</cite>
         </blockquote>
         </div>
       </article>
-      <article class="entry">
+      <article class="entry" id="w08" data-no="08">
         <div class="ghost" aria-hidden="true">08</div>
-        <div class="head"><span class="idx">08</span><span class="dt">2025 →</span><span class="tag">文化</span></div>
-        <h2>clanker</h2>
-        <p class="cn">铁皮罐头</p>
-        <p class="def">对 AI、聊天机器人或机器人的蔑称，借自《星战》里对战斗机器人的骂法。用在 AI 到处出现、让人烦的时候。它已经进了主流词典的同人列表，但还没被正式收录。</p>
+        <div class="head rv"><span class="idx">08</span><span class="dt">安全热词</span></div>
+        <h2 class="rv">prompt injection</h2>
+        <p class="cn rv">提示注入</p>
+        <p class="def rv">把指令藏进模型会读到的内容里，让它做出原本不该做的事。两年前是安全圈的术语，现在每个做 agent 的人都要先想它。</p>
         <div class="quotes">
-        <blockquote>
-          <p class="en">A mocking slang word for an AI, chatbot, or robot, borrowed from a Star Wars insult for battle droids. Used to vent frustration with AI showing up everywhere.</p>
-          <p class="zh">一个用来嘲讽 AI、聊天机器人或机器人的俚语词，借用自《星球大战》里骂战斗机器人的说法。用于发泄对「AI 到处都是」的不满。</p>
-          <cite><a href="https://thelexicon.ai/terms/clanker" target="_blank" rel="noopener">The New AI Lexicon</a><span class="sep">·</span>clanker<span class="sep">·</span>2026-10</cite>
+        <blockquote class="rv">
+          <p class="en">Prompt injection is a class of attack where instructions hidden in content that a model reads cause it to do something it wasn&#x27;t supposed to do.</p>
+          <p class="zh">提示注入是一类攻击：藏在模型会读到的内容里的指令，会让它做出本不该做的事。</p>
+          <cite><a href="https://thelexicon.ai/terms/prompt-injection" target="_blank" rel="noopener">The New AI Lexicon</a><span class="sep">·</span>prompt injection<span class="sep">·</span>2026-10</cite>
         </blockquote>
         </div>
       </article>
-  <footer>
-    <p><b>收词标准：2025—2026 年在 X、播客、技术媒体或职场语境中扩散，并已进入主流词典或顶级媒体报道。</b><br>
-    引文原文照录，中文逐句翻译，非改写。署名可点，直达出处。<br>
-    整理于 2026-11。</p>
-  </footer>
 </div>
 <script>
 (function(){
-  var p=document.getElementById('prog');
-  function up(){var h=document.documentElement;var max=(h.scrollHeight-h.clientHeight)||1;
-    p.style.width=Math.min(100,(h.scrollTop||document.body.scrollTop)/max*100)+'%';}
-  addEventListener('scroll',up,{passive:true}); up();
+  var p=document.getElementById('prog'), doc=document.documentElement;
+  var ghosts=[].slice.call(document.querySelectorAll('.ghost'));
+  var dots=[].slice.call(document.querySelectorAll('nav.dots a'));
+  var entries=[].slice.call(document.querySelectorAll('.entry'));
+  var ticking=false;
+
+  function paint(){
+    var max=(doc.scrollHeight-doc.clientHeight)||1;
+    var y=window.pageYOffset||doc.scrollTop;
+    p.style.width=Math.min(100,y/max*100)+'%';
+    // ghost 视差：随滚动反向缓慢移动
+    for(var i=0;i<ghosts.length;i++){
+      var g=ghosts[i], r=g.parentNode.getBoundingClientRect();
+      if(r.bottom>-200&&r.top<(window.innerHeight+200)){
+        g.style.transform='translate3d(0,'+((r.top-window.innerHeight/2)*0.07).toFixed(2)+'px,0)';
+      }
+    }
+    // 当前词条高亮
+    var cur=-1;
+    for(var j=0;j<entries.length;j++){
+      var b=entries[j].getBoundingClientRect();
+      if(b.top<window.innerHeight*0.45) cur=j;
+    }
+    for(var k=0;k<dots.length;k++) dots[k].classList.toggle('on',k===cur);
+    ticking=false;
+  }
+  function onScroll(){if(!ticking){ticking=true;requestAnimationFrame(paint);}}
+  addEventListener('scroll',onScroll,{passive:true});
+  addEventListener('resize',onScroll);
+  paint();
+
+  // 入场观察
+  var rvs=[].slice.call(document.querySelectorAll('.rv'));
+  rvs.forEach(function(el){
+    var bs=el.parentNode.querySelectorAll('blockquote.rv');
+    if(el.tagName==='BLOCKQUOTE'){
+      for(var i=0;i<bs.length;i++) if(bs[i]===el) el.style.setProperty('--i',i);
+    }
+  });
+  if(!('IntersectionObserver'in window)){rvs.forEach(function(e){e.classList.add('in')});return;}
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+  },{rootMargin:'0px 0px -6% 0px',threshold:0.06});
+  rvs.forEach(function(e){io.observe(e);});
 })();
 </script>
 </body>
