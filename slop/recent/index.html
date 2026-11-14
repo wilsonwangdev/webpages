@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>八个 AI 热词 · 中英对照</title>
-<meta name="description" content="slop、vibe coding、agentic、AGI、hallucination、AI agent、context window、prompt injection — 原文照录，逐句中译。">
+<meta name="description" content="slop、vibe coding、agentic、AGI、hallucination、AI agent、token、compute — 原文照录，逐句中译。">
 <meta property="og:title" content="八个 AI 热词">
 <meta property="og:description" content="英文原文在上，中文在下。">
 <meta property="og:type" content="article">
@@ -21,7 +21,7 @@ body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1
 #prog{position:fixed;top:0;left:0;height:2px;background:var(--ink);width:0;z-index:99;will-change:width}
 
 .topmark{position:fixed;top:18px;left:22px;z-index:50;font-family:var(--mono);font-size:10.5px;
-letter-spacing:.16em;color:var(--mid);mix-blend-mode:multiply;pointer-events:none}
+letter-spacing:.16em;color:var(--mid);pointer-events:none}
 @media(min-width:900px){.topmark{left:44px;top:22px}}
 
 nav.dots{position:fixed;right:12px;top:50%;transform:translateY(-50%);z-index:50;
@@ -34,14 +34,13 @@ nav.dots a.on{background:var(--ink);border-color:var(--ink);transform:scale(1.25
 .wrap{max-width:740px;margin:0 auto;padding:0 22px}
 @media(min-width:900px){.wrap{padding:0 44px}}
 
-.entry{position:relative;padding:110px 0 76px;overflow:hidden}
+.entry{position:relative;padding:104px 0 74px;overflow:hidden}
 .entry+.entry{border-top:1px solid var(--hair)}
-.ghost{position:absolute;top:52px;right:-10px;font-size:clamp(6rem,26vw,14rem);font-weight:700;
+.ghost{position:absolute;top:48px;right:-10px;font-size:clamp(6rem,26vw,14rem);font-weight:700;
 color:#f1f1f1;letter-spacing:-.06em;line-height:1;pointer-events:none;user-select:none;z-index:0;
 will-change:transform}
-.head{position:relative;z-index:1;display:flex;gap:14px;align-items:baseline;margin-bottom:16px}
+.head{position:relative;z-index:1;margin-bottom:15px}
 .idx{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em}
-.dt{font-family:var(--mono);font-size:11.5px;color:var(--mid)}
 h2{position:relative;z-index:1;font-size:clamp(2.5rem,10.6vw,5rem);font-weight:700;
 letter-spacing:-.05em;line-height:1.02;margin-bottom:10px;
 transition:letter-spacing .5s cubic-bezier(.2,.7,.2,1)}
@@ -62,7 +61,6 @@ cite a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--faint
 cite a:hover{border-bottom-color:var(--ink)}
 .sep{margin:0 .4em;color:var(--faint)}
 
-/* 入场：从下裁切揭示 */
 @media(prefers-reduced-motion:no-preference){
   .rv{opacity:0;transform:translateY(22px);
       transition:opacity .85s cubic-bezier(.16,.84,.3,1),transform .85s cubic-bezier(.16,.84,.3,1)}
@@ -76,153 +74,158 @@ cite a:hover{border-bottom-color:var(--ink)}
 </head>
 <body>
 <div id="prog"></div>
-<div class="topmark">2025 — 2026 · 08</div>
-<nav class="dots" aria-label="词条导航"><a href="#w01" aria-label="slop"></a><a href="#w02" aria-label="vibe coding"></a><a href="#w03" aria-label="agentic"></a><a href="#w04" aria-label="AGI"></a><a href="#w05" aria-label="hallucination"></a><a href="#w06" aria-label="AI agent"></a><a href="#w07" aria-label="context window"></a><a href="#w08" aria-label="prompt injection"></a></nav>
+<div class="topmark">08</div>
+<nav class="dots" aria-label="词条导航"><a href="#w01" aria-label="slop"></a><a href="#w02" aria-label="vibe coding"></a><a href="#w03" aria-label="agentic"></a><a href="#w04" aria-label="AGI"></a><a href="#w05" aria-label="hallucination"></a><a href="#w06" aria-label="AI agent"></a><a href="#w07" aria-label="token"></a><a href="#w08" aria-label="compute"></a></nav>
 <div class="wrap">
-      <article class="entry" id="w01" data-no="01">
+      <article class="entry" id="w01">
         <div class="ghost" aria-hidden="true">01</div>
-        <div class="head rv"><span class="idx">01</span><span class="dt">2025 年度词汇</span></div>
+        <div class="head rv"><span class="idx">01</span></div>
         <h2 class="rv">slop</h2>
         <p class="cn rv">泔水 · AI 垃圾内容</p>
-        <p class="def rv">Merriam-Webster 的年度词。定义只有一句：由人工智能批量生产的低质量数字内容。它装着整个 AI 时代的不耐烦，而且是笑着说出来的。</p>
+        <p class="def rv">Merriam-Webster 的年度词。定义就一句：AI 批量生产的低质内容。这个时代对 AI 的那股不耐烦，被四个字母装完了——还是笑着说的。</p>
         <div class="quotes">
         <blockquote class="rv">
           <p class="en noq">Merriam-Webster&#x27;s human editors have chosen slop as the 2025 Word of the Year. We define slop as “digital content of low quality that is produced usually in quantity by means of artificial intelligence.”</p>
-          <p class="zh">Merriam-Webster 的真人编辑把 slop 选为 2025 年度词汇。我们把它定义为「由人工智能批量生产的低质量数字内容」。</p>
-          <cite><a href="https://www.merriam-webster.com/wordplay/word-of-the-year" target="_blank" rel="noopener">Merriam-Webster</a><span class="sep">·</span>2025 Word of the Year<span class="sep">·</span>2025-12</cite>
+          <p class="zh">Merriam-Webster 的真人编辑把 slop 选为年度词。他们的定义是「由人工智能批量生产的低质数字内容」。</p>
+          <cite><a href="https://www.merriam-webster.com/wordplay/word-of-the-year" target="_blank" rel="noopener">Merriam-Webster</a><span class="sep">·</span>Word of the Year</cite>
         </blockquote>
         <blockquote class="rv">
           <p class="en">In 2025, amid all the talk about AI threats, slop set a tone that&#x27;s less fearful, more mocking. The word sends a little message to AI: when it comes to replacing human creativity, sometimes you don&#x27;t seem too superintelligent.</p>
-          <p class="zh">2025 年，满世界都在谈 AI 威胁，slop 定下的调子却不同——不恐惧，更多是取笑。它给 AI 递了句话：要说取代人类创造力，你有时候看着也没那么超级智能。</p>
-          <cite><a href="https://www.merriam-webster.com/wordplay/word-of-the-year" target="_blank" rel="noopener">Merriam-Webster</a><span class="sep">·</span>同上<span class="sep">·</span>2025-12</cite>
+          <p class="zh">2025 年满世界都在谈 AI 威胁，slop 定的调子不一样——不害怕，更多是取笑。它等于给 AI 递了句话：要说取代人类创造力，你有时候看着也没那么超级智能。</p>
+          <cite><a href="https://www.merriam-webster.com/wordplay/word-of-the-year" target="_blank" rel="noopener">Merriam-Webster</a><span class="sep">·</span>同上</cite>
         </blockquote>
         </div>
       </article>
-      <article class="entry" id="w02" data-no="02">
+      <article class="entry" id="w02">
         <div class="ghost" aria-hidden="true">02</div>
-        <div class="head rv"><span class="idx">02</span><span class="dt">2026 入典</span></div>
+        <div class="head rv"><span class="idx">02</span></div>
         <h2 class="rv">vibe coding</h2>
         <p class="cn rv">凭感觉编程</p>
-        <p class="def rv">Karpathy 2025 年 2 月造的词。2026 年 9 月被收进 Merriam-Webster，同批还有 AGI 和 looksmaxxing。从一条推文到一本词典，用了一年半。</p>
+        <p class="def rv">Karpathy 造的词，后来被收进了词典，同批还有 AGI 和 looksmaxxing。从一条推文到一本词典，用了一年半。</p>
         <div class="quotes">
         <blockquote class="rv">
           <p class="en noq">There&#x27;s a new kind of coding I call “vibe coding”, where you fully give in to the vibes, embrace exponentials, and forget that the code even exists.</p>
-          <p class="zh">有一种新的编程方式，我叫它「凭感觉编程」：完全交给感觉，拥抱指数增长，忘掉代码这回事本身就还存在。</p>
-          <cite><a href="https://x.com/karpathy/status/1886192184808149383" target="_blank" rel="noopener">Andrej Karpathy</a><span class="sep">·</span>X<span class="sep">·</span>2025-02</cite>
+          <p class="zh">有一种新的写代码方式，我叫它「凭感觉编程」：完全跟着感觉走，顺着指数往上冲，当代码这东西根本不存在。</p>
+          <cite><a href="https://x.com/karpathy/status/1886192184808149383" target="_blank" rel="noopener">Andrej Karpathy</a><span class="sep">·</span>X</cite>
         </blockquote>
         <blockquote class="rv">
           <p class="en">Merriam-Webster adds meme coin, vibe coding, and uncanny valley to its online dictionary. Those are just three of 1,400 new words added.</p>
-          <p class="zh">Merriam-Webster 把 meme coin、vibe coding 和 uncanny valley 收进了在线词典。这只是新增 1,400 个词里的三个。</p>
-          <cite><a href="https://www.theverge.com/tech/997370/merriam-webster-online-dictionary-vibe-conding-rickroll" target="_blank" rel="noopener">The Verge</a><span class="sep">·</span>2026-09-15 词典更新<span class="sep">·</span>2026-09</cite>
+          <p class="zh">Merriam-Webster 把 meme coin、vibe coding 和 uncanny valley 收进了在线词典。这才只是新增 1,400 个词里的三个。</p>
+          <cite><a href="https://www.theverge.com/tech/997370/merriam-webster-online-dictionary-vibe-conding-rickroll" target="_blank" rel="noopener">The Verge</a><span class="sep">·</span>词典更新</cite>
         </blockquote>
         </div>
       </article>
-      <article class="entry" id="w03" data-no="03">
+      <article class="entry" id="w03">
         <div class="ghost" aria-hidden="true">03</div>
-        <div class="head rv"><span class="idx">03</span><span class="dt">2026 入典</span></div>
+        <div class="head rv"><span class="idx">03</span></div>
         <h2 class="rv">agentic</h2>
         <p class="cn rv">能自己干的</p>
-        <p class="def rv">形容词，2026 年 9 月 15 日进入词典。指 AI 自己拿主意、自己往下做，而不是等你每一步都给指令。也是这一年最泛滥的营销标签。</p>
+        <p class="def rv">形容词。指 AI 自己能拿主意、自己往下推，而不是等你每一步都下指令。也是这一年最泛滥的营销标签——每个厂商的发布会第二页都有它。</p>
         <div class="quotes">
         <blockquote class="rv">
           <p class="en">Agentic: A type of artificial intelligence that can make proactive, autonomous decisions with limited human input and is capable of operating autonomously around the clock.</p>
-          <p class="zh">agentic：一种能主动、自主做决策的人工智能，只需很少的人类输入，且能全天候自主运行。</p>
-          <cite><a href="https://businessinsider.com/ai-terms-definitions-vocabulary-2026" target="_blank" rel="noopener">Business Insider</a><span class="sep">·</span>AI terms: Definitions of the words behind the boom<span class="sep">·</span>2026</cite>
+          <p class="zh">agentic：一种能主动、自主做决策的 AI，人给很少的输入就行，能全天候自己运转。</p>
+          <cite><a href="https://businessinsider.com/ai-terms-definitions-vocabulary-2026" target="_blank" rel="noopener">Business Insider</a><span class="sep">·</span>AI terms: Definitions of the words behind the boom</cite>
         </blockquote>
         <blockquote class="rv">
           <p class="en">‘Vibe coding’ makes the dictionary: AI terms recognized by Merriam-Webster — ‘Agentic’, ‘prompt engineering’ and other technical terms are among the 1,400 entries added.</p>
           <p class="zh">「凭感觉编程」进词典了：Merriam-Webster 认可的 AI 术语——agentic、prompt engineering 等技术名词都在新增的 1,400 个条目里。</p>
-          <cite><a href="https://www.nature.com/articles/d41586-026-03044-9" target="_blank" rel="noopener">Nature</a><span class="sep">·</span>News<span class="sep">·</span>2026-10-01</cite>
+          <cite><a href="https://www.nature.com/articles/d41586-026-03044-9" target="_blank" rel="noopener">Nature</a><span class="sep">·</span>News</cite>
         </blockquote>
         </div>
       </article>
-      <article class="entry" id="w04" data-no="04">
+      <article class="entry" id="w04">
         <div class="ghost" aria-hidden="true">04</div>
-        <div class="head rv"><span class="idx">04</span><span class="dt">2026 入典</span></div>
+        <div class="head rv"><span class="idx">04</span></div>
         <h2 class="rv">AGI</h2>
         <p class="cn rv">通用人工智能</p>
-        <p class="def rv">十年了，没人能给出统一定义。2026 年 9 月，它终于被正式收进词典——不是因为它清楚了，而是因为已经无法回避。</p>
+        <p class="def rv">十年了，没人能给出统一定义。后来它被正式收进词典——不是因为说清楚了，而是因为已经无法回避。</p>
         <div class="quotes">
         <blockquote class="rv">
           <p class="en">Artificial general intelligence, or AGI, is a nebulous term. But it generally refers to AI that&#x27;s more capable than the average human at many, if not most, tasks.</p>
-          <p class="zh">通用人工智能，也就是 AGI，是一个模糊的词。但它一般是指：在多数——即使不是绝大多数——任务上，比普通人更强的 AI。</p>
-          <cite><a href="https://techcrunch.com/2026/09/07/artificial-intelligence-definition-glossary-hallucinations-guide-to-common-ai-terms" target="_blank" rel="noopener">TechCrunch</a><span class="sep">·</span>AI Glossary<span class="sep">·</span>2026-09-07</cite>
+          <p class="zh">通用人工智能，也就是 AGI，是个模糊的词。但大体上指：在多数——即使不是绝大多数——任务上，比普通人更强的 AI。</p>
+          <cite><a href="https://techcrunch.com/2026/09/07/artificial-intelligence-definition-glossary-hallucinations-guide-to-common-ai-terms" target="_blank" rel="noopener">TechCrunch</a><span class="sep">·</span>AI Glossary</cite>
         </blockquote>
         <blockquote class="rv">
           <p class="en noq">OpenAI CEO Sam Altman once described AGI as the “equivalent of a median human that you could hire as a co-worker.”</p>
-          <p class="zh">OpenAI 的 CEO Sam Altman 曾说，AGI 相当于「一个你能雇来当同事的中位水平的人」。</p>
-          <cite><a href="https://techcrunch.com/2026/09/07/artificial-intelligence-definition-glossary-hallucinations-guide-to-common-ai-terms" target="_blank" rel="noopener">TechCrunch</a><span class="sep">·</span>同上 · 引 Altman<span class="sep">·</span>2026-09-07</cite>
+          <p class="zh">OpenAI 的 CEO Sam Altman 说过，AGI 相当于「一个你能招来当同事的中等水平的人」。</p>
+          <cite><a href="https://techcrunch.com/2026/09/07/artificial-intelligence-definition-glossary-hallucinations-guide-to-common-ai-terms" target="_blank" rel="noopener">TechCrunch</a><span class="sep">·</span>同上 · 引 Altman</cite>
         </blockquote>
         </div>
       </article>
-      <article class="entry" id="w05" data-no="05">
+      <article class="entry" id="w05">
         <div class="ghost" aria-hidden="true">05</div>
-        <div class="head rv"><span class="idx">05</span><span class="dt">天天在用</span></div>
+        <div class="head rv"><span class="idx">05</span></div>
         <h2 class="rv">hallucination</h2>
         <p class="cn rv">幻觉</p>
         <p class="def rv">AI 行业对「模型瞎编」的首选说法。它之所以流行，是因为把机器的错误说成了一种精神现象——听起来比「它错了」更准确，也更像托辞。</p>
         <div class="quotes">
         <blockquote class="rv">
           <p class="en">Hallucination is the AI industry&#x27;s preferred term for AI models making stuff up — literally generating information that is incorrect. Obviously, it&#x27;s a huge problem for AI quality.</p>
-          <p class="zh">幻觉是 AI 行业对「模型瞎编」的首选说法——字面意思就是生成了不正确的内容。显然，这对 AI 的质量是个大问题。</p>
-          <cite><a href="https://techcrunch.com/2026/09/07/artificial-intelligence-definition-glossary-hallucinations-guide-to-common-ai-terms" target="_blank" rel="noopener">TechCrunch</a><span class="sep">·</span>AI Glossary<span class="sep">·</span>2026-09-07</cite>
+          <p class="zh">幻觉是 AI 行业对「模型瞎编」的首选说法——说白了就是生成了不正确的信息。这对 AI 质量显然是个大问题。</p>
+          <cite><a href="https://techcrunch.com/2026/09/07/artificial-intelligence-definition-glossary-hallucinations-guide-to-common-ai-terms" target="_blank" rel="noopener">TechCrunch</a><span class="sep">·</span>AI Glossary</cite>
         </blockquote>
         <blockquote class="rv">
           <p class="en">Hallucinations produce GenAI outputs that can be misleading and could even lead to real-life risks — with potentially dangerous consequences.</p>
-          <p class="zh">幻觉会让生成式 AI 的输出具有误导性，甚至可能导致现实风险——后果可能很危险。</p>
-          <cite><a href="https://techcrunch.com/2026/09/07/artificial-intelligence-definition-glossary-hallucinations-guide-to-common-ai-terms" target="_blank" rel="noopener">TechCrunch</a><span class="sep">·</span>同上<span class="sep">·</span>2026-09-07</cite>
+          <p class="zh">幻觉会让生成式 AI 的输出带偏人，甚至引出真实世界的风险——后果可能很危险。</p>
+          <cite><a href="https://techcrunch.com/2026/09/07/artificial-intelligence-definition-glossary-hallucinations-guide-to-common-ai-terms" target="_blank" rel="noopener">TechCrunch</a><span class="sep">·</span>同上</cite>
         </blockquote>
         </div>
       </article>
-      <article class="entry" id="w06" data-no="06">
+      <article class="entry" id="w06">
         <div class="ghost" aria-hidden="true">06</div>
-        <div class="head rv"><span class="idx">06</span><span class="dt">两年最热</span></div>
+        <div class="head rv"><span class="idx">06</span></div>
         <h2 class="rv">AI agent</h2>
         <p class="cn rv">智能体</p>
-        <p class="def rv">2025 到 2026 最铺开的一个概念，也是被滥用最狠的一个。厂商说它的时候，可能指一个能自己订机票的程序，也可能指一个换了名字的聊天框。</p>
+        <p class="def rv">这两年铺得最开、也被滥用得最狠的一个概念。厂商说它的时候，可能指一个能自己订机票的程序，也可能只是个换了名字的聊天框。</p>
         <div class="quotes">
         <blockquote class="rv">
           <p class="en">An AI agent refers to a tool that uses AI technologies to perform a series of tasks on your behalf — beyond what a more basic AI chatbot could do — such as filing expenses, booking tickets or a table at a restaurant, or even writing and maintaining code.</p>
-          <p class="zh">AI 智能体指一种工具：它用 AI 技术代替你完成一系列任务——超出基础聊天机器人能做的范围——比如报销、订票、订餐厅，甚至写代码和维护代码。</p>
-          <cite><a href="https://techcrunch.com/2026/09/07/artificial-intelligence-definition-glossary-hallucinations-guide-to-common-ai-terms" target="_blank" rel="noopener">TechCrunch</a><span class="sep">·</span>AI Glossary<span class="sep">·</span>2026-09-07</cite>
+          <p class="zh">AI 智能体是一种工具：替你连着做完一摊事，比一般的聊天机器人能干——报销、订票、订餐厅，甚至写代码、维护代码。</p>
+          <cite><a href="https://techcrunch.com/2026/09/07/artificial-intelligence-definition-glossary-hallucinations-guide-to-common-ai-terms" target="_blank" rel="noopener">TechCrunch</a><span class="sep">·</span>AI Glossary</cite>
         </blockquote>
         <blockquote class="rv">
           <p class="en noq">“AI agent” might mean different things to different people. Infrastructure is also still being built out to deliver on its envisaged capabilities.</p>
-          <p class="zh">「AI 智能体」对不同的人可能指不同的东西。支撑它那些设想能力的基础设施，也还在建设中。</p>
-          <cite><a href="https://techcrunch.com/2026/09/07/artificial-intelligence-definition-glossary-hallucinations-guide-to-common-ai-terms" target="_blank" rel="noopener">TechCrunch</a><span class="sep">·</span>同上<span class="sep">·</span>2026-09-07</cite>
+          <p class="zh">「AI 智能体」对不同的人可能是不同的东西。支撑它那些设想能力的基础设施，也还在建设中。</p>
+          <cite><a href="https://techcrunch.com/2026/09/07/artificial-intelligence-definition-glossary-hallucinations-guide-to-common-ai-terms" target="_blank" rel="noopener">TechCrunch</a><span class="sep">·</span>同上</cite>
         </blockquote>
         </div>
       </article>
-      <article class="entry" id="w07" data-no="07">
+      <article class="entry" id="w07">
         <div class="ghost" aria-hidden="true">07</div>
-        <div class="head rv"><span class="idx">07</span><span class="dt">天天在用</span></div>
-        <h2 class="rv">context window</h2>
-        <p class="cn rv">上下文窗口</p>
-        <p class="def rv">模型一次能「看见」多少字。这个词两年里从技术参数变成了日常抱怨——「塞不下了」「前面忘光了」，说的都是它。</p>
+        <div class="head rv"><span class="idx">07</span></div>
+        <h2 class="rv">token</h2>
+        <p class="cn rv">词元</p>
+        <p class="def rv">模型读写文本的最小单位。你说的话、它答的话、你上传的文件，全先被切成 token，再按 token 收钱。所以账单和「聊了多久」无关，和「聊了多少字」有关。</p>
         <div class="quotes">
         <blockquote class="rv">
-          <p class="en">The amount of text (measured in tokens) a model can consider at once, covering your messages, its replies, files, and tool output. Effectively the model&#x27;s working memory.</p>
-          <p class="zh">模型一次能考虑的文本量（以 token 计），涵盖你的消息、它的回复、文件和工具输出。实际上就是模型的工作记忆。</p>
-          <cite><a href="https://thelexicon.ai/terms/context-window" target="_blank" rel="noopener">The New AI Lexicon</a><span class="sep">·</span>context window<span class="sep">·</span>2026-10</cite>
+          <p class="en">Transformer models break text into tokens, which can be full words, syllables, or letters, depending on the model.</p>
+          <p class="zh">Transformer 模型把文本切成 token——按模型不同，一个 token 可以是一个完整的词、一个音节，或者一个字母。</p>
+          <cite><a href="https://techcrunch.com/2024/08/27/why-ai-cant-spell-strawberry/" target="_blank" rel="noopener">TechCrunch</a><span class="sep">·</span>Why AI can&#x27;t spell &#x27;strawberry&#x27;</cite>
         </blockquote>
         <blockquote class="rv">
-          <p class="en">The whole codebase won&#x27;t fit in the context window, so the agent searches for what it needs.</p>
-          <p class="zh">整个代码库塞不进上下文窗口，所以 agent 会去搜索它需要的部分。</p>
-          <cite><a href="https://thelexicon.ai/terms/context-window" target="_blank" rel="noopener">The New AI Lexicon</a><span class="sep">·</span>同上 · 词条示例<span class="sep">·</span>2026-10</cite>
+          <p class="en">The first half of 2026 was characterized by one word in the AI community: tokenmaxxing — referring to companies urging their employees to use AI as much as possible. But after reviewing the AI bills…</p>
+          <p class="zh">2026 年上半年，AI 圈可以用一个词概括：刷 token——指公司催着员工尽可能多用 AI。可在核对完 AI 账单之后……</p>
+          <cite><a href="https://businessinsider.com/ai-model-routing-modelmaxxing-efficient-token-use-2026-7" target="_blank" rel="noopener">Business Insider</a><span class="sep">·</span>Tokenmaxxing is over. It's all about modelmaxxing now.</cite>
         </blockquote>
         </div>
       </article>
-      <article class="entry" id="w08" data-no="08">
+      <article class="entry" id="w08">
         <div class="ghost" aria-hidden="true">08</div>
-        <div class="head rv"><span class="idx">08</span><span class="dt">安全热词</span></div>
-        <h2 class="rv">prompt injection</h2>
-        <p class="cn rv">提示注入</p>
-        <p class="def rv">把指令藏进模型会读到的内容里，让它做出原本不该做的事。两年前是安全圈的术语，现在每个做 agent 的人都要先想它。</p>
+        <div class="head rv"><span class="idx">08</span></div>
+        <h2 class="rv">compute</h2>
+        <p class="cn rv">算力</p>
+        <p class="def rv">训练和跑模型要的那点硬件，主要就是 GPU。这个词已经从技术参数变成了地缘政治词——它现在是被出口管制的东西。</p>
         <div class="quotes">
         <blockquote class="rv">
-          <p class="en">Prompt injection is a class of attack where instructions hidden in content that a model reads cause it to do something it wasn&#x27;t supposed to do.</p>
-          <p class="zh">提示注入是一类攻击：藏在模型会读到的内容里的指令，会让它做出本不该做的事。</p>
-          <cite><a href="https://thelexicon.ai/terms/prompt-injection" target="_blank" rel="noopener">The New AI Lexicon</a><span class="sep">·</span>prompt injection<span class="sep">·</span>2026-10</cite>
+          <p class="en">Although somewhat of a multivalent term, compute generally refers to the vital computational power that allows AI models to operate. This type of processing fuels the AI industry.</p>
+          <p class="zh">compute 这词含义不止一个，但大体上指让 AI 模型能跑起来的那种关键算力。这类处理能力是 AI 产业的燃料。</p>
+          <cite><a href="https://techcrunch.com/2026/09/07/artificial-intelligence-definition-glossary-hallucinations-guide-to-common-ai-terms" target="_blank" rel="noopener">TechCrunch</a><span class="sep">·</span>AI Glossary</cite>
+        </blockquote>
+        <blockquote class="rv">
+          <p class="en">Shorthand for the processing power (mostly GPUs and specialized chips) needed to train and run AI. Treated as a scarce strategic resource.</p>
+          <p class="zh">训练和运行 AI 所需算力的简称，主要是 GPU 和专用芯片。它被当成一种稀缺的战略资源。</p>
+          <cite><a href="https://thelexicon.ai/terms/compute" target="_blank" rel="noopener">The New AI Lexicon</a><span class="sep">·</span>compute</cite>
         </blockquote>
         </div>
       </article>
@@ -233,38 +236,34 @@ cite a:hover{border-bottom-color:var(--ink)}
   var ghosts=[].slice.call(document.querySelectorAll('.ghost'));
   var dots=[].slice.call(document.querySelectorAll('nav.dots a'));
   var entries=[].slice.call(document.querySelectorAll('.entry'));
-  var ticking=false;
+  var ticking=false, vh=window.innerHeight;
 
   function paint(){
     var max=(doc.scrollHeight-doc.clientHeight)||1;
     var y=window.pageYOffset||doc.scrollTop;
     p.style.width=Math.min(100,y/max*100)+'%';
-    // ghost 视差：随滚动反向缓慢移动
     for(var i=0;i<ghosts.length;i++){
       var g=ghosts[i], r=g.parentNode.getBoundingClientRect();
-      if(r.bottom>-200&&r.top<(window.innerHeight+200)){
-        g.style.transform='translate3d(0,'+((r.top-window.innerHeight/2)*0.07).toFixed(2)+'px,0)';
+      if(r.bottom>-240&&r.top<vh+240){
+        g.style.transform='translate3d(0,'+((r.top-vh/2)*0.07).toFixed(2)+'px,0)';
       }
     }
-    // 当前词条高亮
     var cur=-1;
     for(var j=0;j<entries.length;j++){
-      var b=entries[j].getBoundingClientRect();
-      if(b.top<window.innerHeight*0.45) cur=j;
+      if(entries[j].getBoundingClientRect().top<vh*0.45) cur=j;
     }
     for(var k=0;k<dots.length;k++) dots[k].classList.toggle('on',k===cur);
     ticking=false;
   }
   function onScroll(){if(!ticking){ticking=true;requestAnimationFrame(paint);}}
   addEventListener('scroll',onScroll,{passive:true});
-  addEventListener('resize',onScroll);
+  addEventListener('resize',function(){vh=window.innerHeight;onScroll();});
   paint();
 
-  // 入场观察
   var rvs=[].slice.call(document.querySelectorAll('.rv'));
   rvs.forEach(function(el){
-    var bs=el.parentNode.querySelectorAll('blockquote.rv');
     if(el.tagName==='BLOCKQUOTE'){
+      var bs=el.parentNode.querySelectorAll('blockquote.rv');
       for(var i=0;i<bs.length;i++) if(bs[i]===el) el.style.setProperty('--i',i);
     }
   });
