@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>近一年 AI 热词 · 2025.09 — 2026.11</title>
+<meta name="description" content="workslop、Deep Blue、tokenmaxxing、meat proxy、opaque recurrence、harness engineering、AI dark factory、clanker — 八个从 X、播客和办公室里真正长出来的词，中英对照。">
+<meta property="og:title" content="近一年 AI 热词">
+<meta property="og:description" content="八个真正被说出口的词，中英对照，附出处。">
+<meta property="og:type" content="article">
+<meta name="theme-color" content="#ffffff">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#fff;--ink:#0a0a0a;--mid:#6b6b6b;--faint:#d8d8d8;--hair:#ebebeb;
+--sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+--mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,monospace}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;
+-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+#prog{position:fixed;top:0;left:0;height:2px;background:var(--ink);width:0;z-index:99}
+.wrap{max-width:740px;margin:0 auto;padding:0 22px}
+@media(min-width:900px){.wrap{padding:0 44px}}
+
+header{padding:82px 0 52px;border-bottom:1px solid var(--hair)}
+.kicker{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--mid);margin-bottom:24px}
+h1{font-size:clamp(2.9rem,11.6vw,5.6rem);font-weight:700;letter-spacing:-.05em;line-height:.94;text-wrap:balance}
+h1 em{font-style:normal;color:var(--faint)}
+.lede{margin-top:26px;font-size:1.0625rem;line-height:1.8;color:#2e2e2e;max-width:32em;text-wrap:pretty}
+.meta{margin-top:30px;font-family:var(--mono);font-size:11.5px;color:var(--mid);line-height:1.95}
+.meta b{font-weight:500;color:var(--ink)}
+
+.entry{position:relative;padding:62px 0 58px;border-bottom:1px solid var(--hair);overflow:hidden}
+.entry:last-of-type{border-bottom:none}
+.ghost{position:absolute;top:26px;right:-6px;font-size:clamp(5.5rem,24vw,12rem);font-weight:700;
+color:#f2f2f2;letter-spacing:-.06em;line-height:1;pointer-events:none;user-select:none;z-index:0}
+.head{position:relative;z-index:1;display:flex;gap:12px;align-items:baseline;margin-bottom:14px;flex-wrap:wrap}
+.idx{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em}
+.dt{font-family:var(--mono);font-size:11.5px;color:var(--mid)}
+.tag{font-family:var(--mono);font-size:10.5px;color:var(--mid);border:1px solid var(--faint);border-radius:2px;padding:2px 6px;letter-spacing:.02em}
+h2{position:relative;z-index:1;font-size:clamp(2.15rem,8.8vw,4.2rem);font-weight:700;
+letter-spacing:-.045em;line-height:1.04;margin-bottom:8px;transition:letter-spacing .4s ease}
+@media(min-width:900px){.entry:hover h2{letter-spacing:-.018em}}
+.cn{position:relative;z-index:1;font-size:1rem;color:#4a4a4a;margin-bottom:18px;letter-spacing:.01em}
+.def{position:relative;z-index:1;font-size:.9688rem;line-height:1.9;color:#1e1e1e;max-width:32em;text-wrap:pretty}
+
+.quotes{position:relative;z-index:1;margin-top:30px;display:flex;flex-direction:column;gap:26px}
+blockquote{border-left:2px solid var(--ink);padding-left:17px}
+blockquote p.en{font-size:.9375rem;line-height:1.78;color:#0f0f0f;text-wrap:pretty}
+blockquote p.en:before{content:"\201C"}
+blockquote p.en:after{content:"\201D"}
+blockquote p.en.noq:before,blockquote p.en.noq:after{content:none}
+blockquote p.zh{margin-top:9px;font-size:.875rem;line-height:1.95;color:#666;text-wrap:pretty;
+padding-top:9px;border-top:1px dotted #e0e0e0}
+cite{display:block;margin-top:11px;font-family:var(--mono);font-size:10.5px;color:var(--mid);font-style:normal;line-height:1.8}
+cite a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--faint)}
+cite a:hover{border-bottom-color:var(--ink)}
+.sep{margin:0 .4em;color:var(--faint)}
+
+footer{padding:54px 0 90px;border-top:1px solid var(--hair)}
+footer p{font-family:var(--mono);font-size:11.5px;line-height:2.1;color:var(--mid)}
+footer b{font-weight:500;color:var(--ink)}
+
+@media(prefers-reduced-motion:no-preference){
+  h1,.lede,.meta{animation:rise .8s cubic-bezier(.2,.7,.2,1) both}
+  .lede{animation-delay:.09s}.meta{animation-delay:.16s}
+  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<div class="wrap">
+  <header>
+    <div class="kicker">Lexicon · 近一年 / 2025.09 — 2026.11</div>
+    <h1>八个热词<br><em>真的在用</em></h1>
+    <p class="lede">只收近一年内从 X、播客和办公室里长出来、并且已经被反复使用的词。每条引文英文在上、中文在下，出处可点。</p>
+    <p class="meta"><b>08</b> 词 · <b>14</b> 条引文 · 全部中英对照</p>
+  </header>
+      <article class="entry">
+        <div class="ghost" aria-hidden="true">01</div>
+        <div class="head"><span class="idx">01</span><span class="dt">2025.09</span><span class="tag">职场</span></div>
+        <h2>workslop</h2>
+        <p class="cn">无用功 / 看似成品的工作</p>
+        <p class="def">AI 生成、表面光鲜、但缺少推进任务所需的实质内容——拿到手里的人还得解读、修补甚至重做。哈佛商业评论在 2025 年造的词，被 WORKTECH Academy 列为 2026 年职场第一趋势。</p>
+        <div class="quotes">
+        <blockquote>
+          <p class="en">AI-generated work that masquerades as good work, but lacks the substance to advance a given task.</p>
+          <p class="zh">AI 生成、伪装成好成果的工作，但缺少推进某一具体任务所需的实质。</p>
+          <cite><a href="https://tech.co/news/what-is-workslop-ai-how-spot" target="_blank" rel="noopener">tech.co</a><span class="sep">·</span>What Is AI Workslop, and How Can You Spot It?<span class="sep">·</span>2025-10-03</cite>
+        </blockquote>
+        <blockquote>
+          <p class="en">Workslop masquerades as meaningful, it may appear superficially polished, and yet requires others to interpret, fix, or even redo it.</p>
+          <p class="zh">无用功伪装成有意义，它表面上可能打磨得很漂亮，却需要别人去解读、修补，甚至整个重做。</p>
+          <cite><a href="https://eveningreport.nz/2025/11/18/what-is-workslop/" target="_blank" rel="noopener">Radio New Zealand</a><span class="sep">·</span>What is workslop?<span class="sep">·</span>2025-11-18</cite>
+        </blockquote>
+        </div>
+      </article>
+      <article class="entry">
+        <div class="ghost" aria-hidden="true">02</div>
+        <div class="head"><span class="idx">02</span><span class="dt">2026.01</span><span class="tag">播客</span></div>
+        <h2>Deep Blue</h2>
+        <p class="cn">深蓝·职业性忧郁</p>
+        <p class="def">软件工程师因为 AI 侵入本行而产生的心理倦怠，从存在性焦虑走向真实的恐惧。2026 年 1 月在 Oxide and Friends 播客上被造出来，取自 1997 年击败卡斯帕罗夫的那台机器。</p>
+        <div class="quotes">
+        <blockquote>
+          <p class="en">We coined a new term on the Oxide and Friends podcast last month (primary credit to Adam Leventhal) covering the sense of psychological ennui leading into existential dread that many software developers are feeling thanks to the encroachment of generative AI into their field of work. We&#x27;re calling it Deep Blue.</p>
+          <p class="zh">上个月我们在 Oxide and Friends 播客上造了一个新词（首功记给 Adam Leventhal），用来描述许多软件开发者正在经历的那种心理倦怠，以及它通向的存在性恐惧——起因是生成式 AI 正在侵入他们的专业领域。我们把它叫做「深蓝」。</p>
+          <cite><a href="https://simonwillison.net/2026/Feb/15/deep-blue" target="_blank" rel="noopener">Simon Willison</a><span class="sep">·</span>Deep Blue<span class="sep">·</span>2026-02-15</cite>
+        </blockquote>
+        <blockquote>
+          <p class="en">The idea that this could all be stripped away by a chatbot is deeply upsetting.</p>
+          <p class="zh">这一切有可能被一个聊天机器人剥夺干净——这个想法让人深感不安。</p>
+          <cite><a href="https://simonwillison.net/2026/Feb/15/deep-blue" target="_blank" rel="noopener">Simon Willison</a><span class="sep">·</span>同上<span class="sep">·</span>2026-02-15</cite>
+        </blockquote>
+        </div>
+      </article>
+      <article class="entry">
+        <div class="ghost" aria-hidden="true">03</div>
+        <div class="head"><span class="idx">03</span><span class="dt">2026 上半年</span><span class="tag">企业</span></div>
+        <h2>tokenmaxxing</h2>
+        <p class="cn">刷 token</p>
+        <p class="def">把 AI token 用量当成生产力的象征，鼓励员工尽量多用。批评者说它奖励浪费、抬高账单。到 2026 年 7 月，这个词已经被同一批人用来表示「这阶段结束了」。</p>
+        <div class="quotes">
+        <blockquote>
+          <p class="en">The first half of 2026 was characterized by one word in the AI community: tokenmaxxing — referring to companies urging their employees to use AI as much as possible. But after reviewing the AI bills…</p>
+          <p class="zh">2026 年上半年，AI 圈可以用一个词概括：刷 token——指公司催促员工尽可能多地使用 AI。但在核对过 AI 账单之后……</p>
+          <cite><a href="https://businessinsider.com/ai-model-routing-modelmaxxing-efficient-token-use-2026-7" target="_blank" rel="noopener">Business Insider</a><span class="sep">·</span>Tokenmaxxing is over. It&#x27;s all about modelmaxxing now.<span class="sep">·</span>2026-07</cite>
+        </blockquote>
+        <blockquote>
+          <p class="en noq">&quot;Tokenmaxxing&quot; — the idea that success with AI coding comes down to using as many tokens as possible — is having a moment.</p>
+          <p class="zh">「刷 token」——认为用 AI 写代码的成功取决于 token 用得够多——正在风头上。</p>
+          <cite><a href="https://jellyfish.co/blog/is-tokenmaxxing-cost-effective-new-data-from-jellyfish-explains" target="_blank" rel="noopener">Jellyfish</a><span class="sep">·</span>Is tokenmaxxing cost effective?<span class="sep">·</span>2026</cite>
+        </blockquote>
+        </div>
+      </article>
+      <article class="entry">
+        <div class="ghost" aria-hidden="true">04</div>
+        <div class="head"><span class="idx">04</span><span class="dt">2026.08</span><span class="tag">X / 办公室</span></div>
+        <h2>meat proxy</h2>
+        <p class="cn">人肉代理</p>
+        <p class="def">把 AI 生成的东西原样转发出去、自己不读不理解也不核实的人。词在 X 上流行，被叫作「最先被替换掉的那批人」，也被列为 2026 年最大的职业风险之一。</p>
+        <div class="quotes">
+        <blockquote>
+          <p class="en noq">There is a new name for the coworker who responds to a simple question with seven paragraphs that very clearly came straight from ChatGPT: a &quot;meat proxy.&quot;</p>
+          <p class="zh">现在，那种你问一句、他甩回七段、而七段明显直接来自 ChatGPT 的同事，有了新名字：「人肉代理」。</p>
+          <cite><a href="https://me.mashable.com/digital-culture/75391/are-you-a-meat-proxy-the-latest-ai-slang-explained" target="_blank" rel="noopener">Mashable</a><span class="sep">·</span>Are you a &#x27;meat proxy&#x27;? The latest AI slang, explained.<span class="sep">·</span>2026</cite>
+        </blockquote>
+        <blockquote>
+          <p class="en noq">Techies on X are calling them &quot;very annoying&quot; and &quot;the first ones to be replaced.&quot; For some, being a meat proxy might even be the &quot;biggest career risk of 2026.&quot;</p>
+          <p class="zh">X 上的技术人叫他们「非常烦人」，还说他们是「最先被替换掉的人」。对某些人来说，当一个人肉代理甚至可能是「2026 年最大的职业风险」。</p>
+          <cite><a href="https://www.businessinsider.com/meat-proxy-tech-new-term-ai-2026-8" target="_blank" rel="noopener">Business Insider</a><span class="sep">·</span>What Is a &#x27;Meat Proxy&#x27;? Tech Has a New Term for Blind AI Sharers<span class="sep">·</span>2026-08</cite>
+        </blockquote>
+        </div>
+      </article>
+      <article class="entry">
+        <div class="ghost" aria-hidden="true">05</div>
+        <div class="head"><span class="idx">05</span><span class="dt">2026.09</span><span class="tag">模型 / 安全</span></div>
+        <h2>opaque recurrence</h2>
+        <p class="cn">不透明递归</p>
+        <p class="def">OpenAI Astra 用的推理技术：可见的推理 token 更少、能力更强，代价是研究人员再也无法通过思维链审计它是怎么得出结论的。这个词 9 月一出，安全研究者集体警觉。</p>
+        <div class="quotes">
+        <blockquote>
+          <p class="en">Astra is also possibly OpenAI&#x27;s most controversial model yet due to its use of a particular reasoning technique known as opaque recurrence. This technique is known to obscure an important model-monitoring process known as chain of thought.</p>
+          <p class="zh">Astra 也可能是 OpenAI 至今最具争议的模型，原因是它使用了一种叫「不透明递归」的推理技术。这项技术会遮蔽一个重要的模型监控过程——思维链。</p>
+          <cite><a href="https://techcrunch.com/2026/09/03/openai-launches-astra-its-powerful-and-controversial-new-model" target="_blank" rel="noopener">TechCrunch</a><span class="sep">·</span>OpenAI launches Astra, its powerful (and controversial) new model<span class="sep">·</span>2026-09-03</cite>
+        </blockquote>
+        <blockquote>
+          <p class="en">It reasons with fewer visible tokens, which makes it more capable but means you can&#x27;t actually audit how it got to an answer anymore.</p>
+          <p class="zh">它用更少的可见 token 推理，这让它更强，但也意味着你再也无法审计它是怎么得到答案的。</p>
+          <cite><a href="https://community.openai.com/t/astra-trades-reasoning-transparency-for-capability-where-do-you-land-on-that/1398967" target="_blank" rel="noopener">OpenAI 开发者社区</a><span class="sep">·</span>Astra trades reasoning transparency for capability<span class="sep">·</span>2026-09</cite>
+        </blockquote>
+        </div>
+      </article>
+      <article class="entry">
+        <div class="ghost" aria-hidden="true">06</div>
+        <div class="head"><span class="idx">06</span><span class="dt">2026</span><span class="tag">工程</span></div>
+        <h2>harness engineering</h2>
+        <p class="cn">外壳工程</p>
+        <p class="def">设计模型外面那一层运行时：它能调用哪些工具、能读改什么、怎么自检、什么时候停。2026 年被说成「取代 prompt engineering 的技能」——同一个模型换个外壳，结果完全不同。</p>
+        <div class="quotes">
+        <blockquote>
+          <p class="en">The bottleneck is everything around the model: who gives it tools, who checks its work, what it remembers, what it is allowed to touch, and whether anyone can see what it did. That layer has a name now. It is called the harness.</p>
+          <p class="zh">瓶颈在于模型周围的一切：谁给它工具、谁检查它的产出、它记得什么、它被允许碰什么、以及有没有人能看到它做了什么。那一层现在有名字了，叫「外壳」。</p>
+          <cite><a href="https://x.com/choopyplug1/article/2088973320964215253" target="_blank" rel="noopener">@choopyplug1</a><span class="sep">·</span>Harness Engineering: the skill that replaced prompt engineering in 2026<span class="sep">·</span>2026</cite>
+        </blockquote>
+        <blockquote>
+          <p class="en">Designing the runtime around a model… The harness often matters more than which model sits inside it.</p>
+          <p class="zh">围绕模型设计运行时……外壳往往比里面装的是哪个模型更重要。</p>
+          <cite><a href="https://thelexicon.ai/terms/harness-engineering" target="_blank" rel="noopener">The New AI Lexicon</a><span class="sep">·</span>harness engineering<span class="sep">·</span>2026-10</cite>
+        </blockquote>
+        </div>
+      </article>
+      <article class="entry">
+        <div class="ghost" aria-hidden="true">07</div>
+        <div class="head"><span class="idx">07</span><span class="dt">2026</span><span class="tag">工程</span></div>
+        <h2>AI dark factory</h2>
+        <p class="cn">AI 黑灯工厂</p>
+        <p class="def">代码由触发器启动的 agent 编写、不经任何人阅读就上线，唯一的检查是自动化测试和自动化评审。名字借自「黑灯工厂」——车间里没有工人。</p>
+        <div class="quotes">
+        <blockquote>
+          <p class="en">A software setup where coding agents are started by triggers rather than people and their code ships without any human reading it; automated tests and automated review are the only checks. Named after lights-out factories that run with no workers on the floor.</p>
+          <p class="zh">一种软件生产形态：编码 agent 由触发器而非人来启动，它们写的代码不经任何人阅读就发布；自动化测试与自动化评审是仅有的检查。名字来自「黑灯工厂」——车间里一个工人都没有。</p>
+          <cite><a href="https://thelexicon.ai/terms/ai-dark-factory" target="_blank" rel="noopener">The New AI Lexicon</a><span class="sep">·</span>AI dark factory<span class="sep">·</span>2026-10</cite>
+        </blockquote>
+        </div>
+      </article>
+      <article class="entry">
+        <div class="ghost" aria-hidden="true">08</div>
+        <div class="head"><span class="idx">08</span><span class="dt">2025</span><span class="tag">文化</span></div>
+        <h2>clanker</h2>
+        <p class="cn">铁皮罐头</p>
+        <p class="def">对 AI、聊天机器人或机器人的蔑称，借自《星战》里对战斗机器人的骂法。用在 AI 到处出现、让人烦的时候。它不是术语，是脏话。</p>
+        <div class="quotes">
+        <blockquote>
+          <p class="en">A mocking slang word for an AI, chatbot, or robot, borrowed from a Star Wars insult for battle droids. Used to vent frustration with AI showing up everywhere.</p>
+          <p class="zh">一个用来嘲讽 AI、聊天机器人或机器人的俚语词，借用自《星球大战》里骂战斗机器人的说法。用于发泄对「AI 到处都是」的不满。</p>
+          <cite><a href="https://thelexicon.ai/terms/clanker" target="_blank" rel="noopener">The New AI Lexicon</a><span class="sep">·</span>clanker<span class="sep">·</span>2026-10</cite>
+        </blockquote>
+        </div>
+      </article>
+  <footer>
+    <p><b>收词标准：近一年（2025.09 之后）首次出现或爆发，且在 X、播客、技术媒体或职场语境中被反复使用。</b><br>
+    引文为原文照录，中文为逐句翻译，非改写。<br>
+    署名可点击，直达出处。整理于 2026-11。</p>
+  </footer>
+</div>
+<script>
+(function(){
+  var p=document.getElementById('prog');
+  function up(){var h=document.documentElement;var max=(h.scrollHeight-h.clientHeight)||1;
+    p.style.width=Math.min(100,(h.scrollTop||document.body.scrollTop)/max*100)+'%';}
+  addEventListener('scroll',up,{passive:true}); up();
+})();
+</script>
+</body>
+</html>
